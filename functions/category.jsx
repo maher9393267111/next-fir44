@@ -64,8 +64,7 @@ export const updateCategory = async (categoryid, category) => {
     const categoryDoc = doc(db, 'Categories2', categoryid);
    
 	await updateDoc(categoryDoc, {name:category});
-
-   
+ 
 
 }
 
@@ -107,4 +106,17 @@ export const createSub = async (subdata) => {
 
     }
     );
+}
+
+
+
+
+export const updateSubCategory = async (subid, subdata) => {
+    console.log('Sub is--💬💬💬💬',subid);
+   
+    const subDoc = doc(db, 'subcat',subid);
+   
+	await updateDoc(subDoc, subdata);
+ 
+
 }
