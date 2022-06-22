@@ -59,7 +59,7 @@ const Category = () => {
             </Form.Item>
             <Form.Item>
               <Button htmlType="submit" type="primary">
-                Create
+                {isupdate ? "Update" : "Create"}
               </Button>
             </Form.Item>
           </Form>
@@ -80,7 +80,7 @@ const Category = () => {
                       onClick={() => {
                         setCatid(category?.id);
                         console.log("catid--->>>", catid);
-                        setIsupdate(true);
+                        setIsupdate(!isupdate);
                       }}
                       className=" w-[85px]"
                     >

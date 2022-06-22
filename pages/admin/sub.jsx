@@ -63,8 +63,8 @@ const Sub = () => {
     <div>
       <AdminLayout>
         <div>
-          <h1 className=" text-xl font-semibold  text-blue-400">
-            sub-category  Numbers { subCategoies?.length}
+          <h1 className=" text-2xl font-semibold ">
+            sub-category  { subCategoies?.length}
           </h1>
 
 <div> <h1>{isupdate ? 'Update sub' : 'Create sub'}</h1></div>
