@@ -1,29 +1,19 @@
 import React from 'react';
-
 import AdminLayout from '../../components/admin/adminLayout';
-const Dashboard = () => {
+const Cuopon = () => {
     return (
         <div>
-        
-<div>
+          
 
-<AdminLayout>
+          <AdminLayout>
 
 
-content
+<h1>cuopon</h1>
 
 </AdminLayout>
-
-
-
-
-
-
-</div>
-
 
         </div>
     );
 }
 
-export default Dashboard;
+export default Cuopon;

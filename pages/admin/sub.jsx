@@ -1,29 +1,18 @@
 import React from 'react';
-
 import AdminLayout from '../../components/admin/adminLayout';
-const Dashboard = () => {
+const Sub = () => {
     return (
         <div>
-        
-<div>
-
-<AdminLayout>
+         
+         <AdminLayout>
 
 
-content
+<h1>sub-category</h1>
 
 </AdminLayout>
-
-
-
-
-
-
-</div>
-
 
         </div>
     );
 }
 
-export default Dashboard;
+export default Sub;
