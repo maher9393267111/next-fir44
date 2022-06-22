@@ -3,11 +3,15 @@ import 'bulma/css/bulma.min.css';
 import 'antd/dist/antd.css';
 import { wrapper } from "../store/index";
 import GlobalContext from '../context/global'
+import Header from '../components/Header'
+import Layout from '../components/layout'
 function MyApp({ Component, pageProps }) {
   return (
   <GlobalContext>
+    <Layout>
   <Component {...pageProps} />
 
+    </Layout>
   </GlobalContext>
   )
 }

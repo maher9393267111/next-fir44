@@ -19,7 +19,7 @@ export default function Home() {
       </Head>
 
 <div>
-  hello world {userinfo?.name}
+  hello {userinfo?.name}
 
 
 

@@ -125,16 +125,17 @@ const signIn = (email, password) => {
     const logout = () => {
       console.log("logout");
       setUser({});
-      return signOut(auth);
+      setUserInfo({});
+       signOut(auth);
     };
   
     //------
   
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
-        if (user) {
+        if (user && user.displayName) {
           // User is signed in.
-  
+  console.log("user is signed in 🔴🔴🔴🔴", user);
           setUser(user);
           console.log("user status changed: ", user.email, user.uid);
   
@@ -154,9 +155,15 @@ const signIn = (email, password) => {
   
           fetchuser().catch(console.error);
         }
+
+// else if (!user || user.email ==="" ) {
+//   console.log("user is not signed in 🔥🔥");
+//   setUser({});
+// }
+
       });
       return unsubscribe;
-    }, [currentUser, auth]);
+    }, [ auth]);
   
     //--- Sign in with google ---
   
