@@ -13,28 +13,73 @@ import {
     updateDoc,
     arrayUnion,
     addDoc,
-  } from "firebase/firestore";
-  import {db} from '../firebase'
+} from "firebase/firestore";
+import { db } from '../firebase'
+import {
+    useCollectionData,
+    useDocumentData,
+  } from "react-firebase-hooks/firestore";
+import { toast } from "react-toastify";
 
-  import { toast } from "react-toastify";
+
+
+// const q = query(
+//     collection(db, "Categories2"),
+  
+//   );
+//   const [categories, loading] = useCollectionData(q);
+ // const [chat] = useDocumentData(doc(db, "chats", id));
+
+
 
 
 // create a new category
 export const createCategory = async (category) => {
 
-console.log('category--->⚡⚡', category);
-    await addDoc(collection(db, "Categories2",), { name: category}).then(() => {
-      toast.success("Category created successfully");
+    console.log('category--->⚡⚡', category);
+    await addDoc(collection(db, "Categories2",), { name: category }).then(() => {
+        toast.success("Category created successfully");
 
-             }
-              ).catch((error) => {
-                toast.error(error.message);
-        
-              
-              }
-            );
+    }
+    ).catch((error) => {
+        toast.error(error.message);
+
+
+    }
+    );
 
 
 
 
 }
+
+
+
+// update a category
+
+export const updateCategory = async (categoryid, category) => {
+    console.log('category--->⚡⚡', category);
+
+    await updateDoc(collection(db, "Categories2", categoryid), { name: category }).then(() => {
+
+        toast.success("Category updated successfully");
+
+    }
+    ).catch((error) => {
+        toast.error(error.message);
+
+    }
+    );
+
+}
+
+
+// list all categories
+export const listCategories = async () => {
+    const categories = await getDocs(collection(db, "Categories2",));
+
+    ;
+}
+
+
+
