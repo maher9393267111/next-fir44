@@ -1,45 +1,16 @@
-    <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-      <Item key="/" icon={<AppstoreOutlined />}>
-        {/* <Link href="/">  <a>Home</a></Link> */}
-      </Item>
+// update Password
+const handleUpdatePassword = (password) => {
+    console.log(password)
+    const user = auth.currentUser;
+    // const newPassword = getASecureRandomPassword();
 
-      {!userinfo && (
-        <Item key="register" icon={<UserAddOutlined />} className="float-right">
-          {/* <Link href="/auth/register"> <a>Register</a></Link> */}
-        </Item>
-      )}
+    updatePassword(user, password).then(() => {
+        // Update successful.
+        toast.success('Password has been changed successfully.')
+    }).catch((error) => {
+        // An error ocurred
+        // ...
+    });
+}
 
-      {!userinfo && (
-        <Item key="login" icon={<UserOutlined />} className="float-right">
-          {/* <Link href="/auth/login"> <a>Login</a></Link> */}
-        </Item>
-      )}
-
-      {userinfo && (
-        <SubMenu
-          icon={<SettingOutlined />}
-          title={userinfo?.name}
-          className="float-right"
-        >
-          {userinfo && userinfo.role === "user" && (
-            <Item>
-              {/* <Link href="/user/history"> */}
-                {/* <a>user history</a>
-                
-                
-                </Link> */}
-            </Item>
-          )}
-
-          {userinfo && userinfo.role === "admin" && (
-            <Item>
-              {/* <Link href="/admin/dashboard"> <a>Admin dashboard</a></Link> */}
-            </Item>
-          )}
-
-          <Item icon={<LogoutOutlined />} onClick={logout}>
-            Logout
-          </Item>
-        </SubMenu>
-      )}
-    </Menu>
+----------------------------------

@@ -51,29 +51,32 @@ const handleSubmit = async (values) => {
 
     const { email, password, username } = values;
 
+signUp(email, password, username);
 
+    // await createUserWithEmailAndPassword(auth, email,password);
 
-    await createUserWithEmailAndPassword(auth, email,password);
-
-    // uodate the profile
-    await updateProfile(auth.currentUser, {
-      displayName: username,
-      photoURL: "https://cdn4.iconfinder.com/data/icons/office-thick-outline/36/office-14-256.png",
-    });
+    // // uodate the profile
+    // await updateProfile(auth.currentUser, {
+    //   displayName: username,
+    //   photoURL: "https://cdn4.iconfinder.com/data/icons/office-thick-outline/36/office-14-256.png",
+    // });
 
    
-    // add the user to the users collection
+    // // add the user to the users collection
 
-    await setDoc(doc(db, "Users", email), {
-      watchList: [],
-      name: username,
-      role: "user",
-      image: "https://picsum.photos/200",
-      email: email,
-        password: password,
-        cart: [],
-        order: [],
-    });
+    // await setDoc(doc(db, "Users", email), {
+    //   watchList: [],
+    //   name: username,
+    //   role: "user",
+    //   image: "https://picsum.photos/200",
+    //   email: email,
+    //     password: password,
+    //     cart: [],
+    //     order: [],
+    // });
+
+
+
   };
 
 

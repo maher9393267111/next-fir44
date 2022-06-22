@@ -41,22 +41,22 @@ const Header = () => {
         <Link href="/"><a>Home</a></Link>
       </Item>
 
-        {!userinfo.name && (
+        {!userinfo?.name && (
         <Item key="register" icon={<UserAddOutlined />} className="float-right">
           <Link href="/auth/register"><a>Register</a></Link>
         </Item>
       )}  
 
-      {!userinfo.name && (
+      {!userinfo?.name && (
         <Item key="login" icon={<UserOutlined />} className="float-right">
           <Link href="/auth/login"><a>Login</a></Link>
         </Item>
       )} 
 
-       {userinfo.name && (
+       {userinfo?.name && (
         <SubMenu
           icon={<SettingOutlined />}
-          title={userinfo.name }
+          title={userinfo?.name }
           className="float-right"
         >
           {userinfo && userinfo.role === "user" && (
@@ -65,7 +65,7 @@ const Header = () => {
             </Item>
           )}
  
-          {userinfo.name && userinfo.role === "admin" && (
+          {userinfo?.name && userinfo?.role === "admin" && (
             <Item>
               <Link href="/admin/dashboard"><a>Admin Dashboard</a></Link>
             </Item>

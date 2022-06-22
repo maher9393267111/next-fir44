@@ -1,5 +1,7 @@
 import '../styles/globals.css'
 import 'bulma/css/bulma.min.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import 'antd/dist/antd.css';
 import { wrapper } from "../store/index";
 import GlobalContext from '../context/global'
@@ -9,6 +11,7 @@ function MyApp({ Component, pageProps }) {
   return (
   <GlobalContext>
     <Layout>
+      <ToastContainer />
   <Component {...pageProps} />
 
     </Layout>
