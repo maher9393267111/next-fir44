@@ -157,7 +157,7 @@ const subContextComponent = ({ children }) => {
   // update Password
   const handleUpdatePassword = async (password) => {
     console.log("new oassword is--->🔥🔥🔥🔥🔥🔥", password);
-    const user = auth.currentUser;
+    const user = auth?.currentUser;
     console.log("user is--->🔥🔥🔥🔥🔥🔥", user);
     // const newPassword = getASecureRandomPassword();
 
