@@ -13,6 +13,7 @@ import {
     updateDoc,
     arrayUnion,
     addDoc,
+    deleteDoc,
 } from "firebase/firestore";
 import { db } from '../firebase'
 import {
@@ -63,6 +64,24 @@ export const updateCategory = async (categoryid, category) => {
     const categoryDoc = doc(db, 'Categories2', categoryid);
    
 	await updateDoc(categoryDoc, {name:category});
+
+   
+
+}
+
+
+
+export const deleteCategory = async (categoryid) => {
+    console.log('category---🚀🚀🚀🚀',categoryid);
+   
+    const categoryDoc = doc(db, 'Categories2',categoryid);
+   
+	await  deleteDoc(categoryDoc).then(() => {
+        toast.success("Category deleted successfully");
+    }).catch((error) => {
+        toast.error(error.message);
+    }
+    );
 
    
 

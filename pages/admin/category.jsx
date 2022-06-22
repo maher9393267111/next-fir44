@@ -2,7 +2,7 @@ import React from 'react';
 import AdminLayout from '../../components/admin/adminLayout';
 import { useState ,useEffect} from 'react';
 import { Button, Checkbox, Form, Input } from "antd";
-import { createCategory,updateCategory,  } from '../../functions/category';
+import { createCategory,updateCategory,deleteCategory  } from '../../functions/category';
 import {
     useCollectionData,
     useDocumentData,
@@ -16,7 +16,7 @@ const Category = () => {
 const [isupdate,setIsupdate] = useState(false);
 const [catid,setCatid] = useState('');
 
-const {allcategory} = globaluse();
+const {allcategory,setRefreshcategory,refreshcategory} = globaluse();
 
 
     const q = query(
@@ -47,12 +47,14 @@ if (!isupdate) {
 
 
     createCategory(category);
+    setRefreshcategory(!refreshcategory);
 }
 
 
 else if (isupdate) {
 
     updateCategory(catid,category);
+    setRefreshcategory(!refreshcategory);
 }
       };
 
@@ -109,15 +111,22 @@ else if (isupdate) {
             <div key ={index} className=' my-2 font-bold  text-xl text-[#096dd9] '>
             
 <div className=' w-[144px] flex gap-2'>
-    <p className=' w-[85px]'>{category?.name}</p>
-    <p
-   onClick ={() => {
+    <p 
+      onClick ={() => {
 
-    setCatid(category?.id);
-    console.log('catid--->>>', catid);
-    setIsupdate(true);
-   }
-   }
+        setCatid(category?.id);
+        console.log('catid--->>>', catid);
+        setIsupdate(true);
+       }
+       }
+    
+    className=' w-[85px]'>{category?.name}</p>
+    <p
+    onClick={ () => { deleteCategory(category?.id) 
+    setRefreshcategory(!refreshcategory);
+    
+    }}
+ 
     className=' ml-[13px] mt-[7px]'><img className=' w-4 h-4 rounded-full' src='https://cdn1.iconfinder.com/data/icons/smallicons-controls/32/614397-x-256.png' alt="" /></p>
 </div>
 

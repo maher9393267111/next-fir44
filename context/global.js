@@ -52,6 +52,7 @@ const subContextComponent = ({ children }) => {
   const [disbledaysischange, setDisbledaysischange] = useState();
   const [openmodal, setOpenmodal] = useState(false);
   const [allcategory, setAllcategory] = useState([]);
+  const [refreshcategory, setRefreshcategory] = useState(false);
   const dispatch = useDispatch();
 
   //------- reguister and login
@@ -197,7 +198,7 @@ useEffect (() => {
 }
 listCategories();
 
-}, [db])
+}, [db,refreshcategory])
 
 
 
@@ -219,7 +220,8 @@ listCategories();
     setOpenmodal,
     signIn,
     handleUpdatePassword,
-    allcategory, setAllcategory
+    allcategory, setAllcategory,
+    refreshcategory, setRefreshcategory
   };
 
   return (
