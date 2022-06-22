@@ -82,7 +82,6 @@ export const deleteCategory = async (categoryid) => {
     }
     );
 
-   
 
 }
 
@@ -112,11 +111,36 @@ export const createSub = async (subdata) => {
 
 
 export const updateSubCategory = async (subid, subdata) => {
-    console.log('Sub is--💬💬💬💬',subid);
+   // console.log('Sub is--💬💬💬💬',subid);
    
     const subDoc = doc(db, 'subcat',subid);
    
-	await updateDoc(subDoc, subdata);
+	await updateDoc(subDoc, subdata).then(() => {
+        toast.success("SubCategory updated successfully");
+
+
+    }   ).catch((error) => {
+        toast.error(error.message);
+
+    }
+    );
  
+
+}
+
+
+
+export const deleteSubCategory = async (subid) => {
+    console.log('subid---🚀🚀🚀🚀',subid);
+   
+    const categoryDoc = doc(db, 'subcat',subid);
+   
+	await  deleteDoc(categoryDoc).then(() => {
+        toast.success("subcategory deleted successfully");
+    }).catch((error) => {
+        toast.error(error.message);
+    }
+    );
+
 
 }

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Checkbox, Form, Input } from "antd";
 import { globaluse } from "../../context/global";
-import {createSub, updateSubCategory } from "../../functions/category";
+import {createSub, updateSubCategory,deleteSubCategory } from "../../functions/category";
 
 import { Select } from "antd";
 const { Option } = Select;
@@ -134,7 +134,8 @@ const Sub = () => {
                     </p>
                     <p
                       onClick={() => {
-                       // deletesubCategory(category?.id);
+                        deleteSubCategory(sub?.id);
+                   
                         setRefreshcategory(!refreshcategory);
                       }}
                       className=" ml-[13px] mt-[7px]"
