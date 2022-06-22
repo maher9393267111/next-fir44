@@ -58,17 +58,12 @@ export const createCategory = async (category) => {
 // update a category
 
 export const updateCategory = async (categoryid, category) => {
-    console.log('category--->⚡⚡', category);
+    console.log('category---🚀🚀🚀🚀', category,categoryid);
+   
+    const categoryDoc = doc(db, 'Categories2', categoryid);
+   
+	await updateDoc(categoryDoc, {name:category});
 
-    await updateDoc(collection(db, "Categories2", categoryid), { name: category }).then(() => {
-
-        toast.success("Category updated successfully");
-
-    }
-    ).catch((error) => {
-        toast.error(error.message);
-
-    }
-    );
+   
 
 }
