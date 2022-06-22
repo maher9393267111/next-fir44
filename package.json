@@ -9,11 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.2",
+    "antd": "^4.21.3",
+    "bulma": "^0.9.4",
     "firebase": "^9.8.3",
     "firebase-hooks": "^0.0.1",
+    "flowbite": "^1.4.7",
     "next": "12.1.6",
+    "next-redux-wrapper": "^7.0.5",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "redux": "^4.2.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.7",

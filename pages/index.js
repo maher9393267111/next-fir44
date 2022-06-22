@@ -1,8 +1,15 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useState } from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {globaluse} from '../context/global'
 
 export default function Home() {
+  const {name} = useSelector((state) => state.global)
+  const {userinfo} = globaluse()
+
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,7 +19,11 @@ export default function Home() {
       </Head>
 
 <div>
-  hello world
+  hello world {userinfo?.name}
+
+
+
+
 </div>
    
     </div>

@@ -32,7 +32,7 @@ import {
   import { useEffect } from "react";
   import { useContext } from "react";
   import { createContext } from "react";
-  import { auth, db } from "../firebas";
+  import { auth, db } from "../firebase";
   
   const globalContext = createContext();
   
@@ -48,6 +48,55 @@ import {
     const [disbledaysischange, setDisbledaysischange] = useState();
     const [openmodal, setOpenmodal] = useState(false);
   
+
+//------- reguister and login
+
+
+const signUp = async (email, password, name) => {
+ await createUserWithEmailAndPassword(auth, email, password);
+
+  console.log("signUp--------->⚡⚡⚡⚡", email, password, name);
+
+  await updateProfile(auth.currentUser, {
+    displayName: name,
+    photoURL: "https://cdn4.iconfinder.com/data/icons/office-thick-outline/36/office-14-256.png",
+  });
+
+
+ 
+
+await setDoc(doc(db, "Users", auth.currentUser.email), {
+  watchList: [],
+  name: auth.currentUser.displayName,
+  role: "user",
+  image: auth.currentUser.photoURL,
+  email: auth.currentUser.email,
+  password: "",
+
+  cart: [],
+  rezerv: [],
+  totalprice: 0,
+});
+
+
+
+};
+
+const signIn = (email, password) => {
+  return signInWithEmailAndPassword(auth, email, password);
+};
+
+
+
+
+
+
+//------- reguister and login
+
+
+
+
+
     //--- Sign in with google ---
   
     // sign with google
@@ -57,7 +106,7 @@ import {
   
       // add the user to the users collection
   
-      await setDoc(doc(db, "villasUsers", auth.currentUser.email), {
+      await setDoc(doc(db, "Users", auth.currentUser.email), {
         watchList: [],
         name: auth.currentUser.displayName,
         role: "user",
@@ -93,7 +142,7 @@ import {
             if (user) {
               //  console.log(`currentUser: ${user.email}`);
   
-              await getDoc(doc(db, "villasUsers", user.email)).then(
+              await getDoc(doc(db, "Users", user.email)).then(
                 (userdata) => {
                   //console.log('userdata',userdata)
                   setUserInfo(userdata.data());
@@ -155,6 +204,7 @@ import {
     };
   
     const value = {
+      signUp,
       disbledaysischange,
       setDisbledaysischange,
       name,
@@ -165,6 +215,8 @@ import {
       currentUser,
       userinfo,
       openmodal, setOpenmodal
+      ,
+      signIn 
     };
   
     return (
