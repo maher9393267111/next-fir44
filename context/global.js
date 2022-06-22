@@ -35,7 +35,7 @@ import { useContext } from "react";
 import { createContext } from "react";
 import { toast } from "react-toastify";
 import { auth, db } from "../firebase";
-import {  fetchCategories} from './store/reduxglobal';
+import {  fetchCategories, fetchSubCategories } from './store/reduxglobal';
 import { useDispatch } from "react-redux";
 
 const globalContext = createContext();
@@ -199,6 +199,41 @@ useEffect (() => {
 listCategories();
 
 }, [db,refreshcategory])
+
+
+
+
+useEffect (() => {
+
+
+  const listSubCategories = async () => {
+   
+   async function readsubData(){
+       let  subarr = [];
+       const querySnapshot = await getDocs(collection(db, "subcat"));
+       console.group("Dashboard useEffect read firestore data: ")
+   
+       querySnapshot.forEach((doc) => {
+           // doc.data() is never undefined for query doc snapshots
+           console.log(doc.id, " => ", doc.data());
+           subarr.push( {id: doc.id, ...doc.data()});
+         });
+       //  setAllcategory(subarr);
+         dispatch( fetchSubCategories(subarr));
+        return subarr;
+     
+       }
+ 
+    await  readsubData()
+ 
+ 
+ 
+ 
+ }
+ listSubCategories();
+ 
+ }, [db,refreshcategory])
+ 
 
 
 

@@ -86,3 +86,25 @@ export const deleteCategory = async (categoryid) => {
    
 
 }
+
+
+
+//-----------------------------------------------------//
+
+
+// subcategory
+
+export const createSub = async (subdata) => {
+
+    console.log('subdata--->⚡⚡');
+    await addDoc(collection(db, "subcat",), subdata).then(() => {
+        toast.success("SubCategory created successfully");
+
+    }
+    ).catch((error) => {
+        toast.error(error.message);
+
+
+    }
+    );
+}

@@ -19,6 +19,7 @@ const authSlice = createSlice({
         name:'maher',
         singleproduct: {},
         categories: [],
+        subCategoies: [],
     },
     reducers: {
         setIsLoggedIn: (state, action) => {
@@ -40,6 +41,10 @@ console.log()
     fetchCategories: (state, action) => {
 
         state.categories = action.payload;
+    },
+    fetchSubCategories: (state, action) => {
+            
+            state.subCategoies = action.payload;
     }
     },
     // extraReducers: {
@@ -64,5 +69,5 @@ console.log()
 
 
 // Export our slice and the action types:
-export const { setIsLoggedIn, setname,  fetchCategories,    setUserInfo,fetchsingleProduct } = authSlice.actions;
+export const { setIsLoggedIn, setname,  fetchCategories,   fetchSubCategories,  setUserInfo,fetchsingleProduct } = authSlice.actions;
 export default authSlice.reducer;
