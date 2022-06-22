@@ -156,9 +156,9 @@ const subContextComponent = ({ children }) => {
 
   // update Password
   const handleUpdatePassword = async (password) => {
-    console.log("new oassword is--->🔥🔥🔥🔥🔥🔥", password);
+  // console.log("new oassword is--->🔥🔥🔥🔥🔥🔥", password);
     const user = auth?.currentUser;
-    console.log("user is--->🔥🔥🔥🔥🔥🔥", user);
+ //  console.log("user is--->🔥🔥🔥🔥🔥🔥", user);
     // const newPassword = getASecureRandomPassword();
 
     await updatePassword(user, password);
@@ -176,19 +176,8 @@ const subContextComponent = ({ children }) => {
         toast.error("error ");
       });
 
-    // updatePassword(user, password).then(() => {
-    //     // Update successful.
-    //     toast.success('Password has been changed successfull.')
-    // }).catch((error) => {
-    //     // An error ocurred
-    //     // ...
-    // });
-
-    console.log(
-      "new oassword afterrrrrr is--->🔥🔥🔥🔥🔥🔥",
-      user.password,
-      user.email
-    );
+ 
+    
   };
 
   const value = {
