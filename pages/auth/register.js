@@ -2,13 +2,15 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import  {globaluse} from '../../context/global';
 import {auth,db} from "../../firebase";
 import Link from "next/link";
+
+import {useEffect} from "react";
 import { useRouter } from 'next/router'
 import { createUserWithEmailAndPassword,updateProfile} from 'firebase/auth'
 import {doc,setDoc,getDoc,addDoc,collection} from "firebase/firestore";
 const Register = () => {
 
 
-const { signUp,signInWithGoogle,currentUser,userinfo } = globaluse;
+const { signUp,signInWithGoogle,currentUser,userinfo } = globaluse();
 
 
   const onFinish = (values) => {
@@ -22,13 +24,22 @@ const { signUp,signInWithGoogle,currentUser,userinfo } = globaluse;
   };
 
 
-const handlesubmit2 = (e) => {
 
-//signUp();
-signInWithGoogle();
+  const router = useRouter();
 
+useEffect(() => {
+  //console.log("🔴🔴🔴🔴", );
 
+if (userinfo?.role === "admin") {
+  router.push("/admin/dashboard");
 }
+if (userinfo?.role === "user") {
+  router.push("/user/history");
+}
+
+
+}, [userinfo?.role]);
+
 
 
 

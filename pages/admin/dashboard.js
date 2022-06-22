@@ -1,9 +1,27 @@
 import React from 'react';
-
+import UserLayout from '../../components/user/userLayout';
+import AdminLayout from '../../components/admin/adminLayout';
 const Dashboard = () => {
     return (
         <div>
-            <h1>Dashboard</h1>
+        
+<div>
+
+<AdminLayout>
+
+
+content
+
+</AdminLayout>
+
+
+
+
+
+
+</div>
+
+
         </div>
     );
 }

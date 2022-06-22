@@ -156,10 +156,7 @@ const signIn = (email, password) => {
           fetchuser().catch(console.error);
         }
 
-// else if (!user || user.email ==="" ) {
-//   console.log("user is not signed in 🔥🔥");
-//   setUser({});
-// }
+
 
       });
       return unsubscribe;
