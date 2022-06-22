@@ -3,7 +3,7 @@ import 'bulma/css/bulma.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import 'antd/dist/antd.css';
-import { wrapper } from "../store/index";
+import { wrapper } from "../context/store/index";
 import GlobalContext from '../context/global'
 import Header from '../components/Header'
 import Layout from '../components/layout'

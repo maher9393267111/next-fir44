@@ -18,6 +18,7 @@ const authSlice = createSlice({
         user: {},
         name:'maher',
         singleproduct: {},
+        categories: [],
     },
     reducers: {
         setIsLoggedIn: (state, action) => {
@@ -34,7 +35,12 @@ const authSlice = createSlice({
         fetchsingleProduct: (state, action) => {
 console.log()
             state.singleproduct = action.payload;
-        }
+        },
+
+    fetchCategories: (state, action) => {
+
+        state.categories = action.payload;
+    }
     },
     // extraReducers: {
     //     // When SSR dispatch "HYDRATE" this will take the action payload and set the state:
@@ -58,5 +64,5 @@ console.log()
 
 
 // Export our slice and the action types:
-export const { setIsLoggedIn, setname,    setUserInfo,fetchsingleProduct } = authSlice.actions;
+export const { setIsLoggedIn, setname,  fetchCategories,    setUserInfo,fetchsingleProduct } = authSlice.actions;
 export default authSlice.reducer;

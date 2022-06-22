@@ -72,14 +72,3 @@ export const updateCategory = async (categoryid, category) => {
     );
 
 }
-
-
-// list all categories
-export const listCategories = async () => {
-    const categories = await getDocs(collection(db, "Categories2",));
-
-    ;
-}
-
-
-

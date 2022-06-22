@@ -35,6 +35,8 @@ import { useContext } from "react";
 import { createContext } from "react";
 import { toast } from "react-toastify";
 import { auth, db } from "../firebase";
+import {  fetchCategories} from './store/reduxglobal';
+import { useDispatch } from "react-redux";
 
 const globalContext = createContext();
 
@@ -49,6 +51,8 @@ const subContextComponent = ({ children }) => {
   const [userinfo, setUserInfo] = useState({});
   const [disbledaysischange, setDisbledaysischange] = useState();
   const [openmodal, setOpenmodal] = useState(false);
+  const [allcategory, setAllcategory] = useState([]);
+  const dispatch = useDispatch();
 
   //------- reguister and login
 
@@ -120,45 +124,30 @@ const subContextComponent = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user ) {
-       
-        setUser(user)
+      if (user) {
+        setUser(user);
 
-        
         const fetchuser = async () => {
           const userinfo = await getDoc(doc(db, "Users", user.email));
           setUserInfo(userinfo.data());
-        }
+        };
 
         fetchuser();
-
-      
       }
-    }
-    );
-         
-  
-     
-    
+    });
+
     return unsubscribe;
   }, [auth]);
 
-  
-
-
-// when user change fetch the user info from the database
-
-
-
-
+  // when user change fetch the user info from the database
 
   // send disbled days to the firebase
 
   // update Password
   const handleUpdatePassword = async (password) => {
-  // console.log("new oassword is--->🔥🔥🔥🔥🔥🔥", password);
+    // console.log("new oassword is--->🔥🔥🔥🔥🔥🔥", password);
     const user = auth?.currentUser;
- //  console.log("user is--->🔥🔥🔥🔥🔥🔥", user);
+    //  console.log("user is--->🔥🔥🔥🔥🔥🔥", user);
     // const newPassword = getASecureRandomPassword();
 
     await updatePassword(user, password);
@@ -175,10 +164,45 @@ const subContextComponent = ({ children }) => {
         console.log("error", error);
         toast.error("error ");
       });
-
- 
-    
   };
+
+
+// 
+useEffect (() => {
+
+
+ const listCategories = async () => {
+  
+  async function readData(){
+      let families = [];
+      const querySnapshot = await getDocs(collection(db, "Categories2"));
+      console.group("Dashboard useEffect read firestore data: ")
+  
+      querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          families.push( {id: doc.id, ...doc.data()});
+        });
+        setAllcategory(families);
+        dispatch(fetchCategories(families));
+       return families;
+    
+      }
+
+   await  readData()
+
+
+
+
+}
+listCategories();
+
+}, [db])
+
+
+
+
+
 
   const value = {
     signUp,
@@ -195,6 +219,7 @@ const subContextComponent = ({ children }) => {
     setOpenmodal,
     signIn,
     handleUpdatePassword,
+    allcategory, setAllcategory
   };
 
   return (
