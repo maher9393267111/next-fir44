@@ -90,7 +90,12 @@ const handleimages = async (e) => {
         }).catch((error) => {
           console.log('Uh-oh, an error occurred!');
         }
-        );
+        ).then(() => {
+
+// filter out the deleted image
+            setImages(images.filter((image, i) => i !== index));
+
+        })
     }
     
 
@@ -121,11 +126,11 @@ type="file" multiple />
 
  {images.length}
 
- <div>
+ <div className=' grid  grid-cols-4'>
     {images.map((image, index) => (
 
         <div key={index}>
-            <img src={image.image} alt="product" />
+            <img className=' w-12 h-12 rounded-full' src={image.image} alt="product" />
             <button onClick={() => deleteImage(index,image.name)}>Delete</button>
         </div>
             ) )}
