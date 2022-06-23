@@ -3,9 +3,10 @@ import { Button, Form, Input, InputNumber,Select } from 'antd';
 import { toast } from "react-toastify";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import {useSelector} from 'react-redux';
+import {globaluse} from '../../context/global';
 const { Option } = Select;
 import AdminLayout from "../../components/admin/adminLayout";
-import {createProduct } from "../../functions/category";
+import {createProduct, updateproduct } from "../../functions/category";
 import { useState, useRef, useEffect } from "react";
 import { db, storage } from "../../firebase";
 import {
@@ -51,6 +52,7 @@ const layout = {
 const Product = () => {
 
 const {categories, subCategoies,products} = useSelector(state=>state.global);
+const {setRefreshcategor,refreshcategory} =globaluse();
 
   const [images, setImages] = useState([]);
 const [name, setName] = useState("");
@@ -135,6 +137,7 @@ if (!isupdate) {
 else if (isupdate) {
 
     console.log("update product");
+    updateproduct(productid,productdata)
 
 
 }
@@ -296,7 +299,7 @@ else if (isupdate) {
                       </Option>
 
                       <Option  value='false'>
-                      true
+                        false
                       </Option>
                     
 
@@ -312,7 +315,7 @@ else if (isupdate) {
 
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
         <Button type="primary" htmlType="submit">
-          Submit
+        {isupdate ? "update" : "create"}
         </Button>
       </Form.Item>
     </Form>
@@ -324,21 +327,49 @@ else if (isupdate) {
 
 <>
 
-<div className=" mt-12 pb-12">
-
-{products?.map((product,index) => (
-
-<div key ={index}>
-<h1>{product.name}</h1>
-</div>
-
-
-))}
-
-
-
-</div>
-
+<>
+        <div className="mt-12 ml-4 mb-12 pb-12">
+          <div className=" ">
+            {products?.map((product, index) => {
+              return (
+                <div
+                  key={index}
+                  className=" my-2 font-bold  text-xl text-[#096dd9] "
+                >
+                  <div className=" w-[144px] flex gap-2">
+                    <p
+                      onClick={() => {
+                        setProductid(product?.id);
+                        console.log("sub--->>>", productid);
+                        setIsupdate(!isupdate);
+                      }}
+                      className=" w-[85px]"
+                    >
+                      {product?.name}
+                    </p>
+                    <p
+                      onClick={() => {
+                    //    deleteSubCategory(sub?.id);
+                   
+                       // setRefreshcategory(!refreshcategory);
+                      }}
+                      className=" ml-[13px] mt-[7px]"
+                    >
+                      <img
+                        className=" w-4 h-4 rounded-full"
+                        src="https://cdn1.iconfinder.com/data/icons/smallicons-controls/32/614397-x-256.png"
+                        alt=""
+                      />
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        
+        
+        </>
 
 
 

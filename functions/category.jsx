@@ -163,3 +163,24 @@ export const createProduct = async (productdata) => {
     );
 }
 
+
+
+
+export const updateproduct = async (productid, productdata) => {
+    // console.log('Sub is--💬💬💬💬',subid);
+    
+     const productDoc = doc(db, 'Pro',productid);
+    
+     await updateDoc(productDoc, productdata).then(() => {
+         toast.success("product----> updated successfully");
+ 
+ 
+     }   ).catch((error) => {
+         toast.error(error.message);
+ 
+     }
+     );
+  
+ 
+ }
+ 
