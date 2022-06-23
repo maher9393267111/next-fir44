@@ -29,7 +29,26 @@ export default function Home() {
 <div>
 
 
-<Typewriter/>
+<Typewriter text={["Latest Products", "New Arrivals", "Best Sellers"]}/>
+
+<div>
+<div className=' grid grid-cols-4 gap-4'>
+
+{products.map((product) => (
+<div>
+
+  <HomeCard product={product}/>
+
+
+</div>))}
+
+</div>
+
+
+
+</div>
+
+
 
 
 </div>

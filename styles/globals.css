@@ -20,3 +20,17 @@ a {
   box-sizing: border-box;
 }
 
+
+.react-typewriter-text-wrap{
+
+padding-top:66px;
+margin:auto;
+width:300px;
+
+
+}
+
+.react-typewriter-text{
+
+  font-weight:bold
+}
