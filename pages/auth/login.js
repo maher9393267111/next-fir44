@@ -104,7 +104,7 @@ if (userinfo.role === "user") {
             span: 16,
           }}
         >
-          <Checkbox>Remember me</Checkbox>
+          <Checkbox>Remember me HHH</Checkbox>
         </Form.Item>
 
         <Form.Item
