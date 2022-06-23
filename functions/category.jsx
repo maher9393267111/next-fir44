@@ -15,7 +15,18 @@ import {
     addDoc,
     deleteDoc,
 } from "firebase/firestore";
-import { db } from '../firebase'
+
+import {
+    getDownloadURL,
+    ref,
+    uploadString,
+    getStorage,
+    uploadBytes,
+    deleteObject,
+  } from "firebase/storage";
+
+
+import { db,storage } from '../firebase'
 import {
     useCollectionData,
     useDocumentData,
@@ -184,3 +195,42 @@ export const updateproduct = async (productid, productdata) => {
  
  }
  
+
+
+
+
+ export const deleteproduct = async (productid) => {
+    console.log('productid---🚀🚀🚀🚀',productid);
+   
+    const productpath = doc(db, "Pro", `${productid}`);
+    const imagesdata = await (await getDoc(productpath)).data()?.images;
+
+console.log('imagesdata---🚀🚀🚀🚀',imagesdata);
+
+  // // delete images from storage
+  if ( imagesdata && imagesdata?.length > 0) {
+         imagesdata?.forEach((image) => {
+        const desertRef = ref(storage, `ecom/${image.name}`);
+        deleteObject(desertRef)
+            .then(() => {'Deleted! '})
+            .catch((error) => {
+                console.log("Uh-oh, an error occurred!");
+            }
+            )
+        })
+    }
+
+
+
+
+    const productDoc = doc(db, 'Pro',productid);
+   
+	await  deleteDoc(productDoc).then(() => {
+        toast.success("product deleted successfully");
+    }).catch((error) => {
+        toast.error(error.message);
+    }
+    );
+
+
+}

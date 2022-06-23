@@ -39,6 +39,7 @@ import {
   fetchCategories,
   fetchSubCategories,
   fetchProducts,
+  fetchCategorySubs
 } from "./store/reduxglobal";
 import { useDispatch } from "react-redux";
 
@@ -57,6 +58,7 @@ const subContextComponent = ({ children }) => {
   const [openmodal, setOpenmodal] = useState(false);
   const [allcategory, setAllcategory] = useState([]);
   const [refreshcategory, setRefreshcategory] = useState(false);
+  const[selectedcategory,setSelectedcategory]=useState('');
   const dispatch = useDispatch();
 
   //------- reguister and login
@@ -232,14 +234,37 @@ const subContextComponent = ({ children }) => {
           proarr.push({ id: doc.id, ...doc.data() });
         });
         //  setAllcategory(subarr);
-        dispatch( fetchProducts(proarr));
+        dispatch(fetchProducts(proarr));
         return proarr;
       }
 
       await readproData();
     };
     listproducts();
-  }, [db, refreshcategory]);
+  }, [ refreshcategory]);
+
+
+
+
+
+
+
+useEffect(() => {
+  const q = query(collection(db, "subcat"), where("categoryid", "==", selectedcategory));
+
+  const noteListener = onSnapshot(q, (querySnapshot) => {
+    const list = [];
+    querySnapshot.forEach((doc) => {
+      list.push(doc.data());
+    });
+  dispatch(fetchCategorySubs(list));
+  });
+
+  return noteListener;
+}, [selectedcategory]);
+
+
+
 
 
 
@@ -264,6 +289,8 @@ const subContextComponent = ({ children }) => {
     setAllcategory,
     refreshcategory,
     setRefreshcategory,
+    selectedcategory,
+    setSelectedcategory
   };
 
   return (

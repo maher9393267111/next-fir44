@@ -6,7 +6,8 @@ import {useSelector} from 'react-redux';
 import {globaluse} from '../../context/global';
 const { Option } = Select;
 import AdminLayout from "../../components/admin/adminLayout";
-import {createProduct, updateproduct } from "../../functions/category";
+import {createProduct, updateproduct,deleteproduct } from "../../functions/category";
+
 import { useState, useRef, useEffect } from "react";
 import { db, storage } from "../../firebase";
 import {
@@ -52,7 +53,7 @@ const layout = {
 const Product = () => {
 
 const {categories, subCategoies,products} = useSelector(state=>state.global);
-const {setRefreshcategor,refreshcategory} =globaluse();
+const {setRefreshcategory,refreshcategory,selectedcategory,setSelectedcategory} =globaluse();
 
   const [images, setImages] = useState([]);
 const [name, setName] = useState("");
@@ -107,8 +108,21 @@ const [shipping, setShipping] = useState(false);
   };
 
 
+  const handlecategoryChange = (value) => {
+
+    console.log(`selected cattt ${value}`);
+    setSelectedcategory(value);
+  
+  }
+  
+
+
+
+
+
   const onFinish = (values) => {
    // console.log('---🔴🔴 -----',values);
+
 
 
 
@@ -124,6 +138,12 @@ quantity:values.product.quantity,
 shipping:values.product.shipping,
 categoryid:values.product.category,
 subid:values.product.subcategory,
+rating: {
+    stars: 0,
+    postedby: "",
+},
+sold:0,
+color:values.product.color,
 //description:values.product.description,
 
     }
@@ -131,13 +151,18 @@ subid:values.product.subcategory,
 if (!isupdate) {
 
 
-    createProduct(productdata)
+   // createProduct(productdata)
+  //  setRefreshcategory(!refreshcategory);
+   
 }
 
 else if (isupdate) {
 
-    console.log("update product");
-    updateproduct(productid,productdata)
+  
+
+  //  console.log("update product");
+  //  setRefreshcategory(!refreshcategory);
+  //  updateproduct(productid,productdata)
 
 
 }
@@ -192,17 +217,17 @@ else if (isupdate) {
       >
         <Input />
       </Form.Item>
-      {/* <Form.Item
-        name={['product', 'email']}
-        label="Email"
+      <Form.Item
+        name={['product', 'color']}
+        label="Product Color"
         rules={[
           {
-            type: 'email',
+            type: 'color',
           },
         ]}
       >
         <Input />
-      </Form.Item> */}
+      </Form.Item>
       <Form.Item
         name={['product', 'price']}
         label="price"
@@ -241,7 +266,7 @@ else if (isupdate) {
                       width: 220,
                       marginBottom: "17px",
                     }}
-                    //onChange={handleChange}
+                    onChange={handlecategoryChange}
                   >
                     {categories.map((category) => (
                       <Option key={category.id} value={category.id}>
@@ -328,6 +353,7 @@ else if (isupdate) {
 <>
 
 <>
+{refreshcategory ? 'trueee' : 'false'}
         <div className="mt-12 ml-4 mb-12 pb-12">
           <div className=" ">
             {products?.map((product, index) => {
@@ -336,22 +362,22 @@ else if (isupdate) {
                   key={index}
                   className=" my-2 font-bold  text-xl text-[#096dd9] "
                 >
-                  <div className=" w-[144px] flex gap-2">
+                  <div className=" w-[222px] flex gap-2">
                     <p
                       onClick={() => {
                         setProductid(product?.id);
                         console.log("sub--->>>", productid);
                         setIsupdate(!isupdate);
                       }}
-                      className=" w-[85px]"
+                      className=" w-[144px]"
                     >
                       {product?.name}
                     </p>
                     <p
                       onClick={() => {
-                    //    deleteSubCategory(sub?.id);
+                        deleteproduct(product?.id);
                    
-                       // setRefreshcategory(!refreshcategory);
+                        setRefreshcategory(!refreshcategory);
                       }}
                       className=" ml-[13px] mt-[7px]"
                     >
