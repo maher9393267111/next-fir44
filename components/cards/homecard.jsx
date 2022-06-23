@@ -35,7 +35,7 @@ const ProductCard = ({ product }) => {
 
 {/* // flex icons- */}
 
-<div className=" flex ml-4 justify-around gap-4">
+<div className=" flex ml-4 sm:justify-between  lg:justify-around gap-4">
 
 <div>
     <img className=" w-10 h-10  object-contain rounded-b-full" src="https://cdn2.iconfinder.com/data/icons/commerce-shadow/100/.svg-3-256.png"/>
@@ -43,14 +43,18 @@ const ProductCard = ({ product }) => {
 <p className="text-[10px]">Add to cart</p>
 </div>
 
-<div>
+<Link href={`/product/${id}`}><a >
+
+ <div> 
+ 
     <img
     className=" w-10 h-10  object-contain rounded-b-full"
     src="https://cdn1.iconfinder.com/data/icons/applicon-sty-3/512/seen-128.png" alt="" />
 
-<p className="text-[10px]">View Product</p>
+ <p className="text-[10px]">View Product</p> 
 
-</div>
+ </div>  
+</a></Link>
 
 
 
