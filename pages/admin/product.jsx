@@ -326,9 +326,9 @@ else if (isupdate) {
 
 <div className=" mt-12 pb-12">
 
-{products?.map((product) => (
+{products?.map((product,index) => (
 
-<div>
+<div key ={index}>
 <h1>{product.name}</h1>
 </div>
 
