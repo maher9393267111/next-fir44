@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {globaluse} from '../context/global'
 
 export default function Home() {
-  const {name} = useSelector((state) => state.global)
+  const {name,products} = useSelector((state) => state.global)
   const {userinfo} = globaluse()
 
 
@@ -20,6 +20,9 @@ export default function Home() {
 
 <div>
   hello {userinfo?.name}
+<div>
+ wsaw {products?.length}
+</div>
 
 
 

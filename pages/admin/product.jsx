@@ -399,7 +399,12 @@ setImages([]);
                   key={index}
                   className=" my-2 font-bold  text-xl text-[#096dd9] "
                 >
-                  <div className=" w-[222px] flex gap-2">
+                  <div className=" w-[400px] flex gap-4">
+<div>
+    <img className= "  object-cover w-14 h-14 rounded-full" src={product?.images[0]?.image} alt="" />
+</div>
+
+
                     <p
                       onClick={() => {
                         handleproductid(product.id);
@@ -414,6 +419,10 @@ setImages([]);
                     <p
                       onClick={() => {
                         deleteproduct(product?.id);
+                        if (products === []){
+
+                            setIsupdate(false);
+                        }
                    
                         setRefreshcategory(!refreshcategory);
                       }}

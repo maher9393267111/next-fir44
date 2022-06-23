@@ -227,7 +227,7 @@ const subContextComponent = ({ children }) => {
       async function readproData() {
         let proarr = [];
         const querySnapshot = await getDocs(collection(db, "Pro"));
-        console.group("Dashboard useEffect read Products---> firestore data: ");
+        console.group("Refetch all products from database   🔴  🔴   🔴 ");
 
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
@@ -242,7 +242,7 @@ const subContextComponent = ({ children }) => {
       await readproData();
     };
     listproducts();
-  }, [ refreshcategory]);
+  }, [db,refreshcategory]);
 
 
 
