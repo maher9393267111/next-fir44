@@ -70,6 +70,7 @@ const [isupdate, setIsupdate] = useState(false);
 const [quantity, setQuantity] = useState(0);
 const [productid, setProductid] = useState("");
 const [shipping, setShipping] = useState(false);
+const [singleproductdata, setSingleproductdata] = useState({});
 const [discreption, setDiscreption] = useState("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit");
 
 
@@ -77,7 +78,18 @@ const handleproductid = (value) => {
 
  
     getSpecificProduct(value).then(res=>{
-        console.log("res--->>>🔥🔥🔥",res);
+        setSingleproductdata(res);
+
+if (!isupdate){
+    setImages(res.images);
+}
+ else if (isupdate) {
+    setImages([]);
+
+ }
+
+
+        console.log("res--->>>",singleproductdata);
     }
     )
    
@@ -111,18 +123,18 @@ const handleproductid = (value) => {
   // delete image from state
 
   const deleteImage = async (index, photoname) => {
-//     const desertRef = ref(storage, `ecom/${photoname}`);
-//    // console.log("🕊️ 🕊️ 🕊️ 🕊️", photoname);
+    const desertRef = ref(storage, `ecom/${photoname}`);
+   // console.log("🕊️ 🕊️ 🕊️ 🕊️", photoname);
 
-//     await deleteObject(desertRef)
-//       .then(() => {'Deleted! '})
-//       .catch((error) => {
-//         console.log("Uh-oh, an error occurred!");
-//       })
-//       .then(() => {
+    await deleteObject(desertRef)
+      .then(() => {'Deleted! '})
+      .catch((error) => {
+        console.log("Uh-oh, an error occurred!");
+      })
+      .then(() => {
         // filter out the deleted image
         setImages(images.filter((image, i) => i !== index));
-      //});
+      });
   };
 
 
@@ -172,6 +184,7 @@ if (!isupdate) {
 
    createProduct(productdata)
    setRefreshcategory(!refreshcategory);
+   setImages([]);
    
 }
 
@@ -181,7 +194,12 @@ else if (isupdate) {
 
    console.log("update product");
    setRefreshcategory(!refreshcategory);
-   updateproduct(productid,productdata)
+   updateproduct(productid,productdata).then(()=>{
+setIsupdate(false);
+setImages([]);
+
+
+   })
 
 
 }
@@ -191,7 +209,7 @@ else if (isupdate) {
   return (
     <div>
       <AdminLayout>
-        <h1>Product {products?.length}</h1>
+        <h1>Product {singleproductdata?.name}</h1>
 
         <>
           <div>

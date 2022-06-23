@@ -319,14 +319,19 @@ export const getSpecificProduct = async (id) => {
 	const collec = await getDoc(userDoc)
 
 	const data = {
-        product_name: collec.data().name,
-    //     cateogry_id: collec.data().cateogry_id,
-    //     img_url: collec.data().img_url,
-    //     price: collec.data().price,
-		// user_id: collec.data().user_id,
-		// status: collec.data().status,
-		// data: collec.data().data,
-		// forSale: collec.data().forSale,
+        name: collec.data().name,
+   
+     
+price: collec.data().price,
+images: collec.data().images,
+quantity: collec.data().quantity,
+shipping: collec.data().shipping,
+categoryid: collec.data().categoryid,
+subid: collec.data().subid,
+desc: collec.data().desc,
+
+
+color: collec.data().color,
 	};
 
 	return data;
