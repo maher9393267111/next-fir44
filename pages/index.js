@@ -1,15 +1,20 @@
 import Head from 'next/head'
-import TypeWriterEffect from 'react-typewriter-effect';
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useState } from 'react'
+import { useState,useRef } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {globaluse} from '../context/global'
 import HomeCard from '../components/cards/homecard'
+
+const  Typewriter = dynamic(() => import('../components/typewriter'), {
+  ssr: false
+})
+
+
 export default function Home() {
   const {name,products} = useSelector((state) => state.global)
   const {userinfo} = globaluse()
-  const myRef = document.querySelector('.scrollable-div')
 
 
 
@@ -23,17 +28,8 @@ export default function Home() {
 
 <div>
 
-<TypeWriterEffect
-className='mt-12 ml-12'
-            textStyle={{ fontFamily: 'Red Hat Display' ,fontSize: '2rem',marginTop: '2rem'}}
-            startDelay={100}
-            cursorColor="black"
-            text="This is a single text"
-            typeSpeed={100}
-            scrollArea={myRef}
-          />
 
-
+<Typewriter/>
 
 
 </div>
