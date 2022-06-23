@@ -144,3 +144,22 @@ export const deleteSubCategory = async (subid) => {
 
 
 }
+
+
+
+
+export const createProduct = async (productdata) => {
+
+    console.log('productdata--->⚡⚡',productdata);
+    await addDoc(collection(db, "Pro",), productdata).then(() => {
+        toast.success("product created successfully");
+
+    }
+    ).catch((error) => {
+        toast.error(error.message);
+
+
+    }
+    );
+}
+
