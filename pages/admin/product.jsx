@@ -50,7 +50,7 @@ const layout = {
 
 const Product = () => {
 
-const {categories, subCategoies} = useSelector(state=>state.global);
+const {categories, subCategoies,products} = useSelector(state=>state.global);
 
   const [images, setImages] = useState([]);
 const [name, setName] = useState("");
@@ -70,7 +70,7 @@ const [shipping, setShipping] = useState(false);
     console.log(file);
     // generate a random string
     const filename = file.name;
-    console.log("🕊️ 🕊️ 🕊️ 🕊️", filename);
+   // console.log("🕊️ 🕊️ 🕊️ 🕊️", filename);
 
     const testRef = ref(storage, `ecom/${filename}`);
 
@@ -91,10 +91,10 @@ const [shipping, setShipping] = useState(false);
 
   const deleteImage = async (index, photoname) => {
     const desertRef = ref(storage, `ecom/${photoname}`);
-    console.log("🕊️ 🕊️ 🕊️ 🕊️", photoname);
+   // console.log("🕊️ 🕊️ 🕊️ 🕊️", photoname);
 
     await deleteObject(desertRef)
-      .then(() => {})
+      .then(() => {'Deleted! '})
       .catch((error) => {
         console.log("Uh-oh, an error occurred!");
       })
@@ -106,7 +106,12 @@ const [shipping, setShipping] = useState(false);
 
 
   const onFinish = (values) => {
-    console.log('---🔴🔴 -----',values);
+   // console.log('---🔴🔴 -----',values);
+
+
+
+
+
 
     const productdata ={
 
@@ -119,21 +124,27 @@ categoryid:values.product.category,
 subid:values.product.subcategory,
 //description:values.product.description,
 
-
-
     }
 
-    createProduct(productdata)
-  
+if (!isupdate) {
 
-    
+
+    createProduct(productdata)
+}
+
+else if (isupdate) {
+
+    console.log("update product");
+
+
+}
   };
 
 
   return (
     <div>
       <AdminLayout>
-        <h1>Product</h1>
+        <h1>Product {products?.length}</h1>
 
         <>
           <div>
@@ -251,7 +262,7 @@ subid:values.product.subcategory,
                       width: 220,
                       marginBottom: "17px",
                     }}
-                    //onChange={handleChange}
+                    
                   >
                     {subCategoies.map((sub) => (
                       <Option key={sub.id} value={sub.id}>
@@ -310,6 +321,28 @@ subid:values.product.subcategory,
 
 </>
 
+
+<>
+
+<div className=" mt-12 pb-12">
+
+{products?.map((product) => (
+
+<div>
+<h1>{product.name}</h1>
+</div>
+
+
+))}
+
+
+
+</div>
+
+
+
+
+</>
 
 
 

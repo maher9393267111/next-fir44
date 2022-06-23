@@ -35,7 +35,11 @@ import { useContext } from "react";
 import { createContext } from "react";
 import { toast } from "react-toastify";
 import { auth, db } from "../firebase";
-import {  fetchCategories, fetchSubCategories } from './store/reduxglobal';
+import {
+  fetchCategories,
+  fetchSubCategories,
+  fetchProducts,
+} from "./store/reduxglobal";
 import { useDispatch } from "react-redux";
 
 const globalContext = createContext();
@@ -167,74 +171,75 @@ const subContextComponent = ({ children }) => {
       });
   };
 
+  //
+  useEffect(() => {
+    const listCategories = async () => {
+      async function readData() {
+        let families = [];
+        const querySnapshot = await getDocs(collection(db, "Categories2"));
+        console.group("Dashboard useEffect read firestore data: ");
 
-// 
-useEffect (() => {
-
-
- const listCategories = async () => {
-  
-  async function readData(){
-      let families = [];
-      const querySnapshot = await getDocs(collection(db, "Categories2"));
-      console.group("Dashboard useEffect read firestore data: ")
-  
-      querySnapshot.forEach((doc) => {
+        querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
           console.log(doc.id, " => ", doc.data());
-          families.push( {id: doc.id, ...doc.data()});
+          families.push({ id: doc.id, ...doc.data() });
         });
         setAllcategory(families);
         dispatch(fetchCategories(families));
-       return families;
-    
+        return families;
       }
 
-   await  readData()
+      await readData();
+    };
+    listCategories();
+  }, [db, refreshcategory]);
 
+  useEffect(() => {
+    const listSubCategories = async () => {
+      async function readsubData() {
+        let subarr = [];
+        const querySnapshot = await getDocs(collection(db, "subcat"));
+        console.group("Dashboard useEffect read firestore data: ");
 
-
-
-}
-listCategories();
-
-}, [db,refreshcategory])
-
-
-
-
-useEffect (() => {
-
-
-  const listSubCategories = async () => {
-   
-   async function readsubData(){
-       let  subarr = [];
-       const querySnapshot = await getDocs(collection(db, "subcat"));
-       console.group("Dashboard useEffect read firestore data: ")
-   
-       querySnapshot.forEach((doc) => {
-           // doc.data() is never undefined for query doc snapshots
-           console.log(doc.id, " => ", doc.data());
-           subarr.push( {id: doc.id, ...doc.data()});
-         });
-       //  setAllcategory(subarr);
-         dispatch( fetchSubCategories(subarr));
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          subarr.push({ id: doc.id, ...doc.data() });
+        });
+        //  setAllcategory(subarr);
+        dispatch(fetchSubCategories(subarr));
         return subarr;
-     
-       }
- 
-    await  readsubData()
- 
- 
- 
- 
- }
- listSubCategories();
- 
- }, [db,refreshcategory])
- 
+      }
 
+      await readsubData();
+    };
+    listSubCategories();
+  }, [db, refreshcategory]);
+
+
+
+
+  useEffect(() => {
+    const listproducts = async () => {
+      async function readproData() {
+        let proarr = [];
+        const querySnapshot = await getDocs(collection(db, "Pro"));
+        console.group("Dashboard useEffect read Products---> firestore data: ");
+
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          proarr.push({ id: doc.id, ...doc.data() });
+        });
+        //  setAllcategory(subarr);
+        dispatch( fetchProducts(proarr));
+        return proarr;
+      }
+
+      await readproData();
+    };
+    listproducts();
+  }, [db, refreshcategory]);
 
 
 
@@ -255,8 +260,10 @@ useEffect (() => {
     setOpenmodal,
     signIn,
     handleUpdatePassword,
-    allcategory, setAllcategory,
-    refreshcategory, setRefreshcategory
+    allcategory,
+    setAllcategory,
+    refreshcategory,
+    setRefreshcategory,
   };
 
   return (
