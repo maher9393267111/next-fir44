@@ -10,6 +10,7 @@ import {createProduct, updateproduct,deleteproduct } from "../../functions/categ
 
 import { useState, useRef, useEffect } from "react";
 import { db, storage } from "../../firebase";
+
 import {
   addDoc,
   collection,
@@ -175,6 +176,7 @@ rating: {
 },
 sold:0,
 color:values.product.color,
+createdat:serverTimestamp(),
 //description:values.product.description,
 
     }

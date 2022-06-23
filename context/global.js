@@ -40,11 +40,14 @@ import {
   fetchSubCategories,
   fetchProducts,
   fetchCategorySubs,
-  fetchsingleProduct
+  fetchsingleProduct,
+  fetchlatestproducts
+
 } from "./store/reduxglobal";
 import { useDispatch } from "react-redux";
 
 const globalContext = createContext();
+
 
 export const globaluse = () => {
   return useContext(globalContext);
@@ -279,6 +282,30 @@ useEffect(() => {
 
 
 
+// latest products
+
+const latesProducts = async () => {
+
+
+
+
+
+  onSnapshot(
+    query(collection(db, "Pro"), orderBy("createdat", "desc"),limit(4)),
+    (snapshot) => {
+      const productsArr = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      dispatch(fetchlatestproducts(productsArr));
+
+    }
+  );
+}
+
+
+
 
 
 
@@ -302,7 +329,8 @@ useEffect(() => {
     refreshcategory,
     setRefreshcategory,
     selectedcategory,
-    setSelectedcategory
+    setSelectedcategory,
+    latesProducts,
   };
 
   return (
@@ -311,6 +339,8 @@ useEffect(() => {
 };
 
 export default subContextComponent;
+
+
 
 
 
@@ -335,4 +365,4 @@ color: collec.data().color,
 	};
 
 	return data;
-};
+}

@@ -5,7 +5,9 @@ import styles from '../styles/Home.module.css'
 import { useState,useRef } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {globaluse} from '../context/global'
+import Paginate from '../components/parac/paginate'
 import HomeCard from '../components/cards/homecard'
+import Latestproducts from '../components/home/latestproducts'
 
 const  Typewriter = dynamic(() => import('../components/typewriter'), {
   ssr: false
@@ -29,18 +31,25 @@ export default function Home() {
 <div>
 
 
-<Typewriter text={["Latest Products", "New Arrivals", "Best Sellers"]}/>
+<Typewriter />
 
 <div>
 <div className=' grid grid-cols-4 gap-4'>
 
-{products.map((product) => (
+
+<Latestproducts />
+
+
+
+{/* {products.map((product) => (
 <div>
 
   <HomeCard product={product}/>
 
 
-</div>))}
+</div>))} */}
+
+<Paginate />
 
 </div>
 

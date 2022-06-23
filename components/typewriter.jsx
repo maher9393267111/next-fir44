@@ -27,9 +27,9 @@ const Typewriter = ({text}) => {
       
         startDelay={1500}
         cursorColor="#3F3D56"
-        multiText={["Hey there, This is a type writer animation package", "it consist of two types...", "Single text display and multi text display", "Fonts can be customized.", "The type speed can be customized as well"]}
+        multiText={["Latest Products", "New Arrivals", "Best Sellers"]}
         multiTextDelay={1000}
-        typeSpeed={30}
+        typeSpeed={260}
         multiTextLoop
         
       />
