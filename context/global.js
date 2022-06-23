@@ -44,10 +44,12 @@ import {
   fetchCategorySubs,
   fetchsingleProduct,
   fetchlatestproducts,
-  fechBestsellers
+  fechBestsellers,
+  fetchsingleCategory
 
 } from "./store/reduxglobal";
 import { useDispatch } from "react-redux";
+
 
 const globalContext = createContext();
 
@@ -342,6 +344,30 @@ const BestSellersProducts = async () => {
   
   
 
+// fetch single category products
+
+// const fetchSingleCategoryProducts = async (categoryid) => {
+
+
+
+// onSnapshot(
+//   query(collection(db, "Categories2",categoryid)),
+//   (snapshot) => {
+//     const productsArr = snapshot.docs.map((doc) => ({
+//       id: doc.id,
+//       ...doc.data(),
+//     }));
+
+//     dispatch(fetchsingleCategory(productsArr));
+//     toast.success(`category ${productsArr[0].name} is fetched`);
+//   }
+// )
+
+
+
+// }
+
+
 
 
 
@@ -368,7 +394,8 @@ const BestSellersProducts = async () => {
     selectedcategory,
     setSelectedcategory,
     latesProducts,
-    BestSellersProducts
+    BestSellersProducts,
+   //fetchSingleCategoryProducts
   };
 
   return (
