@@ -28,6 +28,8 @@ import {
   FieldPath,
   updateDoc,
   arrayUnion,
+  startAt,
+  endAt
 } from "firebase/firestore";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -286,12 +288,15 @@ useEffect(() => {
 
 const latesProducts = async () => {
 
+const startat =2
 
-
+  // startAt(startAtParam), endAt(endAtParam)
 
 
   onSnapshot(
-    query(collection(db, "Pro"), orderBy("createdat", "desc"),limit(4)),
+    query(collection(db, "Pro"), orderBy("createdat", "desc"),limit(5),
+   // startAt(startat)
+    ),
     (snapshot) => {
       const productsArr = snapshot.docs.map((doc) => ({
         id: doc.id,
