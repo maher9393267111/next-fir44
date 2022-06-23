@@ -55,6 +55,15 @@ function Pa() {
 
 <div className=' grid grid-cols-2 gap-6'>
 
+<div>
+
+<div>
+    <h1 className='  bg-blue-400 text-white text-xl font-bold text-center '>New products</h1>
+</div>
+
+</div>
+
+
 
 
 {displayUsers}

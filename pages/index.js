@@ -8,6 +8,7 @@ import {globaluse} from '../context/global'
 import Paginate from '../components/parac/paginate'
 import HomeCard from '../components/cards/homecard'
 import Latestproducts from '../components/home/latestproducts'
+import Bestsellers from '../components/home/Bestsellers'
 
 const  Typewriter = dynamic(() => import('../components/typewriter'), {
   ssr: false
@@ -28,30 +29,34 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-<div>
+<div   className=' pb-22'>
 
 
 <Typewriter />
 
 <div>
-<div className=' grid grid-cols-4 gap-4'>
+<div className=' '>
 
 
-{/* <Latestproducts /> */}
-
-
-
-
-
-{/* {products.map((product) => (
 <div>
 
-  <HomeCard product={product}/>
+  <Latestproducts />
+</div>
 
 
-</div>))} */}
 
-<Paginate />
+<div>
+  <Bestsellers />
+</div>
+
+
+
+
+
+
+
+
+{/* <Paginate /> */}
 
 </div>
 

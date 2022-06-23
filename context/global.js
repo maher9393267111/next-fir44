@@ -43,7 +43,8 @@ import {
   fetchProducts,
   fetchCategorySubs,
   fetchsingleProduct,
-  fetchlatestproducts
+  fetchlatestproducts,
+  fechBestsellers
 
 } from "./store/reduxglobal";
 import { useDispatch } from "react-redux";
@@ -294,7 +295,7 @@ const startat =2
 
 
   onSnapshot(
-    query(collection(db, "Pro"), orderBy("createdat", "desc"),limit(5),
+    query(collection(db, "Pro"), orderBy("createdat", "desc"),limit(8),
    // startAt(startat)
     ),
     (snapshot) => {
@@ -309,6 +310,37 @@ const startat =2
   );
 }
 
+
+
+// best sellers products
+
+
+const BestSellersProducts = async () => {
+
+ 
+    // startAt(startAtParam), endAt(endAtParam)
+  
+  
+    onSnapshot(
+      query(collection(db, "Pro"), orderBy("sold", "desc"),limit(12),
+     // startAt(startat)
+      ),
+      (snapshot) => {
+        const productsArr = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+  
+         dispatch(fechBestsellers(productsArr));
+
+
+        return productsArr;
+  
+      }
+    );
+  }
+  
+  
 
 
 
@@ -336,6 +368,7 @@ const startat =2
     selectedcategory,
     setSelectedcategory,
     latesProducts,
+    BestSellersProducts
   };
 
   return (
