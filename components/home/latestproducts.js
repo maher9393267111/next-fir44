@@ -38,7 +38,7 @@ function Pa() {
     .slice(pagesVisited, pagesVisited + usersPerPage)
     .map((product) => {
       return (
-        <div className=" mx-8">
+        <div key={product.id} className=" mx-8">
           <HomeCard product={product} />
      
         </div>
