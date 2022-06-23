@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'antd/dist/antd.css';
 import { wrapper } from "../context/store/index";
 import GlobalContext from '../context/global'
-import Header from '../components/Header'
+
 import Layout from '../components/layout'
 function MyApp({ Component, pageProps }) {
   return (
