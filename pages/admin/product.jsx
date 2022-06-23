@@ -3,7 +3,7 @@ import { Button, Form, Input, InputNumber,Select } from 'antd';
 import { toast } from "react-toastify";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import {useSelector} from 'react-redux';
-import {globaluse} from '../../context/global';
+import {globaluse,getSpecificProduct} from '../../context/global';
 const { Option } = Select;
 import AdminLayout from "../../components/admin/adminLayout";
 import {createProduct, updateproduct,deleteproduct } from "../../functions/category";
@@ -50,9 +50,12 @@ const layout = {
 
 
 
+
+
+
 const Product = () => {
 
-const {categories, subCategoies,products} = useSelector(state=>state.global);
+const {categories, subCategoies,products,categorysubs} = useSelector(state=>state.global);
 const {setRefreshcategory,refreshcategory,selectedcategory,setSelectedcategory} =globaluse();
 
   const [images, setImages] = useState([]);
@@ -67,12 +70,27 @@ const [isupdate, setIsupdate] = useState(false);
 const [quantity, setQuantity] = useState(0);
 const [productid, setProductid] = useState("");
 const [shipping, setShipping] = useState(false);
+const [discreption, setDiscreption] = useState("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit");
+
+
+const handleproductid = (value) => {
+
+ 
+    getSpecificProduct(value).then(res=>{
+        console.log("res--->>>🔥🔥🔥",res);
+    }
+    )
+   
+}
+
+
+
 
   const handleimages = async (e) => {
     const file = e.target.files[0];
     console.log(file);
     // generate a random string
-    const filename = file.name;
+    const filename = file?.name;
    // console.log("🕊️ 🕊️ 🕊️ 🕊️", filename);
 
     const testRef = ref(storage, `ecom/${filename}`);
@@ -93,18 +111,18 @@ const [shipping, setShipping] = useState(false);
   // delete image from state
 
   const deleteImage = async (index, photoname) => {
-    const desertRef = ref(storage, `ecom/${photoname}`);
-   // console.log("🕊️ 🕊️ 🕊️ 🕊️", photoname);
+//     const desertRef = ref(storage, `ecom/${photoname}`);
+//    // console.log("🕊️ 🕊️ 🕊️ 🕊️", photoname);
 
-    await deleteObject(desertRef)
-      .then(() => {'Deleted! '})
-      .catch((error) => {
-        console.log("Uh-oh, an error occurred!");
-      })
-      .then(() => {
+//     await deleteObject(desertRef)
+//       .then(() => {'Deleted! '})
+//       .catch((error) => {
+//         console.log("Uh-oh, an error occurred!");
+//       })
+//       .then(() => {
         // filter out the deleted image
         setImages(images.filter((image, i) => i !== index));
-      });
+      //});
   };
 
 
@@ -121,7 +139,7 @@ const [shipping, setShipping] = useState(false);
 
 
   const onFinish = (values) => {
-   // console.log('---🔴🔴 -----',values);
+    console.log('---🔴🔴 -----',values.product);
 
 
 
@@ -138,6 +156,7 @@ quantity:values.product.quantity,
 shipping:values.product.shipping,
 categoryid:values.product.category,
 subid:values.product.subcategory,
+desc:discreption,
 rating: {
     stars: 0,
     postedby: "",
@@ -151,8 +170,8 @@ color:values.product.color,
 if (!isupdate) {
 
 
-   // createProduct(productdata)
-  //  setRefreshcategory(!refreshcategory);
+   createProduct(productdata)
+   setRefreshcategory(!refreshcategory);
    
 }
 
@@ -160,9 +179,9 @@ else if (isupdate) {
 
   
 
-  //  console.log("update product");
-  //  setRefreshcategory(!refreshcategory);
-  //  updateproduct(productid,productdata)
+   console.log("update product");
+   setRefreshcategory(!refreshcategory);
+   updateproduct(productid,productdata)
 
 
 }
@@ -292,7 +311,7 @@ else if (isupdate) {
                     }}
                     
                   >
-                    {subCategoies.map((sub) => (
+                    {categorysubs.map((sub) => (
                       <Option key={sub.id} value={sub.id}>
                         {sub.name}
                       </Option>
@@ -365,6 +384,7 @@ else if (isupdate) {
                   <div className=" w-[222px] flex gap-2">
                     <p
                       onClick={() => {
+                        handleproductid(product.id);
                         setProductid(product?.id);
                         console.log("sub--->>>", productid);
                         setIsupdate(!isupdate);

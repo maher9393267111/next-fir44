@@ -39,7 +39,8 @@ import {
   fetchCategories,
   fetchSubCategories,
   fetchProducts,
-  fetchCategorySubs
+  fetchCategorySubs,
+  fetchsingleProduct
 } from "./store/reduxglobal";
 import { useDispatch } from "react-redux";
 
@@ -246,6 +247,17 @@ const subContextComponent = ({ children }) => {
 
 
 
+// find product by his id
+
+  useEffect(() => {
+  
+     
+
+
+
+
+      },[]
+  )
 
 
 
@@ -255,7 +267,7 @@ useEffect(() => {
   const noteListener = onSnapshot(q, (querySnapshot) => {
     const list = [];
     querySnapshot.forEach((doc) => {
-      list.push(doc.data());
+      list.push({ id: doc.id, ...doc.data() });
     });
   dispatch(fetchCategorySubs(list));
   });
@@ -299,3 +311,23 @@ useEffect(() => {
 };
 
 export default subContextComponent;
+
+
+
+export const getSpecificProduct = async (id) => {
+	const userDoc = doc(db, 'Pro', id);
+	const collec = await getDoc(userDoc)
+
+	const data = {
+        product_name: collec.data().name,
+    //     cateogry_id: collec.data().cateogry_id,
+    //     img_url: collec.data().img_url,
+    //     price: collec.data().price,
+		// user_id: collec.data().user_id,
+		// status: collec.data().status,
+		// data: collec.data().data,
+		// forSale: collec.data().forSale,
+	};
+
+	return data;
+};
