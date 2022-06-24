@@ -4,24 +4,26 @@ import {useSelector} from 'react-redux'
 import ProductCard from '../cards/homecard'
 const Allproducts = () => {
 
-const {products,searchedproducts} = useSelector((state) => state.global);
+const {products,searchedproducts,searchtext} = useSelector((state) => state.global);
 
 
     return (
         <div>
-            {/* all products
-            {products?.length} */}
+ 
+{/* {searchtext === '' ?  'ohh empty ' : 'ohh not empty '}   */}
 
-{/* ---header--- */}
 
 <div>
-    <h1 className=' text-2xl font-semibold text-center'> All Products</h1>
+    <h1 className=' text-2xl font-semibold text-center'> {searchtext === '' ?  'All Products ' : 'Searched Products '}   </h1>
 </div>
 
 
 
 {/* --searched products--- */}
 
+
+
+{ searchtext !== ''  &&
 <div>
 
 {searchedproducts.length} off
@@ -32,7 +34,10 @@ const {products,searchedproducts} = useSelector((state) => state.global);
 return (
 
     <div>
-        <img className=' w-4 h-4 rounded-full' src={product?.images[0]?.image} alt="" />
+        <div className=' my-4 '>
+    <ProductCard product={product} />
+</div>
+
     </div>
 )})
 :
@@ -41,6 +46,7 @@ return (
 
 </div>
 
+}
 
 {/* -----map products--- */}
 
@@ -50,6 +56,8 @@ return (
 
 {/* -grid--- */}
 
+
+  {searchtext === ''   &&
 
 <div className='grid gap-4 md:grid-cols-2  sm:grid-cols-1 lg:grid-cols-3'>
 
@@ -67,10 +75,8 @@ return (
 
 
 
-
-
-
 </div>
+}
 
 
 </div>

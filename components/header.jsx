@@ -11,6 +11,7 @@ import Link from "next/link";
 import { globaluse } from "../context/global";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { setsearchtext } from "../context/store/reduxglobal";
 
 
 
@@ -34,9 +35,10 @@ const Header = () => {
   };
 
 
+
 const hendleSearch = (e) => {
 
-
+dispatch(setsearchtext(e.target.value));
   SearchbyText(e.target.value);
   router.push("/shop");
 

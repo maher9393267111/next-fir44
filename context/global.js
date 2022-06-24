@@ -29,7 +29,9 @@ import {
   updateDoc,
   arrayUnion,
   startAt,
-  endAt
+  endAt,
+  equalTo
+  
 } from "firebase/firestore";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -472,52 +474,34 @@ const SearchbyText = async (text) => {
  const regex = new RegExp(text, "i");
 
 
-// `${regex}`
+// `${regex}`   
 
-
-
-var q1 = query(collection(db, "Pro"), where("name", "==", `${text}`));
-
-  onSnapshot(q1, (snapshot) => {
-    const productsArr = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-      dispatch(fetchsearchedproducts(productsArr));
-
+const usersCollectionRef = collection(db, "Pro");
+const data = await getDocs(query(usersCollectionRef, where('name', '==', text)))
+.then(async (snapshot) => {
+  let items = [];
   
-    return productsArr;
-  }
-  );
+  await snapshot.docs.forEach((doc) => {
+    items.push({...doc.data(), id:doc.id})
+  });
+  dispatch(fetchsearchedproducts(items));
+
+
+  return items;
+}
+)
 
 
 
 
 
 
-  // onSnapshot(
-  //   query(collection(db, "Pro"),
-  //    where('name', '==' ,  `m12`   ), 
-  // //  where('name', '!=' , prod   ), 
-  //  // orderBy("id", "desc")
-  //  // ,
-  //  // limit(3),
-  //  // startAt(startat)
-  //   ),
-  //   (snapshot) => {
-  //     const productsArr = snapshot.docs.map((doc) => ({
-  //       id: doc.id,
-  //       ...doc.data(),
-  //     }));
-
-  //      dispatch(fetchsearchedproducts(productsArr));
 
 
-  //     return productsArr;
 
-  //   }
-  // );
+
+
+
 }
 
 

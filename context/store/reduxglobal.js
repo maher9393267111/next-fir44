@@ -31,6 +31,7 @@ const authSlice = createSlice({
         categoryproducts: [],
         subcategoryproducts: [],
         searchedproducts: [],
+        searchtext: '',
         
     },
     reducers: {
@@ -113,6 +114,11 @@ console.log()
 
         state.searchedproducts = action.payload;
 
+    },
+
+    setsearchtext: (state, action) => {
+
+        state.searchtext = action.payload;
     }
 
 
@@ -139,5 +145,5 @@ console.log()
 
 
 // Export our slice and the action types:
-export const { setIsLoggedIn, setname, fetchsingleCategory,  fetchsearchedproducts,  fetchsubcatproducts,fetchcatproducts,  relatedproductsfetch,  afterRatingproduct ,refreshsingleproduct,  fechBestsellers, fetchCategories,    fetchlatestproducts,   fetchCategorySubs,  fetchProducts,  fetchSubCategories,  setUserInfo,fetchsingleProduct } = authSlice.actions;
+export const { setIsLoggedIn, setname, fetchsingleCategory, setsearchtext,  fetchsearchedproducts,  fetchsubcatproducts,fetchcatproducts,  relatedproductsfetch,  afterRatingproduct ,refreshsingleproduct,  fechBestsellers, fetchCategories,    fetchlatestproducts,   fetchCategorySubs,  fetchProducts,  fetchSubCategories,  setUserInfo,fetchsingleProduct } = authSlice.actions;
 export default authSlice.reducer;
