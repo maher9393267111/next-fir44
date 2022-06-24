@@ -84,6 +84,7 @@ const ModalRate = ({
       >
         <div>
           <Rate
+          
             onChange={handlerating}
             allowHalf
             defaultValue={myrating !== 0 ? myrating : 3.5}
