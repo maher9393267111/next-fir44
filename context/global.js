@@ -418,24 +418,7 @@ const subContextComponent = ({ children }) => {
 
     const regex = new RegExp(text, "i");
 
-    // `${regex}`
 
-    // const usersCollectionRef = collection(db, "Pro");
-    // const data = await getDocs(
-    //   query(usersCollectionRef, where("name", "==", text))
-    // ).then(async (snapshot) => {
-    //   let items = [];
-
-    //   await snapshot.docs.forEach((doc) => {
-    //     items.push({ ...doc.data(), id: doc.id });
-    //   });
-    //   dispatch(fetchsearchedproducts(items));
-
-    //   return items;
-    // });
-
-
-//-----------------------------------
 
 
 const filterproducts = products.filter((product) => {
@@ -447,10 +430,6 @@ console.log("filter🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥", filterprod
 dispatch(fetchsearchedproducts(filterproducts));
 
 
-//-----------------------------------
-
-
-
 
   };
 
@@ -458,10 +437,41 @@ dispatch(fetchsearchedproducts(filterproducts));
 
 
 
-  // search products by his regular expression name from firebase
+  // search products  by price  max and min
 
 
+  const ProductsByPrice = async (price) => {
+ 
+    console.log(" price data is is--- 🔴🔴", "-------", price);
   
+
+    onSnapshot(
+      query(
+        collection(db, "Pro"),
+        where("price", ">=", price[0]),
+        where("price", "<=", price[1])
+        //  where('name', '!=' , prod   ),
+        // orderBy("id", "desc")
+        // ,
+        // limit(3),
+        // startAt(startat)
+      ),
+      (snapshot) => {
+        const productsArr = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        dispatch(fetchsearchedproducts(productsArr));
+
+        return productsArr;
+      }
+    );
+  };
+
+
+
+
 
 
 
@@ -492,6 +502,7 @@ dispatch(fetchsearchedproducts(filterproducts));
     CategoryProducts,
     SubProducts,
     SearchbyText,
+    ProductsByPrice,
 
     //fetchSingleCategoryProducts
   };

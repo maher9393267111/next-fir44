@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux'
 import ProductCard from '../cards/homecard'
 const Allproducts = () => {
 
-const {products,searchedproducts,searchtext} = useSelector((state) => state.global);
+const {products,searchedproducts,searchtext,searchmode} = useSelector((state) => state.global);
 
 
     return (
@@ -14,7 +14,7 @@ const {products,searchedproducts,searchtext} = useSelector((state) => state.glob
 
 
 <div>
-    <h1 className=' text-2xl font-semibold text-center'> {searchtext === '' ?  'All Products ' : `Searched Products ${searchedproducts?.length} `}   </h1>
+    <h1 className=' text-2xl font-semibold text-center'> {!searchmode ?  'All Products ' : `Searched Products ${searchedproducts?.length} `}   </h1>
 </div>
 
 
@@ -23,11 +23,13 @@ const {products,searchedproducts,searchtext} = useSelector((state) => state.glob
 
 
 
-{ searchtext !== '' && searchedproducts !== []   &&
+{ searchmode  &&
+
+
 <div className=' grid gap-4 md:grid-cols-2  sm:grid-cols-1 lg:grid-cols-3'>
 
 
-{searchedproducts?.length>0 ? searchedproducts.map((product) => {
+{searchedproducts?.length>0 && searchedproducts.map((product) => {
 
 
 
@@ -40,8 +42,8 @@ return (
 
     </div>
 )})
-:
-('Products searched is Empty' )
+
+
 }
 
 </div>
@@ -57,7 +59,7 @@ return (
 {/* -grid--- */}
 
 
-  {searchtext === ''   &&
+   {!searchmode    &&
 
 <div className='grid gap-4 md:grid-cols-2  sm:grid-cols-1 lg:grid-cols-3'>
 
@@ -76,7 +78,7 @@ return (
 
 
 </div>
-}
+} 
 
 
 </div>

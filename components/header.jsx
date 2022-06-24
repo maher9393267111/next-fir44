@@ -11,7 +11,7 @@ import Link from "next/link";
 import { globaluse } from "../context/global";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { setsearchtext } from "../context/store/reduxglobal";
+import { setsearchtext,setsearchmode } from "../context/store/reduxglobal";
 
 
 
@@ -40,6 +40,7 @@ const Header = () => {
 const hendleSearch = (e) => {
 
 dispatch(setsearchtext(e.target.value));
+dispatch(setsearchmode(true));
   SearchbyText(searchtext);
   router.push("/shop");
 
