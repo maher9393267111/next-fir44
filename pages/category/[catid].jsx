@@ -72,7 +72,7 @@ const Catid = () => {
 
 return (
 
-    <div>
+    <div key={product.id}>
         <HomeCard product={product} />
     </div>
 

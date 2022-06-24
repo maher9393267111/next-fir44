@@ -80,7 +80,7 @@ const Subid = () => {
 
 return (
 
-    <div>
+    <div className=' ' key={product.id}>
         <HomeCard product={product} />
     </div>
 

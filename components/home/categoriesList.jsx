@@ -33,7 +33,7 @@ const CategoriesList = () => {
 
     return (
 
-<div className='  border-2 text-black font-bold border-black text-center p-2'>
+<div key={category.id} className='  border-2 text-black font-bold border-black text-center p-2'>
     <Link href={`/category/${category.id}`}><a className="  text-gray-800">{category.name}</a>
     </Link>
 </div>

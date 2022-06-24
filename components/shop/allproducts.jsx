@@ -35,7 +35,7 @@ const {products,searchedproducts,searchtext,searchmode} = useSelector((state) =>
 
 return (
 
-    <div>
+    <div key ={product.id}>
         <div className=' my-4 '>
     <ProductCard product={product} />
 </div>
@@ -67,7 +67,7 @@ return (
 
 return (
 
-<div className=' my-4 '>
+<div key={product.id} className=' my-4 '>
     <ProductCard product={product} />
 </div>
 

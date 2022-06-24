@@ -33,7 +33,7 @@ const SubList = () => {
 
     return (
 
-<div className='  border-2 text-black font-bold border-black text-center p-2'>
+<div key={sub.id} className='  border-2 text-black font-bold border-black text-center p-2'>
     <Link href={`/sub/${sub.id}`}><a className="  text-gray-800">{sub.name}</a>
     </Link>
 </div>

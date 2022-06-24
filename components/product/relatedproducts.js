@@ -22,7 +22,7 @@ const {relatedproducts} = useSelector(state => state.global);
 
 return (
 
-    <div>
+    <div key={product.id}>
         <HomeCard product={product} />
     </div>
 

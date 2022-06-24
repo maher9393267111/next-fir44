@@ -203,7 +203,7 @@ const Rateread = ({ product }) => {
       </div>
 
       {Array.from(Array().keys()).map((item) => {
-        return <div>1</div>;
+        return <div key ={item}>1</div>;
       })}
     </p>
   );
