@@ -76,7 +76,7 @@ else  {
 
   const showCategories = () =>
     categories.map((c) => (
-      <div key={c._id}>
+      <div key={c.id}>
         <Checkbox
           onChange={handleCheck}
           className="pb-2 pl-4 pr-4"
@@ -97,7 +97,7 @@ else  {
 
 const showSubs= () =>
     subCategoies.map((c) => (
-      <div key={c._id}>
+      <div key={c.id}>
         <Checkbox
          onChange={handlSubsCheck}
           className="pb-2 pl-4 pr-4"
