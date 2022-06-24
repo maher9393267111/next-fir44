@@ -1,33 +1,29 @@
-import React from 'react';
-import { Menu, Slider,Checkbox} from "antd";
+import React from "react";
+import { Menu, Slider, Checkbox } from "antd";
 const { SubMenu, ItemGroup } = Menu;
-import { useEffect,useState } from 'react';
-import { DollarOutlined,DownSquareOutlined } from "@ant-design/icons";
+import { useEffect, useState } from "react";
+import { DollarOutlined, DownSquareOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { globaluse } from "../../context/global";
-import { toast } from 'react-toastify';
-import { setsearchtext,setsearchmode } from "../../context/store/reduxglobal";
+import { toast } from "react-toastify";
+import { setsearchtext, setsearchmode } from "../../context/store/reduxglobal";
 const Filterbar = () => {
+  const [price, setPrice] = useState([0, 1000]);
+  const [categoryIds, setCategoryIds] = useState([]);
+  const dispatch = useDispatch();
+  const [ok, setOk] = useState(false);
 
+  const { ProductsByPrice, ProductsBySelectedCategories  } = globaluse();
 
-const [price, setPrice] = useState([0, 1000]);
-const [categoryIds, setCategoryIds] = useState([]);
-const dispatch = useDispatch();
-const [ok, setOk] = useState(false);
+  const { categories } = useSelector((state) => state.global);
+  // handle price slider change values
 
-
-const {ProductsByPrice, CategoryProducts} = globaluse();
-
-const  {categories} = useSelector((state) => state.global);
-// handle price slider change values
-
-const handleSlider = (value) => {
-   
-    dispatch(setsearchtext(''));
-dispatch(setsearchmode(true));
+  const handleSlider = (value) => {
+    dispatch(setsearchtext(""));
+    dispatch(setsearchmode(true));
     setPrice(value);
-    console.log('price --💬💬', price);
+    console.log("price --💬💬", price);
     // global filter price function
     ProductsByPrice(price);
     setTimeout(() => {
@@ -35,16 +31,15 @@ dispatch(setsearchmode(true));
     }, 300);
   };
 
-
-
-// categories 
-
-
-
+  // categories
 
   // handle check for categories
   const handleCheck = (e) => {
-  dispatch(setsearchtext(''));
+
+
+
+    dispatch(setsearchtext(""));
+    dispatch(setsearchmode(true));
     setPrice([0, 0]);
     // console.log(e.target.value);
     let inTheState = [...categoryIds];
@@ -62,18 +57,10 @@ dispatch(setsearchmode(true));
 
     setCategoryIds(inTheState);
     // console.log(inTheState);
-  //  fetchProducts({ category: inTheState });
+ProductsBySelectedCategories(inTheState)
   };
 
-
-
-
-
-
-
-
-
-const showCategories = () =>
+  const showCategories = () =>
     categories.map((c) => (
       <div key={c._id}>
         <Checkbox
@@ -89,86 +76,56 @@ const showCategories = () =>
       </div>
     ));
 
+  // categories end
 
+  return (
+    <div>
+      <div>
+        {/* ---proce filter-- */}
 
-    // categories end
+        <Menu defaultOpenKeys={["1", "2"]} mode="inline">
+          <SubMenu
+            key="1"
+            title={
+              <span className="h6">
+                <DollarOutlined /> Price
+              </span>
+            }
+          >
+            <div>
+              <Slider
+                className="ml-4 mr-4"
+                tipFormatter={(v) => `$${v}`}
+                range
+                value={price}
+                onChange={handleSlider}
+                max="1000"
+              />
+            </div>
+          </SubMenu>
 
+          {/* ------categories- */}
 
+          <SubMenu
+            key="2"
+            title={
+              <span className="h6">
+                <DownSquareOutlined /> Categories
+              </span>
+            }
+          >
+            <div style={{ maringTop: "-10px" }}>{showCategories()}</div>
+          </SubMenu>
+        </Menu>
 
-
-
-
-
-    return (
         <div>
-        <div>
-
-{/* ---proce filter-- */}
-
-
-<Menu defaultOpenKeys={["1", "2"]} mode="inline">
-            <SubMenu
-              key="1"
-              title={
-                <span className="h6">
-                  <DollarOutlined /> Price
-                </span>
-              }
-            >
-              <div>
-                <Slider
-                  className="ml-4 mr-4"
-                  tipFormatter={(v) => `$${v}`}
-                  range
-                  value={price}
-                  onChange={handleSlider}
-                  max="1000"
-                />
-              </div>
-            </SubMenu>
-
-
-{/* ------categories- */}
-
-<SubMenu
-              key="2"
-              title={
-                <span className="h6">
-                  <DownSquareOutlined /> Categories
-
-
-
-
-                </span>
-              }
-            >
-              <div style={{ maringTop: "-10px" }}>{showCategories()}</div>
-            </SubMenu>
-          
-        
-
-
-
-
-          </Menu>
-
-
-
-          <div>
-    {categoryIds.map((item) => (<div>{item}</div>))}
-</div>
-
-
-
-
-
-
+          {categoryIds.map((item) => (
+            <div>{item}</div>
+          ))}
         </div>
-
-
-
-        </div>
-    );
-}
+      </div>
+    </div>
+  );
+};
 
 export default Filterbar;
