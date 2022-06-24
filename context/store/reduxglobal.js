@@ -28,6 +28,7 @@ const authSlice = createSlice({
         refreshproduct: false,
         afterRatingproduct: {},
         relatedproducts: [],
+        categoryproducts: [],
         
     },
     reducers: {
@@ -94,6 +95,12 @@ console.log()
 
              
         state.relatedproducts = action.payload;
+    },
+
+    fetchcatproducts: (state, action) => {
+
+
+        state.categoryproducts = action.payload;
     }
 
 
@@ -120,5 +127,5 @@ console.log()
 
 
 // Export our slice and the action types:
-export const { setIsLoggedIn, setname, fetchsingleCategory,  relatedproductsfetch,  afterRatingproduct ,refreshsingleproduct,  fechBestsellers, fetchCategories,    fetchlatestproducts,   fetchCategorySubs,  fetchProducts,  fetchSubCategories,  setUserInfo,fetchsingleProduct } = authSlice.actions;
+export const { setIsLoggedIn, setname, fetchsingleCategory, fetchcatproducts,  relatedproductsfetch,  afterRatingproduct ,refreshsingleproduct,  fechBestsellers, fetchCategories,    fetchlatestproducts,   fetchCategorySubs,  fetchProducts,  fetchSubCategories,  setUserInfo,fetchsingleProduct } = authSlice.actions;
 export default authSlice.reducer;

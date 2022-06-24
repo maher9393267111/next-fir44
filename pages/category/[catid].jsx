@@ -21,6 +21,8 @@ const Catid = () => {
 const [category, setCategory] = useState({});
 const [subcategory, setSubcategory] = useState({});
 
+const {  CategoryProducts } = globaluse();
+
 const fetchcategory = async () => {
 
 const categorypath = doc(db, "Categories2", catid);
@@ -28,6 +30,7 @@ const categorypath = doc(db, "Categories2", catid);
     const category = await getDoc(categorypath);
     setCategory({ id: category.id, ...category.data() });
 
+    await   CategoryProducts(catid);
 
 
 }
@@ -50,7 +53,7 @@ if (catid) {
 
     return (
         <div>
-            {catid}
+   {catid}
             {category?.name}
 
 
