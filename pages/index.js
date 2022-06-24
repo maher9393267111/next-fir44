@@ -9,6 +9,7 @@ import Paginate from '../components/parac/paginate'
 import HomeCard from '../components/cards/homecard'
 import Latestproducts from '../components/home/latestproducts'
 import Bestsellers from '../components/home/Bestsellers'
+import CategoriesList from '../components/home/categoriesList'
 
 const  Typewriter = dynamic(() => import('../components/typewriter'), {
   ssr: false
@@ -50,6 +51,10 @@ export default function Home() {
   <Bestsellers />
 </div>
 
+
+<div className=' mt-6 pb-20'>
+  <CategoriesList />
+</div>
 
 
 

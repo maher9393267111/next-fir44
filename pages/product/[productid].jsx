@@ -12,7 +12,6 @@ import {
   getDoc,
   query,
   orderBy,
-
 } from "firebase/firestore";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
@@ -21,10 +20,9 @@ import {
   useDocumentData,
 } from "react-firebase-hooks/firestore";
 import Sideinfo from "../../components/product/sideinfo";
+import Relatedproducts from "../../components/product/relatedproducts";
 
 const Productid = () => {
-
-
   const router = useRouter();
   const { productid } = router.query;
   console.log(productid);
@@ -37,20 +35,15 @@ const Productid = () => {
   const [relatedproducts, setRelatedproducts] = useState([]);
 
   const { refreshproduct } = useSelector((state) => state.global);
-const {RealatedProducts} = globaluse()
+  const { RealatedProducts } = globaluse();
 
   const fetchproduct = async () => {
     const productRef = doc(db, "Pro", productid);
     const product = await getDoc(productRef);
 
+    setProduct({ id: productid, ...product.data() });
 
-
-
-
-    setProduct({id: productid, ...product.data()});
-
-    RealatedProducts(productid) 
-    
+    RealatedProducts(productid);
 
     const cathref = doc(db, "Categories2", product.data().categoryid);
     const category = await getDoc(cathref);
@@ -60,21 +53,13 @@ const {RealatedProducts} = globaluse()
     const subcathref = doc(db, "subcat", product.data().subid);
     const sub = await getDoc(subcathref);
     setSubcategory({ ...sub.data(), id: sub.id });
-  //  console.log(sub, "🔴 🔴 🔴 🔴 🔴 ");
+    //  console.log(sub, "🔴 🔴 🔴 🔴 🔴 ");
 
-const procuctname = await product.data().name;
-const subid = await product.data().subid;
+    const procuctname = await product.data().name;
+    const subid = await product.data().subid;
 
-
-   await RealatedProducts(procuctname,subid) 
-
-
-
+    await RealatedProducts(procuctname, subid);
   };
-
-
-
-
 
   useEffect(() => {
     if (productid) {
@@ -86,7 +71,7 @@ const subid = await product.data().subid;
 
   return (
     <div>
-        {name}
+      {name}
       <div>
         {/* grid--- */}
 
@@ -104,8 +89,27 @@ const subid = await product.data().subid;
           {/* side- */}
           <div className=" col-span-5">
             <div>
-<Sideinfo category={category} subcategory={subcategory} product={product} />
+              <Sideinfo
+                category={category}
+                subcategory={subcategory}
+                product={product}
+              />
+            </div>
+          </div>
+        </div>
 
+        {/* ----related products---- */}
+
+        <div className=" pb-24 mt-8">
+          <div className=" ml-6 mr-6">
+            {/* ---header-- */}
+
+            <div>
+              <h1 className=" text-2xl font-bold">Related Products</h1>
+            </div>
+
+            <div>
+              <Relatedproducts />
             </div>
           </div>
         </div>

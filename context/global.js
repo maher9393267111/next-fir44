@@ -351,8 +351,8 @@ const BestSellersProducts = async () => {
   
 const RealatedProducts = async (prod,subid) => {
 
-  console.log("productid 🚀🚀🚀🚀🚀🚀",prod, '-------',);
-  console.log("sUbi 🔴🔴" ,'-------',subid);
+  //console.log("productid 🚀🚀🚀🚀🚀🚀",prod, '-------',);
+  //console.log("sUbi 🔴🔴" ,'-------',subid);
   // startAt(startAtParam), endAt(endAtParam)
 
 
@@ -381,6 +381,9 @@ const RealatedProducts = async (prod,subid) => {
 }
 
 
+
+
+  
 
 
 

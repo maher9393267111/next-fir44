@@ -19,14 +19,14 @@ function Best() {
   const [users, setUsers] = useState(products);
   const [pageNumber, setPageNumber] = useState(0);
 
-  const usersPerPage = 2;
+  const usersPerPage = 3;
   const pagesVisited = pageNumber * usersPerPage;
 
   const displayUsers = bestsellers
     .slice(pagesVisited, pagesVisited + usersPerPage)
     .map((product) => {
       return (
-        <div key={product.id} className=" mx-8">
+        <div key={product.id} className=" mx-8 mt-4">
           <HomeCard product={product} />
         </div>
       );
@@ -45,7 +45,7 @@ function Best() {
         </div>
       </div>
 
-      <div className=" grid grid-cols-2 gap-6">{displayUsers}</div>
+      <div className=" grid sm:grid-cols-2  lg:grid-cols-3 gap-6">{displayUsers}</div>
       <div className=" mt-6">
         <ReactPaginate
           previousLabel={"Previous"}

@@ -18,10 +18,41 @@ const Catid = () => {
     console.log(catid);
 
 
+const [category, setCategory] = useState({});
+const [subcategory, setSubcategory] = useState({});
+
+const fetchcategory = async () => {
+
+const categorypath = doc(db, "Categories2", catid);
+
+    const category = await getDoc(categorypath);
+    setCategory({ id: category.id, ...category.data() });
+
+
+
+}
+
+
+
+
+useEffect(() => {
+
+if (catid) {
+
+    fetchcategory();
+
+}
+
+
+}, [catid,db])
+
+
 
     return (
         <div>
             {catid}
+            {category?.name}
+
 
         </div>
     );

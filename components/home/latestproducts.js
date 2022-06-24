@@ -31,14 +31,14 @@ function Pa() {
 
 
 
-  const usersPerPage = 2;
+  const usersPerPage = 3;
   const pagesVisited = pageNumber * usersPerPage;
 
   const displayUsers = latestproducts
     .slice(pagesVisited, pagesVisited + usersPerPage)
     .map((product) => {
       return (
-        <div key={product.id} className=" mx-8">
+        <div key={product.id} className=" mx-8 my-4">
           <HomeCard product={product} />
      
         </div>
@@ -63,7 +63,7 @@ function Pa() {
 </div>
 
 
-<div className=' grid grid-cols-2 gap-6'>
+<div className=' grid sm:grid-cols-2 lg:grid-cols-3 gap-6'>
 
 
 
