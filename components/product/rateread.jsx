@@ -1,47 +1,57 @@
-import React from 'react';
-import {Rate} from 'antd'
-import { useState } from 'react';
-import { globaluse } from '../../context/global';
-const Rateread = ({product}) => {
+import React from "react";
+import { Rate } from "antd";
+import { useState, useEffect } from "react";
+import { globaluse } from "../../context/global";
+import { startAfter } from "firebase/firestore";
+const Rateread = ({ product }) => {
+  const { userinfo } = globaluse();
 
-const {userinfo} = globaluse()
+  const [myrating, setMyrating] = useState(0);
 
-const [myrating,setMyrating] = useState(0)
-
-// handle my starts
-
-const handlerating =async () => {
+  
+ 
+const [staraverage, setStarsave] = useState();
 
 
-  product && product?.rating?.map(item => {
-    if (item.postedby === userinfo.id) {
 
-        setMyrating(item.rating.stars)
-        console.log(item.rating,'item.rating')
-    
+
+// ratingaverage calculation
+
+    const ratingaverage = (rating) => {
+        console.log(rating, "ratin🔥🔥🔥🔥g");
+        let sum = 0;
+        let count = 0;
+        rating?.map((item) => {
+            sum += item.stars;
+            console.log(sum, "🔥🔥sum🔥🔥");
+            count++;
+        }
+        );
+        console.log(sum, count, "sum and count");
+        const result = sum/count
+        // setStarsave(result);
+        return sum / count;
     }
-})
-
-}
 
 
-
-// find where im rating stars
+    const rat = ratingaverage(product?.rating);
 
 
 
-    return (
-        <p>
-            
-<div>
-<Rate allowHalf disabled defaultValue={setMyrating} />
-</div>
 
-{product?.rating?.length}  {myrating}
 
-        </p>
-    );
-}
+  return (
+    <p>
+      <div>
+        <Rate allowHalf disabled defaultValue={Number(rat)} />
+      </div>
 
+      {/* {staraverage} */}
+   
+      {ratingaverage(product?.rating)}
+
+    </p>
+  );
+};
 
 export default Rateread;

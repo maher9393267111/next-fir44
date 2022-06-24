@@ -34,7 +34,7 @@ const ModalRate = ({
     console.log(value, "value");
 
     const ratingdata = {
-      rating: value,
+      stars: value,
       postedby: userinfo.id,
     };
 
@@ -45,7 +45,7 @@ const ModalRate = ({
 
     ratingarray.map((item) => {
       if (item.postedby === userinfo.id) {
-        toast.error("You have already rated this product delete it");
+       // toast.error("You have already rated this product delete it");
         setMyrating(0);
         updateDoc(ratingRef, {
           rating: ratingarray.filter((item) => item.postedby !== userinfo.id),
@@ -55,7 +55,7 @@ const ModalRate = ({
         updateDoc(ratingRef, {
           rating: arrayUnion(ratingdata),
         });
-        toast.success("Rating  Successful");
+     //   toast.success("Rating  Successful");
         setMyrating(value);
       }
     });
