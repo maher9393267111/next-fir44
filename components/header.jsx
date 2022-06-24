@@ -22,6 +22,7 @@ const Header = () => {
 
   let dispatch = useDispatch();
   let { userinfo ,logout, SearchbyText} = globaluse()
+  const {searchtext} = useSelector((state) => state.global);
 
   let router= useRouter();
 
@@ -39,7 +40,7 @@ const Header = () => {
 const hendleSearch = (e) => {
 
 dispatch(setsearchtext(e.target.value));
-  SearchbyText(e.target.value);
+  SearchbyText(searchtext);
   router.push("/shop");
 
 

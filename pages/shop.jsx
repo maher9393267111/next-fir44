@@ -17,7 +17,7 @@ const Shop = () => {
 
 {/* ---filter sider--- */}
 
-<div className=' col-span-4'>
+<div className=' col-span-3'>
 
     <Sidebar />
 </div>
@@ -28,7 +28,7 @@ const Shop = () => {
 
 {/* ---all products--- */}
 
-<div className=' mr-4 col-span-8'>
+<div className=' mr-4 col-span-9'>
 
     <Allproducts />
 </div>
