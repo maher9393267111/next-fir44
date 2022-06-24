@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { db } from "../../firebase";
 import { globaluse } from "../../context/global";
+import { useDispatch, useSelector } from "react-redux";
 import {
   onSnapshot,
   doc,
@@ -28,9 +29,17 @@ const Productid = () => {
   const [product, setProduct] = useState({});
   const [subcategory, setSubcategory] = useState({});
   const [category, setCategory] = useState({});
+
+  const { refreshproduct} = useSelector((state) => state.global);
+
+
   const fetchproduct = async () => {
     const productRef = doc(db, "Pro", productid);
     const product = await getDoc(productRef);
+
+
+
+
 
     setProduct({id: productid, ...product.data()});
 
@@ -49,12 +58,13 @@ const Productid = () => {
     if (productid) {
       fetchproduct();
     }
-  }, [db, productid]);
+  }, [db, productid, refreshproduct]);
 
   const { images, name, price, desc, quantity, sold, rating } = product;
 
   return (
     <div>
+        {name}
       <div>
         {/* grid--- */}
 

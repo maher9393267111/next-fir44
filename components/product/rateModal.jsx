@@ -5,14 +5,21 @@ import {db} from '../../firebase'
 import {globaluse} from '../../context/global'
 import { updateDoc,doc,getDoc,query,arrayUnion,arrayRemove,collection } from 'firebase/firestore';
 import { toast } from 'react-toastify';
+import {useDispatch} from 'react-redux'
+import {refreshsingleproduct} from '../../context/store/reduxglobal'
 
 const ModalRate = ({ showModal,handleOk,handleCancel,isModalVisible,product}) => {
  
 const {userinfo} = globaluse()
+const  dispatch = useDispatch()
 
 
+const [myrating,setMyrating] = useState(0)
 
     const handlerating =async (value) => {
+
+dispatch(refreshsingleproduct())
+
 
 console.log(value,'value')
 
@@ -30,6 +37,7 @@ console.log(ratingarray,'ratingarray')
  ratingarray.map(item => {
     if (item.postedby === userinfo.id) {
         toast.error('You have already rated this product delete it');
+        setMyrating(0)
         updateDoc(ratingRef, {
             rating: ratingarray.filter(item => item.postedby !== userinfo.id)
         });
@@ -40,6 +48,7 @@ console.log(ratingarray,'ratingarray')
             rating: arrayUnion(ratingdata)
         });
         toast.success('Rating  Successful');
+        setMyrating(value)
     }
 }
 )
@@ -65,10 +74,11 @@ console.log(ratingarray,'ratingarray')
 <Rate
 onChange={handlerating}
 
-allowHalf defaultValue={5} />
+allowHalf defaultValue={myrating !== 0  ? myrating : 3.5 } />
 
+{myrating !== 0  ? myrating : 3.5 }
+-----{myrating}
 
-{userinfo.id}
 
 </div>
 

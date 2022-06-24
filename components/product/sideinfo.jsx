@@ -82,7 +82,7 @@ const handleCancel = () => {
 <div>
 
 <div className=" mt-4 mb-4">
-{ !isSSR && <Ratreadnossr /> }
+{ !isSSR && <Ratreadnossr product={product} /> }
 </div>
 
 
