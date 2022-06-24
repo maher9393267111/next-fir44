@@ -1,4 +1,5 @@
 import React from "react";
+
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { db } from "../../firebase";
@@ -11,6 +12,7 @@ import {
   getDoc,
   query,
   orderBy,
+
 } from "firebase/firestore";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
@@ -19,7 +21,10 @@ import {
   useDocumentData,
 } from "react-firebase-hooks/firestore";
 import Sideinfo from "../../components/product/sideinfo";
+
 const Productid = () => {
+
+
   const router = useRouter();
   const { productid } = router.query;
   console.log(productid);
@@ -29,9 +34,10 @@ const Productid = () => {
   const [product, setProduct] = useState({});
   const [subcategory, setSubcategory] = useState({});
   const [category, setCategory] = useState({});
+  const [relatedproducts, setRelatedproducts] = useState([]);
 
-  const { refreshproduct} = useSelector((state) => state.global);
-
+  const { refreshproduct } = useSelector((state) => state.global);
+const {RealatedProducts} = globaluse()
 
   const fetchproduct = async () => {
     const productRef = doc(db, "Pro", productid);
@@ -43,6 +49,9 @@ const Productid = () => {
 
     setProduct({id: productid, ...product.data()});
 
+    RealatedProducts(productid) 
+    
+
     const cathref = doc(db, "Categories2", product.data().categoryid);
     const category = await getDoc(cathref);
     setCategory({ id: category.id, ...category.data() });
@@ -52,6 +61,11 @@ const Productid = () => {
     const sub = await getDoc(subcathref);
     setSubcategory({ ...sub.data(), id: sub.id });
   //  console.log(sub, "🔴 🔴 🔴 🔴 🔴 ");
+
+   await RealatedProducts(product.data().subid) 
+
+
+
   };
 
   useEffect(() => {

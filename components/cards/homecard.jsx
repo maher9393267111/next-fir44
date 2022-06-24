@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "antd";
+import {Rate} from "antd";
 import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 //import laptop from "../../images/laptop.png";
 //import  Link  from "next/link";
@@ -14,7 +15,10 @@ const ProductCard = ({ product }) => {
     
 <div>
     <div>
-     <div className="max-w-sm rounded sm:h-[366px]  lg:h-[450px] overflow-hidden shadow-lg">
+     <div className="max-w-sm rounded sm:h-[366px]  lg:h-[477px] overflow-hidden shadow-lg">
+
+
+
    <img  className="w-full lg:h-[200px] sm:h-[130px] object-contain" src={images[0].image} alt="Sunset in the mountains"/>
    <div className="px-6 py-4">
      <div className="font-bold text-xl ">
@@ -23,15 +27,29 @@ const ProductCard = ({ product }) => {
             <p>{product?.name}</p>
         </div>
    
-        <p className= "  sm:text-sm lg:text-lg text-center">
+
+
+
+        {/* <p className= "  sm:text-sm lg:text-lg text-center">
         { desc &&  desc?.slice(0,40)}
-    </p>
+    </p> */}
    </div>
   <div className="px-6   pb-2">
 
 <div className=" text-center">
     <p className=" font-bold">{product.price}$</p>
 </div>
+
+{/* ----rating stars show-- */}
+
+<div>
+  <h1 className=" ml-4 text-center">
+  <Rate allowHalf disabled defaultValue={ product.rating?.length} />
+  </h1>
+</div>
+
+
+
 
 {/* // flex icons- */}
 

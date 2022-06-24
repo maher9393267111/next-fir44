@@ -45,7 +45,8 @@ import {
   fetchsingleProduct,
   fetchlatestproducts,
   fechBestsellers,
-  fetchsingleCategory
+  fetchsingleCategory,
+  relatedproductsfetch,
 
 } from "./store/reduxglobal";
 import { useDispatch } from "react-redux";
@@ -347,6 +348,38 @@ const BestSellersProducts = async () => {
 
 
 
+  
+const RealatedProducts = async (productid) => {
+
+ console.log("productid 🚀🚀🚀🚀🚀🚀",productid)
+  // startAt(startAtParam), endAt(endAtParam)
+
+
+  onSnapshot(
+    query(collection(db, "Pro"), where('subid', '==' , productid  ), 
+   // orderBy("id", "desc")
+   // ,
+    limit(3),
+   // startAt(startat)
+    ),
+    (snapshot) => {
+      const productsArr = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+       dispatch( relatedproductsfetch(productsArr));
+
+
+      return productsArr;
+
+    }
+  );
+}
+
+
+
+
 
 
 
@@ -375,6 +408,7 @@ const BestSellersProducts = async () => {
     setSelectedcategory,
     latesProducts,
     BestSellersProducts,
+    RealatedProducts ,
    //fetchSingleCategoryProducts
   };
 
