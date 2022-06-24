@@ -1,6 +1,21 @@
 import React from "react";
 import { Button, message } from "antd";
 import Link from "next/link";
+import { globaluse } from "../../context/global";
+import { useState } from "react";
+
+import dynamic from "next/dynamic";
+
+const Ratreadnossr = dynamic(() => import("../../components/product/rateread"), {
+  ssr: false,
+});
+
+const RateModalnossr = dynamic(() => import("../../components/product/rateModal"), {
+  ssr: false,
+});
+
+
+//import {Rate} from 'antd'
 const Sideinfo = ({ category, subcategory, product }) => {
   const addtocart = () => {
     message.info(`${product.name} added to cart`);
@@ -9,6 +24,33 @@ const Sideinfo = ({ category, subcategory, product }) => {
   const addtoWishlist = () => {
     message.info(`${product.name} added to wishlist`);
   };
+
+
+
+const {userinfo} = globaluse()
+
+
+// modal
+const [isModalVisible, setIsModalVisible] = useState(false);
+
+const showModal = () => {
+  setIsModalVisible(true);
+};
+
+const handleOk = () => {
+  setIsModalVisible(false);
+};
+
+const handleCancel = () => {
+  setIsModalVisible(false);
+};
+
+
+//
+
+
+
+
 
   return (
     <div>
@@ -20,6 +62,18 @@ const Sideinfo = ({ category, subcategory, product }) => {
             {product.name}
           </h1>
         </div>
+
+{/* rating by me only read and show */}
+
+<div>
+
+<div className=" mt-4 mb-4">
+<Ratreadnossr />
+</div>
+
+
+</div>
+
 
         {/* ----info-- */}
 
@@ -66,30 +120,48 @@ const Sideinfo = ({ category, subcategory, product }) => {
                 <div>
                   <p>
                     <img
-                      className="w-10 h1-10 rounded-full"
+                      className="w-10 h1-10 rounded-full cursor-pointer"
                       src="https://cdn4.iconfinder.com/data/icons/eon-ecommerce-i-1/32/add_plus_cart_buy-256.png"
                       alt=""
                     />
+                    <p className="font-semibold text-[13px]">Add to Cart</p>
                   </p>
                 </div>
 
                 <div>
                   <p>
                     <img
-                      className="w-12 h1-12 rounded-full"
+                      className="w-10 h1-10 cursor-pointer rounded-full"
                       src="https://cdn4.iconfinder.com/data/icons/eon-ecommerce-i-1/32/mark_wishlist_favorite-256.png"
                       alt=""
                     />
+                    <p  className="font-semibold text-[13px]">Add to Wishlist</p>
                   </p>
                 </div>
 
                 <div>
-                  <p>
+                  <p
+                  >
                     <img
-                      className="w-12 h1-12 rounded-full"
+                         
+              onClick={showModal}
+                      className="w-10 h-10 rounded-full  cursor-pointer"
                       src="https://cdn4.iconfinder.com/data/icons/food-delivery-72/64/rating-star-review-feedback-evaluation-premium-rank-256.png"
                       alt=""
                     />
+              {userinfo.name &&      <p 
+         
+              className="font-semibold text-[13px]">Make Rating</p>}
+              {!userinfo.name &&      <p className="font-semibold text-[13px]  text-red-600">Please Signin to Make Rating</p>}
+
+<RateModalnossr   
+showModal= {showModal}
+handleOk= {handleOk}
+handleCancel= {handleCancel}
+isModalVisible= {isModalVisible}
+
+/>
+
                   </p>
                 </div>
               </div>

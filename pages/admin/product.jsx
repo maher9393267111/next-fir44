@@ -170,10 +170,10 @@ shipping:values.product.shipping,
 categoryid:values.product.category,
 subid:values.product.subcategory,
 desc:discreption,
-rating: {
+rating: [{
     stars: 0,
     postedby: "",
-},
+}],
 sold:0,
 color:values.product.color,
 createdat:serverTimestamp(),
