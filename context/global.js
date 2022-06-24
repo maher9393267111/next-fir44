@@ -506,6 +506,37 @@ dispatch(fetchsearchedproducts(filterproducts));
 
 
 
+  const ProductsBySelectedSubs = async (subs) => {
+ 
+    console.log(" subsdata array is is--- 🔴🔴", "-------", subs);
+  
+
+    onSnapshot(
+      query(
+        collection(db, "Pro"),
+        where("subid", "in", subs),
+       
+        //  where('name', '!=' , prod   ),
+        // orderBy("id", "desc")
+        // ,
+        // limit(3),
+        // startAt(startat)
+      ),
+      (snapshot) => {
+        const productsArr = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        dispatch(fetchsearchedproducts(productsArr));
+
+        return productsArr;
+      }
+    );
+  };
+
+
+
 
 
 
@@ -541,7 +572,8 @@ dispatch(fetchsearchedproducts(filterproducts));
     SubProducts,
     SearchbyText,
     ProductsByPrice,
-    ProductsBySelectedCategories 
+    ProductsBySelectedCategories ,
+    ProductsBySelectedSubs ,
 
     //fetchSingleCategoryProducts
   };

@@ -11,15 +11,17 @@ import { setsearchtext, setsearchmode } from "../../context/store/reduxglobal";
 const Filterbar = () => {
   const [price, setPrice] = useState([0, 1000]);
   const [categoryIds, setCategoryIds] = useState([]);
+    const [subIds, setsubIds] = useState([]);
   const dispatch = useDispatch();
   const [ok, setOk] = useState(false);
 
-  const { ProductsByPrice, ProductsBySelectedCategories  } = globaluse();
+  const { ProductsByPrice, ProductsBySelectedCategories,ProductsBySelectedSubs  } = globaluse();
 
-  const { categories } = useSelector((state) => state.global);
+  const { categories,subCategoies } = useSelector((state) => state.global);
   // handle price slider change values
 
   const handleSlider = (value) => {
+   //setCategoryIds([]);
     dispatch(setsearchtext(""));
     dispatch(setsearchmode(true));
     setPrice(value);
@@ -37,9 +39,8 @@ const Filterbar = () => {
   const handleCheck = (e) => {
 
 
-
     dispatch(setsearchtext(""));
-    dispatch(setsearchmode(true));
+  
     setPrice([0, 0]);
     // console.log(e.target.value);
     let inTheState = [...categoryIds];
@@ -56,8 +57,21 @@ const Filterbar = () => {
     console.log(inTheState);
 
     setCategoryIds(inTheState);
-    // console.log(inTheState);
-ProductsBySelectedCategories(inTheState)
+
+if (inTheState.length !== 0) {
+  //dispatch(setsearchtext(""));
+  dispatch(setsearchmode(true));
+  ProductsBySelectedCategories(inTheState);
+}
+
+else  {
+
+    dispatch(setsearchmode(false));
+
+}
+
+    
+
   };
 
   const showCategories = () =>
@@ -77,6 +91,71 @@ ProductsBySelectedCategories(inTheState)
     ));
 
   // categories end
+
+
+//show sub categories
+
+const showSubs= () =>
+    subCategoies.map((c) => (
+      <div key={c._id}>
+        <Checkbox
+         onChange={handlSubsCheck}
+          className="pb-2 pl-4 pr-4"
+          value={c.id}
+          name="Subs"
+          checked={subIds.includes(c.id)}
+        >
+          {c.name}
+        </Checkbox>
+        <br />
+      </div>
+    ));
+
+
+
+    const handlSubsCheck = (e) => {
+
+
+        dispatch(setsearchtext(""));
+      
+        setPrice([0, 0]);
+        // console.log(e.target.value);
+        let inTheState = [...subIds];
+        let justChecked = e.target.value;
+        let foundInTheState = inTheState.indexOf(justChecked); // index or -1
+    
+        // indexOf method ?? if not found returns -1 else return index [1,2,3,4,5]
+        if (foundInTheState === -1) {
+          inTheState.push(justChecked);
+        } else {
+          // if found pull out one item from index
+          inTheState.splice(foundInTheState, 1);
+        }
+        console.log(inTheState);
+    
+        setsubIds(inTheState);
+    
+    if (inTheState.length !== 0  || inTheState.length > 0) {
+      //dispatch(setsearchtext(""));
+      dispatch(setsearchmode(true));
+      ProductsBySelectedSubs(inTheState);
+    }
+    
+    else  {
+    
+        dispatch(setsearchmode(false));
+    
+    }
+    
+        
+    
+      };
+
+
+
+
+
+
 
   return (
     <div>
@@ -116,16 +195,33 @@ ProductsBySelectedCategories(inTheState)
           >
             <div style={{ maringTop: "-10px" }}>{showCategories()}</div>
           </SubMenu>
+
+          <SubMenu
+            key="4"
+            title={
+              <span className="h5">
+                <DownSquareOutlined /> SubCategories {subIds.length}
+              </span>
+            }
+          >
+            <div style={{ maringTop: "-10px" }}>{showSubs()}</div>
+            </SubMenu> 
+
+
+
+
+
         </Menu>
 
-        <div>
-          {categoryIds.map((item) => (
-            <div>{item}</div>
-          ))}
+      
+      {/* -----sub categoris- */}
+
+
+
+ 
         </div>
-      </div>
     </div>
-  );
-};
+    );
+}
 
 export default Filterbar;
