@@ -21,20 +21,28 @@ const ratingdata = {
     postedby: userinfo.id,
 }
 
-const cathref = doc(db, "Pro", product.id);
-//const category = await getDoc(cathref);
 
-// await updateDoc(cathref, {
-//     rating: arrayUnion(ratingdata)
-// });
-// await toast.success('Rating  Successful');
-
-
-// check if user has already rated
 const ratingRef = doc(db, "Pro", product.id);
 const rating = await getDoc(ratingRef);
 const ratingarray = rating.data().rating;
 console.log(ratingarray,'ratingarray')
+
+ ratingarray.map(item => {
+    if (item.postedby === userinfo.id) {
+        toast.error('You have already rated this product delete it');
+        updateDoc(ratingRef, {
+            rating: ratingarray.filter(item => item.postedby !== userinfo.id)
+        });
+        return;
+    }
+    else{
+        updateDoc(ratingRef, {
+            rating: arrayUnion(ratingdata)
+        });
+        toast.success('Rating  Successful');
+    }
+}
+)
 
 
 
