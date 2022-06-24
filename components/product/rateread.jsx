@@ -1,8 +1,16 @@
 import React from "react";
 import { Rate } from "antd";
+import {
+    useCollectionData,
+    useDocumentData,
+  } from "react-firebase-hooks/firestore";
+  import { query, orderBy, collection, doc } from "firebase/firestore";
+  import {db} from '../../firebase'
 import { useState, useEffect } from "react";
+
 import { globaluse } from "../../context/global";
 import { startAfter } from "firebase/firestore";
+
 const Rateread = ({ product }) => {
   const { userinfo } = globaluse();
 
@@ -13,28 +21,48 @@ const Rateread = ({ product }) => {
 const [staraverage, setStarsave] = useState();
 
 
+console.log(product.id, "product");
+//const [prodata] =  useDocumentData(doc(db, "Pro", product.id));
+
 
 
 // ratingaverage calculation
 
-    const ratingaverage = (rating) => {
-        console.log(rating, "ratin🔥🔥🔥🔥g");
+    const ratingaverage = () => {
+      //  console.log(rating, "ratin🔥🔥🔥🔥g");
         let sum = 0;
         let count = 0;
-        rating?.map((item) => {
+
+if (product.rating) {
+
+        product?.rating.map((item) => {
             sum += item.stars;
-            console.log(sum, "🔥🔥sum🔥🔥");
+           // console.log(sum, "🔥🔥sum🔥🔥");
             count++;
         }
         );
-        console.log(sum, count, "sum and count");
+   //     console.log(sum, count, "sum and count");
         const result = sum/count
         // setStarsave(result);
         return sum / count;
     }
 
+}
 
-    const rat = ratingaverage(product?.rating);
+
+useEffect(() => {
+
+ratingaverage();
+  console.log(product.rating, "🔥🔥-----🔥🔥");
+
+}, [product.rating]);
+
+
+
+
+
+
+   // const rat = ratingaverage(product?.rating);
 
 
 
@@ -43,12 +71,31 @@ const [staraverage, setStarsave] = useState();
   return (
     <p>
       <div>
-        <Rate allowHalf disabled defaultValue={Number(rat)} />
+        <Rate allowHalf disabled defaultValue={ratingaverage ? ratingaverage : 1} />
       </div>
 
       {/* {staraverage} */}
    
-      {ratingaverage(product?.rating)}
+      {ratingaverage() }
+
+{product.rating?.length}
+
+
+{Array.from(Array(product.rating?.length).keys()).map((item) => {return (
+
+    <div>1</div>
+)})}
+
+
+{/* {Array.from(Array(Number(ratingaverage)).keys()).map((item) => {
+
+return (
+<div>
+    sd
+</div>
+)})} */}
+
+
 
     </p>
   );
