@@ -14,7 +14,7 @@ import {
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { refreshsingleproduct } from "../../context/store/reduxglobal";
+import { refreshsingleproduct,  afterRatingproduct } from "../../context/store/reduxglobal";
 
 const ModalRate = ({
   showModal,
@@ -29,7 +29,7 @@ const ModalRate = ({
   const [myrating, setMyrating] = useState(0);
 
   const handlerating = async (value) => {
-    dispatch(refreshsingleproduct());
+  
 
     console.log(value, "value");
 
@@ -57,8 +57,21 @@ const ModalRate = ({
         });
      //   toast.success("Rating  Successful");
         setMyrating(value);
+        dispatch(refreshsingleproduct());
+
+        
+  
       }
-    });
+    })
+
+    
+
+
+    
+
+ 
+
+
   };
 
   return (

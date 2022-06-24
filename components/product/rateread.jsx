@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import { globaluse } from "../../context/global";
 import { startAfter } from "firebase/firestore";
 
+
 const Rateread = ({ product }) => {
   const { userinfo } = globaluse();
 
@@ -37,12 +38,13 @@ if (product.rating) {
 
         product?.rating.map((item) => {
             sum += item.stars;
-           // console.log(sum, "🔥🔥sum🔥🔥");
+            console.log(sum, "🔥🔥sum🔥🔥");
             count++;
         }
         );
    //     console.log(sum, count, "sum and count");
         const result = sum/count
+        console.log(result, "-=--=result");
         // setStarsave(result);
         return sum / count;
     }
@@ -62,7 +64,7 @@ ratingaverage();
 
 
 
-   // const rat = ratingaverage(product?.rating);
+    const rat = Number(ratingaverage());
 
 
 
@@ -71,29 +73,117 @@ ratingaverage();
   return (
     <p>
       <div>
-        <Rate allowHalf disabled defaultValue={ratingaverage ? ratingaverage : 1} />
+        <Rate allowHalf disabled defaultValue={ rat} />
       </div>
 
       {/* {staraverage} */}
    
-      {ratingaverage() }
+   <div> 
+   {ratingaverage() }
 
-{product.rating?.length}
+<div>
+    {ratingaverage() >2 ? "Good" : "Bad"}
+
+{ratingaverage() >1 && ratingaverage() <2 ? (
+
+<div className=" flex">
+    <img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+
+<img className=" w-6 h-6 rounded-full" src="https://cdn2.iconfinder.com/data/icons/flat-design-basic-set-9/24/star-half-grayed-256.png" alt="" />
 
 
-{Array.from(Array(product.rating?.length).keys()).map((item) => {return (
+</div>
+
+
+) : (  ratingaverage() > 2 && ratingaverage() < 3 ? (
+
+<div className=" flex">
+    <img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+    <img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+
+<img className=" w-6 h-6 rounded-full" src="https://cdn2.iconfinder.com/data/icons/flat-design-basic-set-9/24/star-half-grayed-256.png" alt="" />
+
+</div>
+
+
+
+
+
+) : ( ratingaverage() > 3 && ratingaverage() < 4 ? (<div>
+
+
+<div className=" flex">
+<img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+    <img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+    <img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+
+<img className=" w-6 h-6 rounded-full" src="https://cdn2.iconfinder.com/data/icons/flat-design-basic-set-9/24/star-half-grayed-256.png" alt="" />
+
+</div>
+
+
+
+
+
+
+
+</div>) : (ratingaverage() > 4 && ratingaverage() <= 5 ? (
+
+<div className=" flex">
+<img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+<img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+    <img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+    <img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+
+<img className=" w-6 h-6 rounded-full" src="https://cdn2.iconfinder.com/data/icons/flat-design-basic-set-9/24/star-half-grayed-256.png" alt="" />
+
+</div>
+
+
+
+
+
+
+) : (
+
+<div className=" flex">
+<img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+<img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+<img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+    <img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+    <img className=" w-6 h-6 rounded-full" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678064-star-256.png" alt="" />
+
+<img className=" w-6 h-6 rounded-full" src="https://cdn2.iconfinder.com/data/icons/flat-design-basic-set-9/24/star-half-grayed-256.png" alt="" />
+
+</div>
+
+
+
+
+)  )  ) )}
+
+
+</div>
+
+
+
+
+    </div>  
+
+
+<div>
+    <p className=" flex gap-4"> <p className="pt-[5px]">Ratings from</p>  <p className=" font-bold text-red-600 pt-[5px]">{product.rating?.length} </p> <div><img className=" w-8 h-8 rounded-full" src="https://cdn4.iconfinder.com/data/icons/eon-ecommerce-i-1/32/user_profile_man-256.png" alt="" /></div></p>
+</div>
+
+
+
+{Array.from(Array().keys()).map((item) => {return (
 
     <div>1</div>
 )})}
 
 
-{/* {Array.from(Array(Number(ratingaverage)).keys()).map((item) => {
 
-return (
-<div>
-    sd
-</div>
-)})} */}
 
 
 
