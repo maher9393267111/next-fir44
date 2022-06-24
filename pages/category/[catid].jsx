@@ -3,13 +3,15 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { db } from "../../firebase";
 import { globaluse } from "../../context/global";
+import {useSelector} from 'react-redux'
+import HomeCard from "../../components/cards/homecard";
 import {
-  onSnapshot,
-  doc,
-  collection,
-  getDoc,
-  query,
-  orderBy,
+    onSnapshot,
+    doc,
+    collection,
+    getDoc,
+    query,
+    orderBy,
 } from "firebase/firestore";
 const Catid = () => {
 
@@ -18,44 +20,67 @@ const Catid = () => {
     console.log(catid);
 
 
-const [category, setCategory] = useState({});
-const [subcategory, setSubcategory] = useState({});
+    const [category, setCategory] = useState({});
+    const [subcategory, setSubcategory] = useState({});
 
-const {  CategoryProducts } = globaluse();
+    const { CategoryProducts } = globaluse();
+    const { categoryproducts } = useSelector((state) => state.global);
 
-const fetchcategory = async () => {
+    const fetchcategory = async () => {
 
-const categorypath = doc(db, "Categories2", catid);
+        const categorypath = doc(db, "Categories2", catid);
 
-    const category = await getDoc(categorypath);
-    setCategory({ id: category.id, ...category.data() });
+        const category = await getDoc(categorypath);
+        setCategory({ id: category.id, ...category.data() });
 
-    await   CategoryProducts(catid);
-
-
-}
+        await CategoryProducts(catid);
 
 
+    }
 
 
-useEffect(() => {
-
-if (catid) {
-
-    fetchcategory();
-
-}
 
 
-}, [catid,db])
+    useEffect(() => {
+
+        if (catid) {
+
+            fetchcategory();
+
+        }
+
+
+    }, [catid, db])
 
 
 
     return (
         <div>
-   {catid}
-            {category?.name}
+            {/* {catid} */}
+          
 
+            {/* ----header-- */}
+
+<div>
+    <h1 className=' text-2xl text-blue-500 mt-6 ml-8'> {category?.name} Category </h1>
+</div>
+
+            <div className=' ml-12 mt-12 mr-4 grid  sm:grid-cols-2 lg:grid-cols-3'>
+
+       
+            { categoryproducts && categoryproducts.map((product) => {
+
+return (
+
+    <div>
+        <HomeCard product={product} />
+    </div>
+
+
+
+) })}
+
+</div>
 
         </div>
     );

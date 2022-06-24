@@ -34,7 +34,7 @@ const ProductCard = ({ product }) => {
         { desc &&  desc?.slice(0,40)}
     </p> */}
    </div>
-  <div className="px-6   pb-2">
+  <div className="px-6  md:w-[240px]  pb-2">
 
 <div className=" text-center">
     <p className=" font-bold">{product.price}$</p>
@@ -42,7 +42,7 @@ const ProductCard = ({ product }) => {
 
 {/* ----rating stars show-- */}
 
-<div>
+<div className=" w-full">
   <h1 className=" ml-4 text-center">
   <Rate allowHalf disabled defaultValue={ product.rating?.length} />
   </h1>
@@ -53,7 +53,7 @@ const ProductCard = ({ product }) => {
 
 {/* // flex icons- */}
 
-<div className=" flex ml-4 sm:justify-between  lg:justify-around gap-4">
+<div className=" flex ml-4   justify-between gap-4">
 
 <div>
     <img className=" w-10 h-10  object-contain rounded-b-full" src="https://cdn2.iconfinder.com/data/icons/commerce-shadow/100/.svg-3-256.png"/>

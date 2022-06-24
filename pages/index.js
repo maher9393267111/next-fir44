@@ -10,6 +10,7 @@ import HomeCard from '../components/cards/homecard'
 import Latestproducts from '../components/home/latestproducts'
 import Bestsellers from '../components/home/Bestsellers'
 import CategoriesList from '../components/home/categoriesList'
+import SubList from '../components/home/subList'
 
 const  Typewriter = dynamic(() => import('../components/typewriter'), {
   ssr: false
@@ -59,6 +60,11 @@ export default function Home() {
 
 
 
+
+
+<div className=' mt-6 pb-20'>
+  <SubList />
+</div>
 
 
 

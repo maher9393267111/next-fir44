@@ -48,6 +48,8 @@ import {
   fetchsingleCategory,
   relatedproductsfetch,
   fetchcatproducts,
+  fetchsubcatproducts,
+  fetchsearchedproducts
 
 } from "./store/reduxglobal";
 import { useDispatch } from "react-redux";
@@ -421,6 +423,105 @@ const CategoryProducts = async (catid) => {
 
 
 
+const SubProducts = async (subid) => {
+
+  //console.log("productid 🚀🚀🚀🚀🚀🚀",prod, '-------',);
+  console.log("sub id is--- 🔴🔴" ,'-------',subid);
+  // startAt(startAtParam), endAt(endAtParam)
+
+
+  onSnapshot(
+    query(collection(db, "Pro"),
+     where('subid', '==' , `${subid}`  ), 
+  //  where('name', '!=' , prod   ), 
+   // orderBy("id", "desc")
+   // ,
+   // limit(3),
+   // startAt(startat)
+    ),
+    (snapshot) => {
+      const productsArr = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+       dispatch(fetchsubcatproducts(productsArr));
+
+
+      return productsArr;
+
+    }
+  );
+}
+
+
+
+
+
+// searched by text products
+
+
+const SearchbyText = async (text) => {
+
+  //console.log("productid 🚀🚀🚀🚀🚀🚀",prod, '-------',);
+  console.log("sub id is--- 🔴🔴🚀🚀🚀🚀🚀🚀" ,'-------',text);
+  // startAt(startAtParam), endAt(endAtParam)
+
+// search with text  regexp 
+
+ const regex = new RegExp(text, "i");
+
+
+// `${regex}`
+
+
+
+var q1 = query(collection(db, "Pro"), where("name", "==", `${text}`));
+
+  onSnapshot(q1, (snapshot) => {
+    const productsArr = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+      dispatch(fetchsearchedproducts(productsArr));
+
+  
+    return productsArr;
+  }
+  );
+
+
+
+
+
+
+  // onSnapshot(
+  //   query(collection(db, "Pro"),
+  //    where('name', '==' ,  `m12`   ), 
+  // //  where('name', '!=' , prod   ), 
+  //  // orderBy("id", "desc")
+  //  // ,
+  //  // limit(3),
+  //  // startAt(startat)
+  //   ),
+  //   (snapshot) => {
+  //     const productsArr = snapshot.docs.map((doc) => ({
+  //       id: doc.id,
+  //       ...doc.data(),
+  //     }));
+
+  //      dispatch(fetchsearchedproducts(productsArr));
+
+
+  //     return productsArr;
+
+  //   }
+  // );
+}
+
+
+
 
 
 
@@ -451,6 +552,8 @@ const CategoryProducts = async (catid) => {
     BestSellersProducts,
     RealatedProducts ,
     CategoryProducts,
+    SubProducts,
+    SearchbyText
    //fetchSingleCategoryProducts
   };
 
