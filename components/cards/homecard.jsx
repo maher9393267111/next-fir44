@@ -34,7 +34,7 @@ const ProductCard = ({ product }) => {
         { desc &&  desc?.slice(0,40)}
     </p> */}
    </div>
-  <div className="px-6  md:w-[240px]  pb-2">
+  <div className="px-6  md:w-[252px]  pb-2">
 
 <div className=" text-center">
     <p className=" font-bold">{product.price}$</p>

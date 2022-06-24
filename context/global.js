@@ -374,6 +374,9 @@ const subContextComponent = ({ children }) => {
 
         dispatch(fetchcatproducts(productsArr));
 
+        dispatch(fetchsearchedproducts(productsArr));
+
+
         return productsArr;
       }
     );
