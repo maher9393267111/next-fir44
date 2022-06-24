@@ -30,8 +30,7 @@ import {
   arrayUnion,
   startAt,
   endAt,
-  equalTo
-  
+  equalTo,
 } from "firebase/firestore";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -51,14 +50,11 @@ import {
   relatedproductsfetch,
   fetchcatproducts,
   fetchsubcatproducts,
-  fetchsearchedproducts
-
+  fetchsearchedproducts,
 } from "./store/reduxglobal";
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
 
 const globalContext = createContext();
-
 
 export const globaluse = () => {
   return useContext(globalContext);
@@ -73,8 +69,9 @@ const subContextComponent = ({ children }) => {
   const [openmodal, setOpenmodal] = useState(false);
   const [allcategory, setAllcategory] = useState([]);
   const [refreshcategory, setRefreshcategory] = useState(false);
-  const[selectedcategory,setSelectedcategory]=useState('');
+  const [selectedcategory, setSelectedcategory] = useState("");
   const dispatch = useDispatch();
+  const { products } = useSelector((state) => state.global);
 
   //------- reguister and login
 
@@ -151,7 +148,7 @@ const subContextComponent = ({ children }) => {
 
         const fetchuser = async () => {
           const userinfo = await getDoc(doc(db, "Users", user.email));
-          setUserInfo({id:userinfo.id, ...userinfo.data()});
+          setUserInfo({ id: userinfo.id, ...userinfo.data() });
         };
 
         fetchuser();
@@ -233,9 +230,6 @@ const subContextComponent = ({ children }) => {
     listSubCategories();
   }, [db, refreshcategory]);
 
-
-
-
   useEffect(() => {
     const listproducts = async () => {
       async function readproData() {
@@ -256,258 +250,218 @@ const subContextComponent = ({ children }) => {
       await readproData();
     };
     listproducts();
-  }, [db,refreshcategory]);
+  }, [db, refreshcategory]);
 
+  // find product by his id
 
-
-
-// find product by his id
+  useEffect(() => {}, []);
 
   useEffect(() => {
-  
-     
+    const q = query(
+      collection(db, "subcat"),
+      where("categoryid", "==", selectedcategory)
+    );
 
-
-
-
-      },[]
-  )
-
-
-
-useEffect(() => {
-  const q = query(collection(db, "subcat"), where("categoryid", "==", selectedcategory));
-
-  const noteListener = onSnapshot(q, (querySnapshot) => {
-    const list = [];
-    querySnapshot.forEach((doc) => {
-      list.push({ id: doc.id, ...doc.data() });
+    const noteListener = onSnapshot(q, (querySnapshot) => {
+      const list = [];
+      querySnapshot.forEach((doc) => {
+        list.push({ id: doc.id, ...doc.data() });
+      });
+      dispatch(fetchCategorySubs(list));
     });
-  dispatch(fetchCategorySubs(list));
-  });
 
-  return noteListener;
-}, [selectedcategory]);
+    return noteListener;
+  }, [selectedcategory]);
 
+  // latest products
 
+  const latesProducts = async () => {
+    const startat = 2;
 
-
-
-// latest products
-
-const latesProducts = async () => {
-
-const startat =2
-
-  // startAt(startAtParam), endAt(endAtParam)
-
-
-  onSnapshot(
-    query(collection(db, "Pro"), orderBy("createdat", "desc"),limit(8),
-   // startAt(startat)
-    ),
-    (snapshot) => {
-      const productsArr = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      dispatch(fetchlatestproducts(productsArr));
-
-    }
-  );
-}
-
-
-
-// best sellers products
-
-
-const BestSellersProducts = async () => {
-
- 
     // startAt(startAtParam), endAt(endAtParam)
-  
-  
+
     onSnapshot(
-      query(collection(db, "Pro"), orderBy("sold", "desc"),limit(12),
-     // startAt(startat)
+      query(
+        collection(db, "Pro"),
+        orderBy("createdat", "desc"),
+        limit(8)
+        // startAt(startat)
       ),
       (snapshot) => {
         const productsArr = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-  
-         dispatch(fechBestsellers(productsArr));
 
-
-        return productsArr;
-  
+        dispatch(fetchlatestproducts(productsArr));
       }
     );
-  }
+  };
+
+  // best sellers products
+
+  const BestSellersProducts = async () => {
+    // startAt(startAtParam), endAt(endAtParam)
+
+    onSnapshot(
+      query(
+        collection(db, "Pro"),
+        orderBy("sold", "desc"),
+        limit(12)
+        // startAt(startat)
+      ),
+      (snapshot) => {
+        const productsArr = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        dispatch(fechBestsellers(productsArr));
+
+        return productsArr;
+      }
+    );
+  };
+
+  const RealatedProducts = async (prod, subid) => {
+    //console.log("productid 🚀🚀🚀🚀🚀🚀",prod, '-------',);
+    //console.log("sUbi 🔴🔴" ,'-------',subid);
+    // startAt(startAtParam), endAt(endAtParam)
+
+    onSnapshot(
+      query(
+        collection(db, "Pro"),
+        where("subid", "==", `${subid}`),
+        where("name", "!=", prod)
+        // orderBy("id", "desc")
+        // ,
+        // limit(3),
+        // startAt(startat)
+      ),
+      (snapshot) => {
+        const productsArr = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        dispatch(relatedproductsfetch(productsArr));
+
+        return productsArr;
+      }
+    );
+  };
+
+  const CategoryProducts = async (catid) => {
+    //console.log("productid 🚀🚀🚀🚀🚀🚀",prod, '-------',);
+    console.log("category id is--- 🔴🔴", "-------", catid);
+    // startAt(startAtParam), endAt(endAtParam)
+
+    onSnapshot(
+      query(
+        collection(db, "Pro"),
+        where("categoryid", "==", `${catid}`)
+        //  where('name', '!=' , prod   ),
+        // orderBy("id", "desc")
+        // ,
+        // limit(3),
+        // startAt(startat)
+      ),
+      (snapshot) => {
+        const productsArr = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        dispatch(fetchcatproducts(productsArr));
+
+        return productsArr;
+      }
+    );
+  };
+
+  const SubProducts = async (subid) => {
+    //console.log("productid 🚀🚀🚀🚀🚀🚀",prod, '-------',);
+    console.log("sub id is--- 🔴🔴", "-------", subid);
+    // startAt(startAtParam), endAt(endAtParam)
+
+    onSnapshot(
+      query(
+        collection(db, "Pro"),
+        where("subid", "==", `${subid}`)
+        //  where('name', '!=' , prod   ),
+        // orderBy("id", "desc")
+        // ,
+        // limit(3),
+        // startAt(startat)
+      ),
+      (snapshot) => {
+        const productsArr = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        dispatch(fetchsubcatproducts(productsArr));
+
+        return productsArr;
+      }
+    );
+  };
+
+  // searched by text products
+
+  const SearchbyText = async (text) => {
+    //console.log("productid 🚀🚀🚀🚀🚀🚀",prod, '-------',);
+    console.log("sub id is--- 🔴🔴🚀🚀🚀🚀🚀🚀", "-------", text);
+    // startAt(startAtParam), endAt(endAtParam)
+
+    // search with text  regexp
+
+    const regex = new RegExp(text, "i");
+
+    // `${regex}`
+
+    // const usersCollectionRef = collection(db, "Pro");
+    // const data = await getDocs(
+    //   query(usersCollectionRef, where("name", "==", text))
+    // ).then(async (snapshot) => {
+    //   let items = [];
+
+    //   await snapshot.docs.forEach((doc) => {
+    //     items.push({ ...doc.data(), id: doc.id });
+    //   });
+    //   dispatch(fetchsearchedproducts(items));
+
+    //   return items;
+    // });
+
+
+//-----------------------------------
+
+
+const filterproducts = products.filter((product) => {
+  return product.name.match(regex);
+});
+
+console.log("filter🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥", filterproducts);
+
+dispatch(fetchsearchedproducts(filterproducts));
+
+
+//-----------------------------------
+
+
+
+
+  };
+
+
+
+
+
+  // search products by his regular expression name from firebase
+
+
   
-  
-
-
-
-
-  
-const RealatedProducts = async (prod,subid) => {
-
-  //console.log("productid 🚀🚀🚀🚀🚀🚀",prod, '-------',);
-  //console.log("sUbi 🔴🔴" ,'-------',subid);
-  // startAt(startAtParam), endAt(endAtParam)
-
-
-  onSnapshot(
-    query(collection(db, "Pro"),
-     where('subid', '==' , `${subid}`  ), 
-    where('name', '!=' , prod   ), 
-   // orderBy("id", "desc")
-   // ,
-   // limit(3),
-   // startAt(startat)
-    ),
-    (snapshot) => {
-      const productsArr = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-       dispatch( relatedproductsfetch(productsArr));
-
-
-      return productsArr;
-
-    }
-  );
-}
-
-
-
-
-    
-const CategoryProducts = async (catid) => {
-
-  //console.log("productid 🚀🚀🚀🚀🚀🚀",prod, '-------',);
-  console.log("category id is--- 🔴🔴" ,'-------',catid);
-  // startAt(startAtParam), endAt(endAtParam)
-
-
-  onSnapshot(
-    query(collection(db, "Pro"),
-     where('categoryid', '==' , `${catid}`  ), 
-  //  where('name', '!=' , prod   ), 
-   // orderBy("id", "desc")
-   // ,
-   // limit(3),
-   // startAt(startat)
-    ),
-    (snapshot) => {
-      const productsArr = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-       dispatch(fetchcatproducts(productsArr));
-
-
-      return productsArr;
-
-    }
-  );
-}
-
-
-
-
-
-
-const SubProducts = async (subid) => {
-
-  //console.log("productid 🚀🚀🚀🚀🚀🚀",prod, '-------',);
-  console.log("sub id is--- 🔴🔴" ,'-------',subid);
-  // startAt(startAtParam), endAt(endAtParam)
-
-
-  onSnapshot(
-    query(collection(db, "Pro"),
-     where('subid', '==' , `${subid}`  ), 
-  //  where('name', '!=' , prod   ), 
-   // orderBy("id", "desc")
-   // ,
-   // limit(3),
-   // startAt(startat)
-    ),
-    (snapshot) => {
-      const productsArr = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-       dispatch(fetchsubcatproducts(productsArr));
-
-
-      return productsArr;
-
-    }
-  );
-}
-
-
-
-
-
-// searched by text products
-
-
-const SearchbyText = async (text) => {
-
-  //console.log("productid 🚀🚀🚀🚀🚀🚀",prod, '-------',);
-  console.log("sub id is--- 🔴🔴🚀🚀🚀🚀🚀🚀" ,'-------',text);
-  // startAt(startAtParam), endAt(endAtParam)
-
-// search with text  regexp 
-
- const regex = new RegExp(text, "i");
-
-
-// `${regex}`   
-
-const usersCollectionRef = collection(db, "Pro");
-const data = await getDocs(query(usersCollectionRef, where('name', '==', text)))
-.then(async (snapshot) => {
-  let items = [];
-  
-  await snapshot.docs.forEach((doc) => {
-    items.push({...doc.data(), id:doc.id})
-  });
-  dispatch(fetchsearchedproducts(items));
-
-
-  return items;
-}
-)
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
-
-
 
 
 
@@ -534,11 +488,12 @@ const data = await getDocs(query(usersCollectionRef, where('name', '==', text)))
     setSelectedcategory,
     latesProducts,
     BestSellersProducts,
-    RealatedProducts ,
+    RealatedProducts,
     CategoryProducts,
     SubProducts,
-    SearchbyText
-   //fetchSingleCategoryProducts
+    SearchbyText,
+
+    //fetchSingleCategoryProducts
   };
 
   return (
@@ -548,29 +503,23 @@ const data = await getDocs(query(usersCollectionRef, where('name', '==', text)))
 
 export default subContextComponent;
 
-
-
-
-
 export const getSpecificProduct = async (id) => {
-	const userDoc = doc(db, 'Pro', id);
-	const collec = await getDoc(userDoc)
+  const userDoc = doc(db, "Pro", id);
+  const collec = await getDoc(userDoc);
 
-	const data = {
-        name: collec.data().name,
-   
-     
-price: collec.data().price,
-images: collec.data().images,
-quantity: collec.data().quantity,
-shipping: collec.data().shipping,
-categoryid: collec.data().categoryid,
-subid: collec.data().subid,
-desc: collec.data().desc,
+  const data = {
+    name: collec.data().name,
 
+    price: collec.data().price,
+    images: collec.data().images,
+    quantity: collec.data().quantity,
+    shipping: collec.data().shipping,
+    categoryid: collec.data().categoryid,
+    subid: collec.data().subid,
+    desc: collec.data().desc,
 
-color: collec.data().color,
-	};
+    color: collec.data().color,
+  };
 
-	return data;
-}
+  return data;
+};
