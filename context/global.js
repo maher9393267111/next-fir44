@@ -344,28 +344,8 @@ const BestSellersProducts = async () => {
   
   
 
-// fetch single category products
-
-// const fetchSingleCategoryProducts = async (categoryid) => {
 
 
-
-// onSnapshot(
-//   query(collection(db, "Categories2",categoryid)),
-//   (snapshot) => {
-//     const productsArr = snapshot.docs.map((doc) => ({
-//       id: doc.id,
-//       ...doc.data(),
-//     }));
-
-//     dispatch(fetchsingleCategory(productsArr));
-//     toast.success(`category ${productsArr[0].name} is fetched`);
-//   }
-// )
-
-
-
-// }
 
 
 
