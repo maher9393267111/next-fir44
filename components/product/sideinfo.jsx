@@ -2,9 +2,10 @@ import React from "react";
 import { Button, message } from "antd";
 import Link from "next/link";
 import { globaluse } from "../../context/global";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 import dynamic from "next/dynamic";
+import { isAssetError } from "next/dist/client/route-loader";
 
 const Ratreadnossr = dynamic(() => import("../../components/product/rateread"), {
   ssr: false,
@@ -17,6 +18,19 @@ const RateModalnossr = dynamic(() => import("../../components/product/rateModal"
 
 //import {Rate} from 'antd'
 const Sideinfo = ({ category, subcategory, product }) => {
+
+const [isSSR , setIsSSR] = useState(true)
+
+useEffect(() => {
+ 
+  if(isSSR){
+    setIsSSR(false)
+  }
+
+}, []);
+
+
+
   const addtocart = () => {
     message.info(`${product.name} added to cart`);
   };
@@ -68,7 +82,7 @@ const handleCancel = () => {
 <div>
 
 <div className=" mt-4 mb-4">
-<Ratreadnossr />
+{ !isSSR && <Ratreadnossr /> }
 </div>
 
 
@@ -154,13 +168,15 @@ const handleCancel = () => {
               className="font-semibold text-[13px]">Make Rating</p>}
               {!userinfo.name &&      <p className="font-semibold text-[13px]  text-red-600">Please Signin to Make Rating</p>}
 
-<RateModalnossr   
+ { !isSSR && <RateModalnossr   
 showModal= {showModal}
 handleOk= {handleOk}
 handleCancel= {handleCancel}
 isModalVisible= {isModalVisible}
+product= {product}
 
 />
+}
 
                   </p>
                 </div>

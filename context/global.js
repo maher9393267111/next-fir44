@@ -145,7 +145,7 @@ const subContextComponent = ({ children }) => {
 
         const fetchuser = async () => {
           const userinfo = await getDoc(doc(db, "Users", user.email));
-          setUserInfo(userinfo.data());
+          setUserInfo({id:userinfo.id, ...userinfo.data()});
         };
 
         fetchuser();

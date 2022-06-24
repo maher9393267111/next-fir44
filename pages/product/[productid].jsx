@@ -32,7 +32,7 @@ const Productid = () => {
     const productRef = doc(db, "Pro", productid);
     const product = await getDoc(productRef);
 
-    setProduct(product.data());
+    setProduct({id: productid, ...product.data()});
 
     const cathref = doc(db, "Categories2", product.data().categoryid);
     const category = await getDoc(cathref);

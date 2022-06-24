@@ -1,16 +1,19 @@
 import React from 'react';
 import {Rate} from 'antd'
 const Rateread = () => {
+
+
     return (
-        <div>
+        <p>
             
 <div>
 <Rate allowHalf disabled defaultValue={2.5} />
 </div>
 
 
-        </div>
+        </p>
     );
 }
+
 
 export default Rateread;
