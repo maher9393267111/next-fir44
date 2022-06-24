@@ -166,7 +166,7 @@ const handleCancel = () => {
               {userinfo.name &&      <p 
          
               className="font-semibold text-[13px]">Make Rating</p>}
-              {!userinfo.name &&      <p className="font-semibold text-[13px]  text-red-600">Please Signin to Make Rating</p>}
+              {!userinfo.name &&      <p className="font-semibold text-[13px]  text-red-600">Please  to Make Rating  <p> <Link href = {`/auth/login`}><a> Login</a></Link></p></p>}
 
  { !isSSR && <RateModalnossr   
 showModal= {showModal}

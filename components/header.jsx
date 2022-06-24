@@ -37,9 +37,25 @@ const Header = () => {
 
 <div>
 <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+
+
+{/* ---flex--- */}
+
+<div className=" w-full flex justify-between   mx-6">
+
+
+
+<div>
+
       <Item key="home" icon={<AppstoreOutlined />}>
         <Link href="/"><a>Home</a></Link>
       </Item>
+
+</div>
+
+
+<div className=" left">
+
 
         {!userinfo?.name && (
         <Item key="register" icon={<UserAddOutlined />} className="float-right">
@@ -82,6 +98,8 @@ const Header = () => {
           </Item>
         </SubMenu>
       )}    
+      </div>
+      </div>
     </Menu>
 </div>
 
