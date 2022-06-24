@@ -349,17 +349,20 @@ const BestSellersProducts = async () => {
 
 
   
-const RealatedProducts = async (productid) => {
+const RealatedProducts = async (prod,subid) => {
 
- console.log("productid 🚀🚀🚀🚀🚀🚀",productid)
+  console.log("productid 🚀🚀🚀🚀🚀🚀",prod, '-------',);
+  console.log("sUbi 🔴🔴" ,'-------',subid);
   // startAt(startAtParam), endAt(endAtParam)
 
 
   onSnapshot(
-    query(collection(db, "Pro"), where('subid', '==' , productid  ), 
+    query(collection(db, "Pro"),
+     where('subid', '==' , `${subid}`  ), 
+    where('name', '!=' , prod   ), 
    // orderBy("id", "desc")
    // ,
-    limit(3),
+   // limit(3),
    // startAt(startat)
     ),
     (snapshot) => {

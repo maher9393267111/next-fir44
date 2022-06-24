@@ -62,11 +62,19 @@ const {RealatedProducts} = globaluse()
     setSubcategory({ ...sub.data(), id: sub.id });
   //  console.log(sub, "🔴 🔴 🔴 🔴 🔴 ");
 
-   await RealatedProducts(product.data().subid) 
+const procuctname = await product.data().name;
+const subid = await product.data().subid;
+
+
+   await RealatedProducts(procuctname,subid) 
 
 
 
   };
+
+
+
+
 
   useEffect(() => {
     if (productid) {
