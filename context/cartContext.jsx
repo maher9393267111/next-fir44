@@ -49,6 +49,7 @@ const allContext = ({ children }) => {
     const [cartexecute, setCartexecute] = useState(false);
 
 
+
     // add product to current user cart
 
     const addtocart = async (product) => {
@@ -103,6 +104,8 @@ const allContext = ({ children }) => {
                 });
 
                 const totalprice = await (await getDoc(userpath)).data()?.totalprice;
+
+setCartexecute(!cartexecute);
 
               dispatch(setCart({ cart: cart, total: totalprice }));
                 // update totla price
@@ -165,7 +168,7 @@ const allContext = ({ children }) => {
 
            dispatch(setCart({ cart: cartafterdelete, total: totalpricedafterfelete }));
 
-
+setCartexecute(!cartexecute);
 
 
         }
@@ -181,6 +184,7 @@ const allContext = ({ children }) => {
 
 
 useEffect(() => {
+cartdata()
 
 
 
@@ -193,7 +197,7 @@ const cartdata = async () => {
 const userpath = doc(db, "Users", `${userinfo?.email}`);
 const cart = await (await getDoc(userpath)).data()?.cart;
 
-totalprice = await (await getDoc(userpath)).data()?.totalprice;
+ const totalprice = await (await getDoc(userpath)).data()?.totalprice;
 
 const  obj = {cart: cart, total: totalprice};
 
@@ -204,9 +208,35 @@ return obj;
 
 
 
+// update product quantity in cart when user click on + or - button
+
+
+const increasequantity = async (product, quantity) => {
+
+ const userpath = doc(db, "Users", `${userinfo?.email}`);
+const cart = await (await getDoc(userpath)).data()?.cart;
+
+    const totalprice = await (await getDoc(userpath)).data()?.totalprice;
+
+    // find this product in the cart and increse  the quantity
+
+    const increseproduct = cart?.find((item) => item.id === product.id);
+
+     console.log("increseproduct", increseproduct);
+
+
+}
+
+
+
+
+
+
+
     const value = {
         addtocart,
-        cartdata
+        cartdata,
+        increasequantity
     };
     return <cartContext.Provider {...{ value }}>{children}</cartContext.Provider>;
 };

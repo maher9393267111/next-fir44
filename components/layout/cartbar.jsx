@@ -1,73 +1,48 @@
-import React from 'react';
+import React from "react";
 
 import { Button, Drawer } from "antd";
 import { useState, useEffect } from "react";
-import { globaluse } from "../../context/global"
-import { cartuse } from "../../context/cartContext"
-import {useDispatch,useSelector} from 'react-redux'
-import { toast } from 'react-toastify';
-import { setUserInfo, setVisible } from '../../context/store/reduxglobal';
-
+import { globaluse } from "../../context/global";
+import { cartuse } from "../../context/cartContext";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { setUserInfo, setVisible } from "../../context/store/reduxglobal";
 
 const Cartbar = () => {
+  const { visible } = useSelector((state) => state.global);
+  const { cartdata } = cartuse();
 
-const {visible} = useSelector((state) => state.global);
-const {cartdata } = cartuse();
+  const [current, setCurrent] = useState({ cart: [], total: 0 });
 
-const [current, setCurrent] = useState({cart:[],total : 0});
+  const dispatch = useDispatch();
 
+  const onClose = () => {
+    dispatch(setVisible(false));
+  };
 
-const dispatch = useDispatch();
+  useEffect(() => {
+    let obj = {};
 
-const onClose = () => {
+    cartdata().then((data) => {
+      console.log("cartdata🛍️🛍️🛍️", data);
 
-dispatch(setVisible(false));
+      obj.cart = data.cart;
+      obj.total = data.total;
 
-}
+      setCurrent(obj);
+    });
+  }, [visible]);
 
-
-useEffect(() => {
-
-let obj = {}
-
-
-cartdata().then((data) => {
-
-
-console.log("cartdata🛍️🛍️🛍️", data);
-
-
-obj.cart = data.cart;
-obj.total = data.total;
-
-toast.success(`objdata--> ${obj.total}` )
-
-setCurrent(obj);
-
-
-})
+  
 
 
 
 
 
-}, [visible]);
 
-
-const handle = () => {
-    setCurrent("about");
-
-
-}
-
-
-
-
-    return (
-        <div>
-
-
-<Drawer
+  return (
+    <div>
+      <Drawer
         width={520}
         style={{ transition: " all2.5s  ease-in-out" }}
         className="  transition-all   duration-500"
@@ -78,20 +53,26 @@ const handle = () => {
       >
 
 
-<div
-onClick={handle}
->
-    clicked  {current.total}
+{/* -----sidebar conten----- */}
+
+
+
+<div>
+
+
+
+{current?.total}
+
+
+
 </div>
 
 
-sidebar is:
-
-        </Drawer>
-
-            
-        </div>
-    );
-}
+       
+    
+      </Drawer>
+    </div>
+  );
+};
 
 export default Cartbar;

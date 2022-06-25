@@ -6,6 +6,7 @@ import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 //import  Link  from "next/link";
 import  Link  from "next/link";
 import {cartuse}  from "../../context/cartContext"
+import {useSelector} from "react-redux";
 
 const { Meta } = Card;
 
@@ -15,6 +16,7 @@ const ProductCard = ({ product }) => {
 
 const {addtocart} = cartuse();
 
+const {cart} = useSelector((state) => state.global);
 
 // calculate average rating
   const ratings = product.rating.map((rating) => rating.stars);
@@ -73,7 +75,13 @@ const {addtocart} = cartuse();
 <p
 
 
-className="text-[10px] cursor-pointer">Add to cart</p>
+className="text-[10px] cursor-pointer">
+
+{cart.filter((item)=>item.id===id).length>0?  (<p className="  text-red-600 font-bold">Remove it</p>)  : (<p className="   text-blue-700 font-bold">Add to Cart</p>) }
+
+
+
+</p>
 </div>
 
 <Link href={`/product/${id}`}><a >

@@ -13,6 +13,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { setsearchtext,setsearchmode,setVisible  } from "../context/store/reduxglobal";
 
+import {
+  useCollectionData,
+  useDocumentData,
+} from "react-firebase-hooks/firestore";
+import { query, orderBy, collection, doc,getDoc } from "firebase/firestore";
+import {db} from '../firebase';
 
 
 
@@ -55,6 +61,11 @@ dispatch(setsearchmode(true));
 
 
 }
+
+
+
+const [userdata] = useDocumentData(doc(db, "Users", `${userinfo?.email}`));
+
 
 
 
@@ -103,15 +114,19 @@ dispatch(setsearchmode(true));
 
 <div className=" relative">
   <div>
+  <Link href="/cartpage"><a>
+    
+ 
     <img
     onClick={openModal}
     className=" w-12 h1-12 cursor-pointer rounded-full" src="https://cdn4.iconfinder.com/data/icons/e-commerce-and-online-shopping-flat/512/sale_shop_buy_bag_purchase_shopping-256.png" alt="" />
+   </a></Link>
   </div>
 
 {/* ----products number */}
 
 <div className=" ">
-  <span className="  top-[-2px] right-[-18px] bg-blue-400  rounded-full text-center w-8 h-8 absolute"><p className=" -mt-[5px]">0</p></span>
+  <span className="  top-[-2px] right-[-18px] bg-blue-400  rounded-full text-center w-8 h-8 absolute"><p className=" -mt-[5px]">{userdata?.cart?.length}</p></span>
 </div>
 
 
