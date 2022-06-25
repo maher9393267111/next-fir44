@@ -11,7 +11,8 @@ import Link from "next/link";
 import { globaluse } from "../context/global";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { setsearchtext,setsearchmode } from "../context/store/reduxglobal";
+import { setsearchtext,setsearchmode,setVisible  } from "../context/store/reduxglobal";
+
 
 
 
@@ -34,6 +35,14 @@ const Header = () => {
   const logouthandle = () => {
  logout();
   };
+
+
+  const openModal = () => {
+
+
+    dispatch(setVisible(true));
+  }
+
 
 
 
@@ -81,7 +90,7 @@ dispatch(setsearchmode(true));
 
 {/* -----searrch bar----- */}
 
-<div>
+<div className=" flex gap-2">
 <div className="relative">
     <input
     onChange={hendleSearch}
@@ -89,6 +98,26 @@ dispatch(setsearchmode(true));
     type="text" id="floating_filled" clasName="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
     <label  htmlFor="floating_filled" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Search Bar</label>
 </div>
+
+
+
+<div className=" relative">
+  <div>
+    <img
+    onClick={openModal}
+    className=" w-12 h1-12 cursor-pointer rounded-full" src="https://cdn4.iconfinder.com/data/icons/e-commerce-and-online-shopping-flat/512/sale_shop_buy_bag_purchase_shopping-256.png" alt="" />
+  </div>
+
+{/* ----products number */}
+
+<div className=" ">
+  <span className="  top-[-2px] right-[-18px] bg-blue-400  rounded-full text-center w-8 h-8 absolute"><p className=" -mt-[5px]">0</p></span>
+</div>
+
+
+
+</div>
+
 </div>
 
 

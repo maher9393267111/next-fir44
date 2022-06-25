@@ -33,6 +33,8 @@ const authSlice = createSlice({
         searchedproducts: [],
         searchtext: '',
         searchmode: false,
+        visible: false,
+        cart : [],
         
     },
     reducers: {
@@ -125,8 +127,17 @@ console.log()
     setsearchmode: (state, action) => {
 
         state.searchmode = action.payload;
-    }
+    },
 
+    setVisible: (state, action) => {
+
+        state.visible = action.payload;
+
+    },
+    setCart: (state, action) => {
+
+        state.cart = action.payload;
+    }
 
     },
     // extraReducers: {
@@ -151,5 +162,5 @@ console.log()
 
 
 // Export our slice and the action types:
-export const { setIsLoggedIn, setname, fetchsingleCategory,   setsearchmode,setsearchtext,  fetchsearchedproducts,  fetchsubcatproducts,fetchcatproducts,  relatedproductsfetch,  afterRatingproduct ,refreshsingleproduct,  fechBestsellers, fetchCategories,    fetchlatestproducts,   fetchCategorySubs,  fetchProducts,  fetchSubCategories,  setUserInfo,fetchsingleProduct } = authSlice.actions;
+export const { setIsLoggedIn,   setVisible, setname, setCart, fetchsingleCategory,   setsearchmode,setsearchtext,  fetchsearchedproducts,  fetchsubcatproducts,fetchcatproducts,  relatedproductsfetch,  afterRatingproduct ,refreshsingleproduct,  fechBestsellers, fetchCategories,    fetchlatestproducts,   fetchCategorySubs,  fetchProducts,  fetchSubCategories,  setUserInfo,fetchsingleProduct } = authSlice.actions;
 export default authSlice.reducer;

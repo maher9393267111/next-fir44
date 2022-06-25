@@ -5,12 +5,15 @@ import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 //import laptop from "../../images/laptop.png";
 //import  Link  from "next/link";
 import  Link  from "next/link";
+import {cartuse}  from "../../context/cartContext"
 
 const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
   // destructure
   const { images, name, desc, id } = product;
+
+const {addtocart} = cartuse();
 
 
 // calculate average rating
@@ -63,9 +66,14 @@ const ProductCard = ({ product }) => {
 <div className=" flex ml-4   justify-between gap-4">
 
 <div>
-    <img className=" w-10 h-10  object-contain rounded-b-full" src="https://cdn2.iconfinder.com/data/icons/commerce-shadow/100/.svg-3-256.png"/>
+    <img 
+    onClick={()=>addtocart(product)}
+    className=" w-10 h-10  cursor-pointer object-contain rounded-b-full" src="https://cdn2.iconfinder.com/data/icons/commerce-shadow/100/.svg-3-256.png"/>
 
-<p className="text-[10px]">Add to cart</p>
+<p
+
+
+className="text-[10px] cursor-pointer">Add to cart</p>
 </div>
 
 <Link href={`/product/${id}`}><a >

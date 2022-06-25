@@ -264,9 +264,10 @@ const handlecolor = (value) => {
 
 {allcolors.map((c) => (<div>
 
-<p
+    <p
+    key={c}
     onClick={()=>handlecolor(c)}
-    className={` cursor-pointer font-bold`} style={{backgroundColor: `${c ? c : 'black'}`,color:`${c}`}}  key={c}>{c}</p>
+    className={` cursor-pointer font-bold`} style={{backgroundColor: `${c ? c : 'black'}`,color:`${c}`}}  >{c}</p>
 
 
 
