@@ -5,13 +5,17 @@ import { useState, useEffect } from "react";
 import { globaluse } from "../../context/global"
 import { cartuse } from "../../context/cartContext"
 import {useDispatch,useSelector} from 'react-redux'
-import { setVisible } from '../../context/store/reduxglobal';
+import { toast } from 'react-toastify';
+import { setUserInfo, setVisible } from '../../context/store/reduxglobal';
 
 
 const Cartbar = () => {
 
 const {visible} = useSelector((state) => state.global);
 const {cartdata } = cartuse();
+
+const [current, setCurrent] = useState({cart:[],total : 0});
+
 
 const dispatch = useDispatch();
 
@@ -24,16 +28,38 @@ dispatch(setVisible(false));
 
 useEffect(() => {
 
+let obj = {}
+
+
 cartdata().then((data) => {
 
+
 console.log("cartdata🛍️🛍️🛍️", data);
+
+
+obj.cart = data.cart;
+obj.total = data.total;
+
+toast.success(`objdata--> ${obj.total}` )
+
+setCurrent(obj);
+
 
 })
 
 
 
 
+
 }, [visible]);
+
+
+const handle = () => {
+    setCurrent("about");
+
+
+}
+
 
 
 
@@ -52,7 +78,14 @@ console.log("cartdata🛍️🛍️🛍️", data);
       >
 
 
-sidebar
+<div
+onClick={handle}
+>
+    clicked  {current.total}
+</div>
+
+
+sidebar is:
 
         </Drawer>
 

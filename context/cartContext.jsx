@@ -178,7 +178,7 @@ const allContext = ({ children }) => {
 
 
 
-    const [usercart, setUsercart] = useState({cart: [], total: 0});
+
 
 useEffect(() => {
 
