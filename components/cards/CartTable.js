@@ -3,7 +3,7 @@ import {cartuse} from "../../context/cartContext";
 const CartTable = ({cart}) => {
 
 
-const {increasequantity} = cartuse()
+const {increasequantity,Decreasequantity,deleteProduct } = cartuse()
 
 
   return (
@@ -58,6 +58,16 @@ return (
                   <p 
                     onClick={() => increasequantity(item,2)}
                     >plus</p>
+
+<div>
+<p 
+                    onClick={() => Decreasequantity(item,2)}
+                    >dec</p>
+
+
+</div>
+
+
                     </div>  
                     
                 </td>
@@ -75,7 +85,10 @@ return (
                  
 <p className=" text-green-500 font-bold">  <img className="w-6 mt-2 h-6 rounded-full" src="https://cdn2.iconfinder.com/data/icons/basic-flat-icon-set/128/pencil-256.png" alt="" /></p>
 
-<p className=" font-bold  text-red-500" >  <img className="w-6 h-6  mt-2 rounded-full" src="https://cdn4.iconfinder.com/data/icons/buno-email/32/__trash_delete_can-256.png" alt="" /></p>
+<p 
+onClick={()=> deleteProduct (item)}
+
+className=" font-bold  text-red-500" >  <img className="w-6 h-6  mt-2 rounded-full" src="https://cdn4.iconfinder.com/data/icons/buno-email/32/__trash_delete_can-256.png" alt="" /></p>
 
 
                     </div>  

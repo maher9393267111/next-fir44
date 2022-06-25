@@ -213,7 +213,15 @@ return obj;
 
 const increasequantity = async (product, quantity) => {
 
+console.log("product", product);
+
+
  const userpath = doc(db, "Users", `${userinfo?.email}`);
+ const procuctpath = doc(db, "Pro", product.id);
+ const Quantity = await (await getDoc(procuctpath)).data()?.quantity;
+
+ console.log("Quantity---☢️☢️☢️☢️☢️☢️", Quantity);
+
 const cart = await (await getDoc(userpath)).data()?.cart;
 
     const totalprice = await (await getDoc(userpath)).data()?.totalprice;
@@ -222,11 +230,157 @@ const cart = await (await getDoc(userpath)).data()?.cart;
 
     const increseproduct = cart?.find((item) => item.id === product.id);
 
-     console.log("increseproduct", increseproduct);
+// increase the quantity of the product
+
+
+//  
+
+
+
+if (increseproduct?.quantity < Quantity) {
+
+    increseproduct.quantity += quantity;
+}
+
+     console.log("increseproduct----->", increseproduct.quantity);
+
+
+updateDoc(userpath, {
+    cart: cart?.map((item) => {
+        if (item.id === product.id) {
+            return increseproduct;
+        }
+        return item;
+    }
+    ),
+    totalprice: cart?.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+    ),
+}).then(async () => {
+
+    const cart = await (await getDoc(userpath)).data()?.cart;
+    const totalprice = await (await getDoc(userpath)).data()?.totalprice;
+
+    dispatch(setCart({ cart: cart, total: totalprice }));
+    // update totla price
+
+    setCartexecute(!cartexecute);
+
+    toast.success(`total priced is ${totalprice}`);
+
+
 
 
 }
+);
+}
 
+
+
+
+
+const Decreasequantity = async (product, quantity) => {
+
+    console.log("product", product);
+    
+    
+     const userpath = doc(db, "Users", `${userinfo?.email}`);
+    const cart = await (await getDoc(userpath)).data()?.cart;
+    
+        const totalprice = await (await getDoc(userpath)).data()?.totalprice;
+    
+        // find this product in the cart and increse  the quantity
+    
+        const increseproduct = cart?.find((item) => item.id === product.id);
+    
+    // increase the quantity of the product
+
+
+if ( increseproduct.quantity > 1) {
+
+        increseproduct.quantity -= quantity;
+}
+    
+         console.log("increseproduct----->", increseproduct.quantity);
+    
+    
+    updateDoc(userpath, {
+        cart: cart?.map((item) => {
+            if (item.id === product.id) {
+                return increseproduct;
+            }
+            return item;
+        }
+        ),
+        totalprice: cart?.reduce(
+            (acc, item) => acc + item.price * item.quantity,
+            0
+        ),
+    }).then(async () => {
+    
+        const cart = await (await getDoc(userpath)).data()?.cart;
+        const totalprice = await (await getDoc(userpath)).data()?.totalprice;
+    
+        dispatch(setCart({ cart: cart, total: totalprice }));
+        // update totla price
+    
+        setCartexecute(!cartexecute);
+    
+        toast.success(`total priced is ${totalprice}`);
+    
+    
+    
+    
+    }
+    );
+    }
+    
+    
+
+
+// delete product from cart
+
+ const deleteProduct = async (product) => {
+
+
+ const userpath = doc(db, "Users", `${userinfo?.email}`);
+const cart = await (await getDoc(userpath)).data()?.cart;   
+const totalprice = await (await getDoc(userpath)).data()?.totalprice;
+
+    // find this product in the cart and  delete it
+
+    const deleteproduct = cart?.find((item) => item.id === product.id);
+
+    // delete the product from cart
+    cart.splice(cart.indexOf(deleteproduct), 1);
+
+    // update total price
+    const totalpriced = cart.reduce((acc, item) => {
+        return acc + item.price * item.quantity;
+    }
+    , 0);
+
+    // update cart in the database
+    updateDoc(userpath, {
+        cart: cart,
+        totalprice: totalpriced,
+    }).then(async () => {
+            
+            const cart = await (await getDoc(userpath)).data()?.cart;
+            const totalprice = await (await getDoc(userpath)).data()?.totalprice;
+    
+            dispatch(setCart({ cart: cart, total: totalprice }));
+            // update totla price
+    
+            setCartexecute(!cartexecute);
+    
+            toast.success(`total priced is ${totalprice}`);
+
+
+ }
+);
+}
 
 
 
@@ -236,7 +390,9 @@ const cart = await (await getDoc(userpath)).data()?.cart;
     const value = {
         addtocart,
         cartdata,
-        increasequantity
+        increasequantity,
+        Decreasequantity,
+        deleteProduct 
     };
     return <cartContext.Provider {...{ value }}>{children}</cartContext.Provider>;
 };
