@@ -211,7 +211,7 @@ return obj;
 // update product quantity in cart when user click on + or - button
 
 
-const increasequantity = async (product, quantity) => {
+const increasequantity = async (product, quantity =1) => {
 
 console.log("product", product);
 
@@ -280,7 +280,7 @@ updateDoc(userpath, {
 
 
 
-const Decreasequantity = async (product, quantity) => {
+const Decreasequantity = async (product, quantity = 1) => {
 
     console.log("product", product);
     

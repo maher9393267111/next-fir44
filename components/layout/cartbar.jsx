@@ -8,37 +8,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { setUserInfo, setVisible } from "../../context/store/reduxglobal";
 
-const Cartbar = () => {
-  const { visible } = useSelector((state) => state.global);
-  const { cartdata } = cartuse();
+import {
+  useCollectionData,
+  useDocumentData,
+} from "react-firebase-hooks/firestore";
+import { query, orderBy, collection, doc, getDoc } from "firebase/firestore";
 
-  const [current, setCurrent] = useState({ cart: [], total: 0 });
+
+import { db } from "../../firebase";
+
+const Cartbar = () => {
+  const { userinfo } = globaluse();
+
+  const query = doc(db, "Users", `${userinfo?.email}`);
+
+  const [userdata] = useDocumentData(query, { idField: "id" });
+
+  const { visible } = useSelector((state) => state.global);
 
   const dispatch = useDispatch();
 
   const onClose = () => {
     dispatch(setVisible(false));
   };
-
-  useEffect(() => {
-    let obj = {};
-
-    cartdata().then((data) => {
-      console.log("cartdata🛍️🛍️🛍️", data);
-
-      obj.cart = data.cart;
-      obj.total = data.total;
-
-      setCurrent(obj);
-    });
-  }, [visible]);
-
-  
-
-
-
-
-
 
   return (
     <div>
@@ -51,25 +43,35 @@ const Cartbar = () => {
         onClose={onClose}
         visible={visible}
       >
+        {/* -----sidebar conten----- */}
 
+        <div>
+          {/* --show all products in cart-- */}
 
-{/* -----sidebar conten----- */}
+          <div>
+            {userdata?.cart?.map((item) => {
+              return (
+                <div key={item.name} className="">
+                  {/* -----image-- */}
 
+                  <div className=" flex">
+                    <img
+                      className=" w-[100px] my-4 h-[100px] object-contain"
+                      src={item.image}
+                      alt=""
+                    />
 
-
-<div>
-
-
-
-{current?.total}
-
-
-
-</div>
-
-
-       
-    
+                    <div>
+                      <h1 className=" font-bold text-xl text-red-500  mt-12 ml-12">
+                        {item.name}
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </Drawer>
     </div>
   );
