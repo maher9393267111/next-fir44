@@ -7,6 +7,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 
 // Import the createSlice function from redux toolkit:
 import { createSlice } from '@reduxjs/toolkit';
+import { startCase } from 'lodash';
 
 
 // Create the slice:
@@ -35,6 +36,7 @@ const authSlice = createSlice({
         searchmode: false,
         visible: false,
         cart : [],
+        totalprice: 0,
         
     },
     reducers: {
@@ -136,7 +138,8 @@ console.log()
     },
     setCart: (state, action) => {
 
-        state.cart = action.payload;
+        state.cart = action.payload.cart;
+        state.totalprice = action.payload.total
     }
 
     },
