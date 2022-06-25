@@ -171,8 +171,8 @@ const handleCheckout = async () => {
                   </div>
                   <div className="w-full md:w-1/2 px-3">
                     <label
-                      class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                      for="grid-last-name"
+                      className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                      htmlFor="grid-last-name"
                     >
                       Last Name
                     </label>
@@ -210,10 +210,10 @@ const handleCheckout = async () => {
                   </div>
                 </div>
                 <div className="flex flex-wrap -mx-3 mb-6">
-                  <div class="w-full px-3">
+                  <div className="w-full px-3">
                     <label
                       className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                      for="grid-password"
+                      htmlFor="grid-password"
                     >
                       Address
                     </label>
@@ -228,11 +228,11 @@ const handleCheckout = async () => {
                     <p className="text-gray-600 text-xs italic"></p>
                   </div>
                 </div>
-                <div class="flex flex-wrap -mx-3 mb-2">
+                <div className="flex flex-wrap -mx-3 mb-2">
                   <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                     <label
-                      class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                      for="grid-city"
+                      className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                      htmlFor="grid-city"
                     >
                       City
                     </label>
@@ -245,7 +245,7 @@ const handleCheckout = async () => {
                       placeholder="Albuquerque"
                     />
                   </div>
-                  <div class="w-full md:w-1/3 px-3 mt-6 mr-6 mb-6 md:mb-0">
+                  <div className="w-full md:w-1/3 px-3 mt-6 mr-6 mb-6 md:mb-0">
                     {/* <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
         Phone Number
       </label> */}
@@ -261,8 +261,8 @@ const handleCheckout = async () => {
                   </div>
                   <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                     <label
-                      class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                      for="grid-zip"
+                      className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                      htmlFor="grid-zip"
                     >
                       Zip
                     </label>
@@ -281,7 +281,7 @@ const handleCheckout = async () => {
                   <button
                     onClick={handlesubmit}
                     type="submit"
-                    class="text-white  block text-center mt-6 mr-6 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                    className="text-white  block text-center mt-6 mr-6 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                   >
                     Make Order
                   </button>
@@ -361,7 +361,7 @@ const handleCheckout = async () => {
                         className="text-gray-900 bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 mr-2 mb-2"
                       >
                         <svg
-                          class="w-4 h-4 mr-2 -ml-1"
+                          className="w-4 h-4 mr-2 -ml-1"
                           aria-hidden="true"
                           focusable="false"
                           data-prefix="fab"

@@ -19,7 +19,7 @@ const CartTable = ({ cart }) => {
               Image
             </th>
 
-            <th scope="col" class="px-6 py-3">
+            <th scope="col" className="px-6 py-3">
               Edit
             </th>
           </tr>
@@ -30,7 +30,7 @@ const CartTable = ({ cart }) => {
             return (
               <tr
                 key={item?.name}
-                class="bg-white  border-b dark:bg-gray-800 dark:border-gray-700"
+                className="bg-white  border-b dark:bg-gray-800 dark:border-gray-700"
               >
                 <th
                   scope="row"
@@ -39,7 +39,7 @@ const CartTable = ({ cart }) => {
                   <div className=" mt-4 font-bold">{item.name}</div>
                 </th>
 
-                <td class="px-6 py-4  ">
+                <td className="px-6 py-4  ">
                   <div className=" text-center mt-4 flex gap-4  font-bold">
                     <p onClick={() => increasequantity(item)}>
                       <img
@@ -71,7 +71,7 @@ const CartTable = ({ cart }) => {
                   />
                 </td>
 
-                <td class="px-6 py-4">
+                <td className="px-6 py-4">
                   <div className=" text-center flex gap-4">
                     <p className=" text-green-500 font-bold">
                       {" "}
