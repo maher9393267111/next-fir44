@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
-import getStripe from '../../lib/getStripe';
+//import getStripe from '../../lib/getStripe';
 
 
 import {
@@ -16,12 +16,12 @@ import {
   useCollectionData,
   useDocumentData,
 } from "react-firebase-hooks/firestore";
-import { db } from "../../firebase";
-import { useAuth } from "../../context/global";
+import { db } from "../firebase";
+import { globaluse} from "../context/global";
 import { get } from "react-hook-form";
 const Step2 = () => {
-  const { userinfo } = useAuth();
-  const [userdata] = useDocumentData(doc(db, "users", `${userinfo?.email}`));
+  const { userinfo } = globaluse();
+  const [userdata] = useDocumentData(doc(db, "Users", `${userinfo?.email}`));
 
   const [values, setValues] = useState({
     firstname: "",
@@ -48,50 +48,51 @@ const Step2 = () => {
   };
 
   const handlesubmit = async (e) => {
-    // e.preventDefault();
-    // //  console.log("values", values);
+    e.preventDefault();
+    //  console.log("values", values);
 
-    // //console.log('userdata', userdata);
+    //console.log('userdata', userdata);
 
-    // const docRef =
-    //   // await addDoc(collection(db, "orders",  `${userinfo?.email}`)
-    //   await setDoc(doc(db, "orders", `${userinfo?.email}`), {
-    //     user: values.email,
-    //     firstname: values.firstname,
-    //     lastname: values.lastname,
-    //     phone: values.phone,
-    //     adress: values.adress,
-    //     city: values.city,
-    //     state: values.state,
-    //     zip: values.zip,
-    //     country: values.country,
-    //     status: "pending",
-    //     cartitems: userdata?.cart,
-    //     total: userdata?.totalprice,
-    //   });
+    const docRef =
+      // await addDoc(collection(db, "orders",  `${userinfo?.email}`)
+      await setDoc(doc(db, "orders", `${userinfo?.email}`), {
+        user: values.email,
+       
+        firstname: values.firstname,
+        lastname: values.lastname,
+        phone: values.phone,
+        adress: values.adress,
+        city: values.city,
+        state: values.state,
+        zip: values.zip,
+        country: values.country,
+        status: "pending",
+        cartitems: userdata?.cart,
+        total: userdata?.totalprice,
+      });
 
 
-    //   // reset cart and totalprice after order is placed
+      // reset cart and totalprice after order is placed
       
 
-    //     // then resset form values
-    //     setValues({
-    //         firstname: "",
+        // then resset form values
+        setValues({
+            firstname: "",
 
-    //         lastname: "",
-    //         email: "",
-    //         phone: "",
-    //         city: "",
-    //         adress: "",
-    //         state: "",
-    //         zip: "",
-    //         country: "",
-    //     });
+            lastname: "",
+            email: "",
+            phone: "",
+            city: "",
+            adress: "",
+            state: "",
+            zip: "",
+            country: "",
+        });
   };
 
   return (
-    <div>
-      <div>
+    <div className=" pb-20">
+      <div className=" ml-14 mt-14 w-[350px]">
         {/* -header- */}
 
         <div className=" relative">
@@ -101,28 +102,28 @@ const Step2 = () => {
 
           <div className=" mt-12 mb-12">
             <div>
-              <form class="w-full max-w-lg">
-                <div class="flex flex-wrap -mx-3 mb-6">
-                  <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <form className="w-full max-w-lg">
+                <div className="flex flex-wrap -mx-3 mb-6">
+                  <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label
-                      class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                      for="grid-first-name"
+                      className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                      htmlFor="grid-first-name"
                     >
                       First Name
                     </label>
                     <input
                       onChange={handleInputChange}
                       name="firstname"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                      className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                       id="grid-first-name"
                       type="text"
                       placeholder="Jane"
                     />
-                    <p class="text-red-500 text-xs italic">
+                    <p className="text-red-500 text-xs italic">
                       Please fill out this field.
                     </p>
                   </div>
-                  <div class="w-full md:w-1/2 px-3">
+                  <div className="w-full md:w-1/2 px-3">
                     <label
                       class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                       for="grid-last-name"
@@ -132,17 +133,17 @@ const Step2 = () => {
                     <input
                       onChange={handleInputChange}
                       name="lastname"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                      className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       id="grid-last-name"
                       type="text"
                       placeholder="Doe"
                     />
                   </div>
                 </div>
-                <div class="flex flex-wrap -mx-3 mb-6">
+                <div className="flex flex-wrap -mx-3 mb-6">
                   <div class="w-full px-3">
                     <label
-                      class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                      className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                       for="grid-password"
                     >
                       Address
@@ -150,16 +151,16 @@ const Step2 = () => {
                     <input
                       onChange={handleInputChange}
                       name="adress"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                      className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       id="grid-password"
                       type="text"
                       placeholder="adress"
                     />
-                    <p class="text-gray-600 text-xs italic"></p>
+                    <p className="text-gray-600 text-xs italic"></p>
                   </div>
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-2">
-                  <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                  <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                     <label
                       class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                       for="grid-city"
@@ -169,7 +170,7 @@ const Step2 = () => {
                     <input
                       onChange={handleInputChange}
                       name="city"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                      className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       id="grid-city"
                       type="text"
                       placeholder="Albuquerque"
@@ -179,7 +180,7 @@ const Step2 = () => {
                     {/* <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
         Phone Number
       </label> */}
-                    <div class="relative  lg:-mt-4">
+                    <div className="relative  lg:-mt-4">
                       <div className="">
                         <PhoneInput
                           country={"us"}
@@ -189,7 +190,7 @@ const Step2 = () => {
                       </div>
                     </div>
                   </div>
-                  <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                  <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                     <label
                       class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                       for="grid-zip"
@@ -199,7 +200,7 @@ const Step2 = () => {
                     <input
                       onChange={handleInputChange}
                       name="zip"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                      className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       id="grid-zip"
                       type="text"
                       placeholder="90210"
