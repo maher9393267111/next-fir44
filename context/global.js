@@ -252,12 +252,7 @@ const subContextComponent = ({ children }) => {
     };
     listproducts();
 
-// then check all colors from products and save them in the colors array
-
-    
-
-
-
+    // then check all colors from products and save them in the colors array
   }, [db, refreshcategory]);
 
   // find product by his id
@@ -382,9 +377,6 @@ const subContextComponent = ({ children }) => {
 
         dispatch(fetchcatproducts(productsArr));
 
-       
-
-
         return productsArr;
       }
     );
@@ -429,32 +421,19 @@ const subContextComponent = ({ children }) => {
 
     const regex = new RegExp(text, "i");
 
+    const filterproducts = products.filter((product) => {
+      return product.name.match(regex);
+    });
 
+    console.log("filter🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥", filterproducts);
 
-
-const filterproducts = products.filter((product) => {
-  return product.name.match(regex);
-});
-
-console.log("filter🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥", filterproducts);
-
-dispatch(fetchsearchedproducts(filterproducts));
-
-
-
+    dispatch(fetchsearchedproducts(filterproducts));
   };
-
-
-
-
 
   // search products  by price  max and min
 
-
   const ProductsByPrice = async (price) => {
- 
     console.log(" price data is is--- 🔴🔴", "-------", price);
-  
 
     onSnapshot(
       query(
@@ -480,18 +459,14 @@ dispatch(fetchsearchedproducts(filterproducts));
     );
   };
 
-
-
   const ProductsBySelectedCategories = async (categories) => {
- 
     console.log(" price data is is--- 🔴🔴", "-------", categories);
-  
 
     onSnapshot(
       query(
         collection(db, "Pro"),
-        where("categoryid", "in", categories),
-       
+        where("categoryid", "in", categories)
+
         //  where('name', '!=' , prod   ),
         // orderBy("id", "desc")
         // ,
@@ -510,20 +485,15 @@ dispatch(fetchsearchedproducts(filterproducts));
       }
     );
   };
-
-
-
 
   const ProductsBySelectedSubs = async (subs) => {
- 
     console.log(" subsdata array is is--- 🔴🔴", "-------", subs);
-  
 
     onSnapshot(
       query(
         collection(db, "Pro"),
-        where("subid", "in", subs),
-       
+        where("subid", "in", subs)
+
         //  where('name', '!=' , prod   ),
         // orderBy("id", "desc")
         // ,
@@ -543,21 +513,67 @@ dispatch(fetchsearchedproducts(filterproducts));
     );
   };
 
+  // filter by stars
+
+  const ProductsByStars = async (star) => {
+    console.log(" star--- 🔴🔴", "-------", star);
+
+    onSnapshot(
+      query(
+        collection(db, "Pro")
+        //  where("rating", "array-contains", star),
+
+        //  where('name', '!=' , prod   ),
+        // orderBy("id", "desc")
+        // ,
+        // limit(3),
+        // startAt(startat)
+      ),
+      (snapshot) => {
+        const productsArr = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        console.log(" productsArr--- 🔴🔴", "-------", productsArr);
+
+        // filetr productarray by stars
+        // const filterproducts = productsArr.filter((product) => {
+        //   return product.rating.stars === star;
+        // }
+        // );
+
+        // make avaergae of stars for each product then compare with star
+
+        const filterproducts = productsArr.filter((product) => {
+          let stars = 0;
+          product.rating.forEach((rate) => {
+            stars += rate.stars;
+          });
+
+          return stars / product.rating.length.toFixed() === star;
+        });
+
+        console.log("filterproducts---  🕊️  ✅✅✅", "-------", filterproducts);
+
+        dispatch(fetchsearchedproducts(filterproducts));
+
+        return productsArr;
+      }
+    );
+  };
 
 
-// filter by stars 
+// filter by color
 
-
-const ProductsByStars = async (star) => {
- 
-  console.log(" star--- 🔴🔴", "-------", star);
-
+const ProductsByColor = async (color) => {
+  console.log(" price data is is--- 🔴🔴", "-------", color);
 
   onSnapshot(
     query(
       collection(db, "Pro"),
-    //  where("rating", "array-contains", star),
      
+      where("color", "==", color)
       //  where('name', '!=' , prod   ),
       // orderBy("id", "desc")
       // ,
@@ -570,49 +586,12 @@ const ProductsByStars = async (star) => {
         ...doc.data(),
       }));
 
-console.log(" productsArr--- 🔴🔴", "-------", productsArr);
-
-
-
-// filetr productarray by stars
-// const filterproducts = productsArr.filter((product) => {
-//   return product.rating.stars === star;
-// }
-// );
-
-// make avaergae of stars for each product then compare with star
-
-  
-const filterproducts = productsArr.filter((product) => {
-  let stars = 0;
-  product.rating.forEach((rate) => {
-    stars += rate.stars;
-  }
-  );
-
-  
-
-  return stars / product.rating.length.toFixed() === star;
-}
-);
-
-console.log("filterproducts---  🕊️  ✅✅✅", "-------", filterproducts);
-
-
-
-
-
-      dispatch(fetchsearchedproducts(filterproducts));
+      dispatch(fetchsearchedproducts(productsArr));
 
       return productsArr;
     }
   );
 };
-
-
-
-
-
 
 
 
@@ -646,9 +625,10 @@ console.log("filterproducts---  🕊️  ✅✅✅", "-------", filterproducts);
     SubProducts,
     SearchbyText,
     ProductsByPrice,
-    ProductsBySelectedCategories ,
-    ProductsBySelectedSubs ,
-    ProductsByStars
+    ProductsBySelectedCategories,
+    ProductsBySelectedSubs,
+    ProductsByStars,
+    ProductsByColor
 
     //fetchSingleCategoryProducts
   };
