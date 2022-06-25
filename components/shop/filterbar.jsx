@@ -262,7 +262,7 @@ const handlecolor = (value) => {
            
 <div className="  grid sm:grid-cols-2 lg:grid-cols-3 gap-2 ml-4 mr-4 mt-4">
 
-{allcolors?.map((c,index) => (<div   key={index}>
+{allcolors?.map((c,index) => (<div   key={c}>
 
     <p
   

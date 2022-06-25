@@ -63,7 +63,7 @@ const CartTable = ({ cart }) => {
                   </div>
                 </td>
 
-                <td class="px-6 py-4">
+                <td className="px-6 py-4">
                   <img
                     className="w-12   object-contain h-12 rounded-full"
                     src={item.image}
