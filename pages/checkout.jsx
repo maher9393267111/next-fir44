@@ -25,6 +25,7 @@ const Step2 = () => {
   const [ordercheckout, setOrdercheckout] = useState(true);
   const [userdata] = useDocumentData(doc(db, "Users", `${userinfo?.email}`));
   const [orderinfo] = useDocumentData(doc(db, "orders2", `${userinfo?.email}`));
+console.log(' 💎💎💎 💎💎💎 💎💎💎',orderinfo)
 
   const [values, setValues] = useState({
     firstname: "",
@@ -295,7 +296,7 @@ const handleCheckout = async () => {
       {/* // order data--- */}
 
       <div className=" mt-20  sm:col-span-12 ml-12 mr-12 lg:col-span-5">
-        {ordercheckout ? (
+        {ordercheckout?.email ? (
           <div>
             {/* ---header--- */}
 

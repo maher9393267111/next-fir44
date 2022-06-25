@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { db } from "../firebase";
 import { Button } from "antd";
 import { toast } from "react-toastify";
+import Link from "next/link";
 import { globaluse } from "../context/global";
 import dynamic from "next/dynamic";
 const CartTable = dynamic(() => import("../components/cards/CartTable"),
@@ -96,7 +97,8 @@ const Cartpage = () => {
                   {/* ---checkout--- */}
                   <div className=" mt-4 sm:ml-4 lg:ml-0">
                     {userinfo?.name && (
-                      <Button type="primary">Process Checkout</Button>
+                      <Link href="/checkout"><Button type="primary">Process Checkout</Button>
+                      </Link>
                     )}
 
                     {!userinfo?.name && (
