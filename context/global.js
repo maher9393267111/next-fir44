@@ -70,6 +70,7 @@ const subContextComponent = ({ children }) => {
   const [allcategory, setAllcategory] = useState([]);
   const [refreshcategory, setRefreshcategory] = useState(false);
   const [selectedcategory, setSelectedcategory] = useState("");
+  const [colors, setColors] = useState([]);
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.global);
 
@@ -250,6 +251,13 @@ const subContextComponent = ({ children }) => {
       await readproData();
     };
     listproducts();
+
+// then check all colors from products and save them in the colors array
+
+    
+
+
+
   }, [db, refreshcategory]);
 
   // find product by his id
@@ -537,6 +545,72 @@ dispatch(fetchsearchedproducts(filterproducts));
 
 
 
+// filter by stars 
+
+
+const ProductsByStars = async (star) => {
+ 
+  console.log(" star--- 🔴🔴", "-------", star);
+
+
+  onSnapshot(
+    query(
+      collection(db, "Pro"),
+    //  where("rating", "array-contains", star),
+     
+      //  where('name', '!=' , prod   ),
+      // orderBy("id", "desc")
+      // ,
+      // limit(3),
+      // startAt(startat)
+    ),
+    (snapshot) => {
+      const productsArr = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+console.log(" productsArr--- 🔴🔴", "-------", productsArr);
+
+
+
+// filetr productarray by stars
+// const filterproducts = productsArr.filter((product) => {
+//   return product.rating.stars === star;
+// }
+// );
+
+// make avaergae of stars for each product then compare with star
+
+  
+const filterproducts = productsArr.filter((product) => {
+  let stars = 0;
+  product.rating.forEach((rate) => {
+    stars += rate.stars;
+  }
+  );
+
+  
+
+  return stars / product.rating.length.toFixed() === star;
+}
+);
+
+console.log("filterproducts---  🕊️  ✅✅✅", "-------", filterproducts);
+
+
+
+
+
+      dispatch(fetchsearchedproducts(filterproducts));
+
+      return productsArr;
+    }
+  );
+};
+
+
+
 
 
 
@@ -574,6 +648,7 @@ dispatch(fetchsearchedproducts(filterproducts));
     ProductsByPrice,
     ProductsBySelectedCategories ,
     ProductsBySelectedSubs ,
+    ProductsByStars
 
     //fetchSingleCategoryProducts
   };

@@ -2,6 +2,8 @@ import React from "react";
 import { Menu, Slider, Checkbox, Rate } from "antd";
 const { SubMenu, ItemGroup } = Menu;
 import { useEffect, useState } from "react";
+import Stars from './sidestars'
+import { round, uniqBy } from 'lodash';
 import { DollarOutlined, DownSquareOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -14,10 +16,12 @@ const Filterbar = () => {
     const [subIds, setsubIds] = useState([]);
     const dispatch = useDispatch();
     const [ok, setOk] = useState(false);
+    const [allcolors, setAllcolors] = useState([]);
+    const [stars, setStars] = useState(0);
 
-    const { ProductsByPrice, ProductsBySelectedCategories, ProductsBySelectedSubs } = globaluse();
+    const { ProductsByPrice, ProductsBySelectedCategories,ProductsByStars, ProductsBySelectedSubs ,} = globaluse();
 
-    const { categories, subCategoies } = useSelector((state) => state.global);
+    const { categories, subCategoies,products } = useSelector((state) => state.global);
     // handle price slider change values
 
     const handleSlider = (value) => {
@@ -34,6 +38,21 @@ const Filterbar = () => {
     };
 
     // categories
+
+
+
+useEffect(() => {
+
+    const colors=(products.map(product => product.color));
+    setAllcolors(uniqBy(colors));
+    console.log("all colors--💬💬", allcolors);
+
+}, [products]);
+
+console.log("allcolors", allcolors);
+
+
+
 
     // handle check for categories
     const handleCheck = (e) => {
@@ -114,10 +133,16 @@ const Filterbar = () => {
 
     // show stars
 
-    const handlerating = (value) => {
+    const handleStarClick = (value) => {
 
 console.log("rating -✅✅✅", value);
 
+setStars(value);
+setsubIds([]);
+setCategoryIds([]);
+dispatch(setsearchtext(""));
+dispatch(setsearchmode(true));
+ProductsByStars(stars);
 
 
 
@@ -238,11 +263,11 @@ console.log("rating -✅✅✅", value);
 
                         <div className=" flex flex-col gap-2 mt-4 mb-4">
 
-<Rate onChange ={handlerating} allowHalf defaultValue={1} />
-<Rate   onChange ={handlerating}  allowHalf defaultValue={2} />
-<Rate  onChange ={handlerating} allowHalf defaultValue={3} />
-<Rate  onChange ={handlerating} allowHalf defaultValue={4} />
-<Rate  onChange ={handlerating} allowHalf defaultValue={5} />
+<Stars starClick={handleStarClick} numberOfStars={1} />
+<Stars   starClick={handleStarClick} numberOfStars={2} />
+<Stars  starClick={handleStarClick} numberOfStars={3} />
+<Stars  starClick={handleStarClick} numberOfStars={4} />
+<Stars  starClick={handleStarClick} numberOfStars={5} />
 
 
 
@@ -264,7 +289,7 @@ console.log("rating -✅✅✅", value);
 
                 {/* -----sub categoris- */}
 
-
+{products?.length}ss
 
 
             </div>

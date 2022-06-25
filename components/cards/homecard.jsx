@@ -11,6 +11,13 @@ const { Meta } = Card;
 const ProductCard = ({ product }) => {
   // destructure
   const { images, name, desc, id } = product;
+
+
+// calculate average rating
+  const ratings = product.rating.map((rating) => rating.stars);
+  const average = ratings.reduce((acc, curr) => acc + curr, 0) / ratings.length;
+
+
   return (
     
 <div>
@@ -44,7 +51,7 @@ const ProductCard = ({ product }) => {
 
 <div className=" w-full">
   <h1 className=" ml-4 text-center">
-  <Rate allowHalf disabled defaultValue={ product.rating?.length} />
+  <Rate allowHalf disabled defaultValue={ average} />
   </h1>
 </div>
 
