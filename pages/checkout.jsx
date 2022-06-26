@@ -12,6 +12,8 @@ import {
   setDoc,
   updateDoc,
   addDoc,
+  getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import {
   useCollectionData,
@@ -25,7 +27,7 @@ const Step2 = () => {
   const [ordercheckout, setOrdercheckout] = useState(true);
   const [userdata] = useDocumentData(doc(db, "Users", `${userinfo?.email}`));
   const [orderinfo] = useDocumentData(doc(db, "orders2", `${userinfo?.email}`));
-console.log(' 💎💎💎 💎💎💎 💎💎💎',orderinfo)
+console.log(' 💎💎💎 💎💎💎 💎💎💎----',orderinfo)
 
   const [values, setValues] = useState({
     firstname: "",
@@ -51,6 +53,8 @@ console.log(' 💎💎💎 💎💎💎 💎💎💎',orderinfo)
     console.log("🚀🚀🚀", values);
   };
 
+
+
   const handlesubmit = async (e) => {
     e.preventDefault();
     //  console.log("values", values);
@@ -61,7 +65,6 @@ console.log(' 💎💎💎 💎💎💎 💎💎💎',orderinfo)
       // await addDoc(collection(db, "orders",  `${userinfo?.email}`)
       await setDoc(doc(db, "orders2", `${userinfo?.email}`), {
         user: values.email,
-
         firstname: values.firstname,
         lastname: values.lastname,
         phone: values.phone,
@@ -73,26 +76,25 @@ console.log(' 💎💎💎 💎💎💎 💎💎💎',orderinfo)
         status: "pending",
         cartitems: userdata?.cart,
         total: userdata?.totalprice,
-      }).then(() => {
-        toast.success("Order Placed Successfully");
-        setOrdercheckout(true);
       });
 
-    // reset cart and totalprice after order is placed
 
-    // then resset form values
-    setValues({
-      firstname: "",
+      // reset cart and totalprice after order is placed
+      
 
-      lastname: "",
-      email: "",
-      phone: "",
-      city: "",
-      adress: "",
-      state: "",
-      zip: "",
-      country: "",
-    });
+        // then resset form values
+        // setValues({
+        //     firstname: "",
+
+        //     lastname: "",
+        //     email: "",
+        //     phone: "",
+        //     city: "",
+        //     adress: "",
+        //     state: "",
+        //     zip: "",
+        //     country: "",
+        // });
   };
 
 
@@ -131,6 +133,17 @@ const handleCheckout = async () => {
 
 
 
+// delete order if  customer cancels payment
+
+  const handleCancel = async () => {
+
+    const orderpath = doc(db, "orders2", `${userinfo?.email}`);
+    const orderRef =  await deleteDoc(orderpath);
+ toast.error('Order Cancelled');
+
+
+  }
+
 
 
 
@@ -141,7 +154,10 @@ const handleCheckout = async () => {
 
       <div className=" sm:col-span-12 lg:col-span-7 ml-14 mt-14 w-[350px]">
         {/* -header- */}
-        {orderinfo?.email}
+
+<h1>{orderinfo?.user ? 'order maked' : ' no order yet'}</h1>
+
+        {orderinfo?.user}
         <div className=" relative">
           <div className=" absolute  top-[-29px] lg:left-[364px]">
             <h1>Shipping Details {userdata?.cart?.length}</h1>
@@ -296,7 +312,7 @@ const handleCheckout = async () => {
       {/* // order data--- */}
 
       <div className=" mt-20  sm:col-span-12 ml-12 mr-12 lg:col-span-5">
-        {ordercheckout?.email ? (
+        {orderinfo?.user ? (
           <div>
             {/* ---header--- */}
 
@@ -379,6 +395,23 @@ const handleCheckout = async () => {
                         Check out with PayPal
                       </button>
                     </div>
+
+
+{/* --cancell the order--- */}
+
+<div>
+<div className=" mt-6 mb-6">
+                  <button
+                    onClick={ handleCancel}
+                    type="submit"
+                    className="text-white  block text-center mt-6 mr-6 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                  >
+                  Cancelle Order ?
+                  </button>
+                  </div>
+</div>
+
+
                   </div>
                 </div>
               </div>
